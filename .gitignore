@@ -1,0 +1,6 @@
+deno.lock
+version.ts
+bin/*
+man/*
+_codemeta.json
+*.ds/

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>COLD (Controlled Object List and Datum (Concept))</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://caltechlibrary.github.io/css/site.css">
+</head>
+<body>
+<header>
+<a href="http://library.caltech.edu" title="link to Caltech Library Homepage"><img src="https://caltechlibrary.github.io/assets/liblogo.gif" alt="Caltech Library logo"></a>
+</header>
+<nav>
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="index.html">README</a></li>
+    <li><a href="LICENSE">LICENSE</a></li>
+    <li><a href="INSTALL.html">INSTALL</a></li>
+    <li><a href="user_manual.html">User Manual</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="https://github.com/caltechlibrary/cold">GitHub</a></li>
+</ul>
+</nav>
+
+<section>
+<h1 id="installation-for-development-of-cold_ui">Installation for
+development of <strong>cold_ui</strong></h1>
+<p><strong>cold_ui</strong> is experimental software providing a human
+user interface for managing controlled object lists and datum
+(e.g. controlled vocabularies) hosted in a dataset collections. The
+application is split with two layers of responsibility. The UI is
+written in Typescript and run via <a href="https://deno.land">Deno</a>.
+A JSON API used by cold_ui is provided by datasetd for managing the
+people, groups and vocabularies collections.</p>
+<p><strong>cold_ui</strong> can be configured via the command, the
+environment or YAML configuration file.</p>
+<p><strong>cold_ui</strong> is intended to run behind a front facing web
+server (e.g. Apache 2 or NginX) that access control and authentication.
+This can be configured in Apache 2 or NginX by use of Shibboleth or
+BasicAuth. An example apache2 configuration block is included in the
+source repository for <strong>cold</strong>. It will require adaptation
+to your specific web server configuration.</p>
+<p>You will need to build <strong>cold_ui</strong> for your specific
+system configuration. You need to rebuild the static web content (very
+likely) you’ll need to have Git, GNU Make, Pandoc 3 and Deno &gt;= 1.44
+available and working on your system.</p>
+<h2 id="required-software">Required software</h2>
+<p>Adjusting the web content to your host system requires the
+following</p>
+<ol type="1">
+<li>Git (to clone the cold repository on GitHub)</li>
+<li>Deno &gt;= 1.44</li>
+<li>dataset &gt;= 2.1</li>
+<li>Pandoc &gt; 3 (both cli and server)</li>
+<li>GNU Make</li>
+</ol>
+<h2 id="running-cold_ui-on-unix-systems">Running cold_ui on Unix
+systems</h2>
+<p>NOTE: Currently Pandoc 2 ships with many packaging systems
+(e.g. Ubuntu 22.04 LTS). <strong>cold_ui</strong> requires Pandoc 3. To
+get Pandoc v3 you can check the <a href="https://pandoc.org">Pandoc</a>
+<a href="https://pandoc.org/downloads">Download Page</a> for your
+platform. You can also compile Pandoc but you will need a modern Haskell
+installed (e.g. via <a
+href="https://www.haskell.org/ghcup/">gchup</a>).</p>
+<p>Here’s an example of the commands you could use for development.</p>
+<pre><code>make
+make website
+deno task dev</code></pre>
+<h2 id="building-pandoc-on-linuxmacos">Building Pandoc on
+Linux/macOS</h2>
+<ol type="1">
+<li>Install Haskell via <a
+href="https://www.haskell.org/ghcup/">ghcup</a></li>
+<li>Make sure <code>$HOME/bin</code> exists and is in your path
+<ol type="a">
+<li><code>mkdir -p $HOME/bin</code></li>
+<li>Add it to your .bashrc,
+<code>echo 'export PATH="$HOME/bin:$PATH"' &gt;&gt;$HOME.bashrc</code></li>
+<li>Source .bashrc if needed <code>source $HOME/.bashrc</code></li>
+</ol></li>
+<li>Build Pandoc 3 install as pandoc and pandoc-server
+<ol type="a">
+<li><code>cd</code></li>
+<li><code>git clone https://github.com/jgm/pandoc src/github.com/jgm/pandoc</code></li>
+<li><code>cd src/github.com/jgm/pandoc</code></li>
+<li><code>make</code></li>
+<li><code>cp -vi $(find . -type f -name pandoc) $HOME/bin/pandoc-server</code></li>
+<li><code>cp -vi $(find . -type f -name pandoc) $HOME/bin/pandoc</code></li>
+</ol></li>
+</ol>
+<pre><code>curl --proto &#39;=https&#39; --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+source $HOME/.ghcup/env
+mkdir -p $HOME/bin
+echo &#39;export PATH=&quot;$HOME/bin:$PATH&quot;&#39; &gt;&gt;&quot;$HOME/.bashrc&quot;
+source $HOME/.bashrc
+cd
+git clone https://github.com/jgm/pandoc \
+    src/github.com/jgm/pandoc
+cd src/github.com/jgm/pandoc
+make
+cp -vi $(find . -type f -name pandoc) $HOME/bin/pandoc
+cp -vi $(find . -type f -name pandoc) $HOME/bin/pandoc-server
+cd</code></pre>
+<h2 id="building-cold_ui-on-linuxmacos">Building cold_ui on
+Linux/macOS</h2>
+<ol type="1">
+<li>Clone the Git repository for cold and run with Make
+<ol type="a">
+<li><code>cd</code></li>
+<li><code>git clone https://github.com/caltechlibrary/cold_ui src/github.com/caltechlibrary/cold_ui</code></li>
+<li><code>cd src/github.com/caltechlibrary/cold_ui</code></li>
+</ol></li>
+<li>Run <code>make</code> to compile cold_ui</li>
+<li>Run <code>make dataset_collections</code> to create SQLite3 based
+dataset collections for people, groups, vocabularies</li>
+<li>Run tmux, launch datasetd then split the window and our deno task
+<ol type="a">
+<li>tmux</li>
+<li>launch JSON API with <code>datasetd cold_api.yaml</code></li>
+<li>split the window, <code>Ctrl-b %</code></li>
+<li>launch COLD UI with <code>deno task start</code> or
+<code>deno task dev</code> (for development)</li>
+</ol></li>
+</ol>
+<p>Get datasetd going</p>
+<p>Here’s an example of the steps I’d take on my M1 Mac Mini.</p>
+<pre><code>git clone git@github.com:caltechlibrary/cold_ui \
+    src/github.com/caltechlibrary/cold_ui
+cd src/github.com/caltechlibrary/cold_ui
+make
+make dataset_collections
+tmux
+dataset cold_api.yaml
+# split the window then run start task
+deno task start</code></pre>
+<p>The cold ui application is visible to your web browser at <a
+href="http://localhost:8180" class="uri">http://localhost:8180</a></p>
+<p>The datasetd JSON API is visible at <a href="http://localhost:8485"
+class="uri">http://localhost:8485</a></p>
+<p>To shutdown the running services I do the following</p>
+<ul>
+<li>Press ctl-c to quit in the datasetd window to stop the JSON API</li>
+<li>Press ctl-c to quit <code>deno task start</code> or run
+<code>deno task stop</code></li>
+</ul>
+</section>
+
+<footer>
+<span>&copy; 2022 <a href="https://www.library.caltech.edu/copyright">Caltech Library</a></span>
+<address>1200 E California Blvd, Mail Code 1-32, Pasadena, CA 91125-3200</address>
+<span><a href="mailto:library@caltech.edu">Email Us</a></span>
+<span>Phone: <a href="tel:+1-626-395-3405">(626)395-3405</a></span>
+</footer>
+</body>
+</html>

@@ -1,0 +1,63 @@
+#
+# cold.yaml defines the controlled object list and datum application
+# from the perspective of a JSON API running via datasetd. 
+# 
+# @author: R. S. Doiel <rsdoiel@caltech.edu>
+#
+host: localhost:8485
+# This htdocs directory is provided by cold_ui so we don't enable it.
+#htdocs: htdocs
+collections:
+  # Each collection is an object. The path prefix is
+  # /api/<dataset_name>/...
+  - dataset: people.ds
+    # What follows are object level permissions
+    keys: true
+    create: true
+    read: true
+    update: true
+    delete: true
+    # These are attachment related permissions
+    attachments: true
+    attach: true
+    retrieve: true
+    prune: true
+    # These are frame level permissions
+    frame_read: true
+    frame_write: true
+    # This sets versioning behavior
+    versions: true
+  - dataset: groups.ds
+    # What follows are object level permissions
+    keys: true
+    create: true
+    read: true
+    update: true
+    delete: true
+    # These are attachment related permissions
+    attachments: true
+    attach: true
+    retrieve: true
+    prune: true
+    # These are frame level permissions
+    frame_read: true
+    frame_write: true
+    # This sets versioning behavior
+    versions: true
+  - dataset: vocabularies.ds
+    # What follows are object level permissions
+    keys: true
+    create: true
+    read: true
+    update: true
+    delete: true
+    # These are attachment related permissions
+    attachments: true
+    attach: true
+    retrieve: true
+    prune: true
+    # These are frame level permissions
+    frame_read: true
+    frame_write: true
+    # This sets versioning behavior
+    versions: true
