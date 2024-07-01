@@ -1,9 +1,11 @@
 
 # COLD UI
 
-This is a test of implementing the UI layer of COLD dataset collections as JSON data source. It uses Deno to present the UI layer talking to datasetd webservice for actual data management. The cold_ui service should be run behind a front end web server setup to provide access control (e.g. single sign-on via Shibboleth). The UI code is written in Typescript which is also use to generate the HTML, CSS and JavaScript needed for dynamic content while static assets are also hosted via Deno.
+This project implemented the human user interface for [cold](https://github.com/caltechlibrary/cold). It is implemented in TypeScript, compiled into an executable via [Deno](https://deno.land). It is intended to run as a service behind the [Newt](https://github.com/caltechlibrary/newt) data router.
 
+## Development Requirements
 
-
+- [Deno](https://deno.land) >= 1.44
+- [COLD](https://github.com/caltechlibrary/cold), latest release providing the data API JSON API
 
 
