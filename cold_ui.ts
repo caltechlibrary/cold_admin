@@ -5,7 +5,6 @@ import {
   fmtHelp,
   handleGroups,
   handlePeople,
-  handleVocabularies,
   http,
   markdown,
   mustache,
@@ -105,9 +104,6 @@ export function ColdUIHandler(
   }
   if (pathname.startsWith("/groups")) {
     return handleGroups(req, options);
-  }
-  if (pathname.startsWith("/vocabularies")) {
-    return handleVocabularies(req, options);
   }
   if (options.debug) {
     console.log(

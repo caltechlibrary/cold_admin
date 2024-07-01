@@ -22,4 +22,3 @@ export { appInfo, fmtHelp } from "./version.ts";
 export { OptionsProcessor } from "./options.ts";
 export { handlePeople } from "./people.ts";
 export { handleGroups } from "./groups.ts";
-export { handleVocabularies } from "./vocabularies.ts";
