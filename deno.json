@@ -1,9 +1,10 @@
 {
   "tasks": {
     "json_api": "datasetd cold_api.yaml",
-	"reset_data": "dsquery groups.ds 'delete from groups' ; dsquery people.ds 'delete from people'",
-	"reload_data": "deno task reset_data ; deno task import_people_csv ; deno task import groups_csv",
-	"test_dataset": "dsquery test.ds 'delete from test' ; deno test --allow-net dataset_test.ts",
+    "json_api_debug": "datasetd --debug cold_api.yaml",
+    "reset_data": "dsquery groups.ds 'delete from groups' ; dsquery people.ds 'delete from people'",
+    "reload_data": "deno task reset_data ; deno task import_people_csv ; deno task import groups_csv",
+    "test_dataset": "dsquery test.ds 'delete from test' ; deno test --allow-net dataset_test.ts",
     "check": "deno check cold_ui.ts",
     "check-all": "deno check --all cold_ui.ts",
     "dev": "deno run --allow-read --allow-net --watch cold_ui.ts",

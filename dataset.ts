@@ -77,23 +77,32 @@ export class DatasetApiClient {
     });
   }
 
-  /*
-	async query(query_name: string, fields: string[], body: string): Promise<Response> {
-		if (fields.length === 0) {
-		  return fetch(`${this.dataset_api}/query/${query_name}`, {
+  /**
+   * query performns a named query based on the YAML file running the datasetd API.
+   * If they query has parameters then the field order needs to be supplied in the fields
+   * and the key/value pairs in the body which will be transmitted as a POST body encoded
+   * as application/json.
+   *
+   * @param {string} query_name
+   * @param {string[]} fields, an ordered array of fields defined in the query
+   * @param {string} body holds the JSON encoded key/value pairs for the query
+   * @returns {Promise<Repsonse>}
+   */
+  async query(query_name: string, fields: string[], body: string): Promise<Response> {
+    if (fields.length === 0) {
+      return fetch(`${this.dataset_api}/query/${query_name}`, {
 			headers: { 'content-type': 'application/json' },
 			method: 'POST',
 			body: body
-		  });
-		} else {
-		  return fetch(`${this.dataset_api}/query/${query_name}/${fields.join('/')}`, {
+      });
+    } else {
+      return fetch(`${this.dataset_api}/query/${query_name}/${fields.join('/')}`, {
 			headers: { 'content-type': 'application/json' },
 			method: 'POST',
 			body: body
-		  });
-		}
-	}
-	*/
+      });
+    }
+  }
 }
 
 /**
@@ -120,9 +129,9 @@ export class Dataset {
     const resp = await this._ds.keys();
     if (resp.ok && resp.body) {
       const key_list = await resp.json();
-	  if (key_list !== null) {
-      	return key_list;
-	  }
+      if (key_list !== null) {
+        return key_list;
+      }
     }
     return [];
   }
@@ -148,6 +157,7 @@ export class Dataset {
 
   /**
    * read retrieves an object from a dataset collection using the datasetd JSON API.
+   *
    * @param {string} key, the key to the object you want to retrieve.
    * @returns {object} returns the object or undefined if it fails.
    */
@@ -159,6 +169,13 @@ export class Dataset {
     return undefined;
   }
 
+  /**
+   * update takes an key and object updating the collection via the datasetd JSON API.
+   *
+   * @param {string} key
+   * @param {object} obj is the replacement object for the key in the collection.
+   * @returns {boolean} true if successful, false otherwise
+   */
   async update(key: string, obj: object): Promise<boolean> {
     const text = JSON.stringify(obj);
     const resp = await this._ds.update(key, text);
@@ -171,6 +188,12 @@ export class Dataset {
     return false;
   }
 
+  /**
+   * delete removes object from a dataset collection using the datasetd JSON API.
+   *
+   * @param {string} key, the key to the object you want to remove.
+   * @returns {boolean} true if successful, false otherwise
+   */
   async delete(key: string): Promise<boolean> {
     const resp = await this._ds.delete(key);
     if (resp.ok) {
@@ -180,5 +203,42 @@ export class Dataset {
       return true;
     }
     return false;
+  }
+
+  /**
+   * query executes a query defined in the YAML file of your datasetd API.
+   * If the query takes parameters they field ordering (matching the SQL query)
+   * needs to be provided in the fields array. Any data that is needed to execute
+   * the query is provided in the kv object.  fields maybe an empty list and
+   * kv maybe an empty object for queries that don't need any parameters.
+   *
+   * @param {string} query_name, the attribute name in the query property of your
+   * datasetd YAML configuration.
+   * @param {string[]} fields, an ordered list of field names matching the sequence
+   * to the query defined in the YAML file. The fields need to match those in kv.
+   * @param {object} kv is the map of key and values to POST to the JSON API if
+   * the query requires parameters.
+   * @returns {object}, usually a list or an empty list or object is returned if
+   * there were no results or an error. Errors will be reported in the datasetd
+   * log.
+   */
+  async query(query_name: string, fields: string[], kv: object): Promise<object | undefined> {
+	if (fields.length > 0) {
+		const body = JSON.stringify(kv);
+    	const resp = await this._ds.query(query_name, fields, body);
+		if (resp.ok) {
+			let results = await resp.json();
+			console.log("DEBUG query results", results);
+			return results;
+		}
+	} else {
+    	const resp = await this._ds.query(query_name, [], '');
+		if (resp.ok) {
+			let results = await resp.json();
+			console.log("DEBUG query results (no fields or kv)", results);
+			return results;
+		}
+	}
+	return undefined;
   }
 }

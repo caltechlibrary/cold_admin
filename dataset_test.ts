@@ -35,6 +35,12 @@ Deno.test("testObjects", async () => {
         sObj = await ds.read(key);
 		assertEquals(sObj, nObj, `expected to read ${key} -> ${nObj} (after update), got ${nObj}`)
 	}
+	let results = await ds.query('list_item', [], {});
+	/*
+	let hasResults = (results !== undefined);
+	console.log("DEBUG hasResults, ", hasResults, " results", results);
+	assertStrictEquals(hasResults, true, `expected results for the list query test -> ${results}`);
+	*/
 	let keys = await ds.keys();
 	assertStrictEquals(1, keys.length, `expected keys.length === 1, got keys.length === ${keys.length}, failed`);
 	assertStrictEquals(keys[0], key, `expected single key === "${key}", got ${keys[0]}`);

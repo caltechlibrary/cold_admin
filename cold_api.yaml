@@ -28,6 +28,8 @@ collections:
     # This sets versioning behavior
     versions: true
   - dataset: groups.ds
+    query:
+      group_names: select json_object('clgid', src->'clgid', 'group_name', src->'name') as src from groups order by src->'name' ASC;
     # What follows are object level permissions
     keys: true
     create: true
@@ -44,24 +46,10 @@ collections:
     frame_write: true
     # This sets versioning behavior
     versions: true
-###   - dataset: vocabularies.ds
-###     # What follows are object level permissions
-###     keys: true
-###     create: true
-###     read: true
-###     update: true
-###     delete: true
-###     # These are attachment related permissions
-###     attachments: true
-###     attach: true
-###     retrieve: true
-###     prune: true
-###     # These are frame level permissions
-###     frame_read: true
-###     frame_write: true
-###     # This sets versioning behavior
-###     versions: true
   - dataset: test.ds
+    # This is a test query which returns our test object.
+    query:
+      list_item: select src from test;
     # What follows are object level permissions
     keys: true
     create: true
