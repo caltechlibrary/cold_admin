@@ -27,6 +27,7 @@ export class Group {
   website: string = "";
   pi: string = "";
   parent: string = "";
+  /* prefix refers to the DOI prefix that some groups on campus have. */
   prefix: string = "";
   grid: string = "";
   isni: string = "";
