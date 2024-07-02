@@ -1,6 +1,6 @@
 
 Installation for development of **cold_ui**
-=======================================
+===========================================
 
 **cold_ui** is experimental software providing a human user interface for managing controlled object lists and datum (e.g. controlled vocabularies) hosted in a dataset collections. The application is split with two layers of responsibility. The UI is written in Typescript and run via [Deno](https://deno.land). A JSON API used by cold_ui is provided by datasetd for managing the people, groups and vocabularies collections.
 

@@ -120,14 +120,16 @@ export class Dataset {
     const resp = await this._ds.keys();
     if (resp.ok && resp.body) {
       const key_list = await resp.json();
-      console.log("DEBUG key_list ->", key_list);
-      return key_list;
+	  if (key_list !== null) {
+      	return key_list;
+	  }
     }
     return [];
   }
 
   /**
    * create takes an key and object creating them via the datasetd JSON API.
+   *
    * @param {string} key
    * @param {object} obj is the thing you want to create in the collection.
    * @returns {boolean} true if successful, false otherwise
@@ -136,9 +138,9 @@ export class Dataset {
     const text = JSON.stringify(obj);
     const resp = await this._ds.create(key, text);
     if (resp.ok) {
-	  if (resp.body !== null) {
+      if (resp.body !== null) {
         resp.body.cancel();
-	  }
+      }
       return true;
     }
     return false;
@@ -153,13 +155,7 @@ export class Dataset {
     const resp = await this._ds.read(key);
     if (resp.ok && resp.body) {
       return await resp.json();
-	  /*
-	  console.log("DEBUG text ->", text, typeof(text));
-	  const obj = JSON.parse(text);
-      console.log("DEBUG obj ->", obj, typeof(obj));
-	  return obj;
-	  */
-	}
+    }
     return undefined;
   }
 
@@ -167,9 +163,9 @@ export class Dataset {
     const text = JSON.stringify(obj);
     const resp = await this._ds.update(key, text);
     if (resp.ok) {
-	  if (resp.body !== null) {
+      if (resp.body !== null) {
         resp.body.cancel();
-	  }
+      }
       return true;
     }
     return false;
@@ -178,9 +174,9 @@ export class Dataset {
   async delete(key: string): Promise<boolean> {
     const resp = await this._ds.delete(key);
     if (resp.ok) {
-	  if (resp.body !== null) {
+      if (resp.body !== null) {
         resp.body.cancel();
-	  }
+      }
       return true;
     }
     return false;
