@@ -1,11 +1,12 @@
 ---
 title: Welcome to COLD
-pubDate: 2024-06-26
+pubDate: 2024-07-01
 ---
 
 # Welcome to COLD
 
-COLD lets you manage Caltech People, Groups, Funders and other shared
-vocabularies used in Caltech Library.
+COLD lets you manage Caltech People and Groups.  used in Caltech Library.
 
+- [People](./people/)
+- [Groups](./groups/)
 

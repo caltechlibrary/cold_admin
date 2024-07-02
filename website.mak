@@ -22,6 +22,6 @@ pagefind: .FORCE
 	git add pagefind
 
 clean:
-	@if [ -f index.html ]; then rm *.html; fi
+	@rm *.html
 
 .FORCE:

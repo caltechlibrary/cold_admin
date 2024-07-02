@@ -3,8 +3,6 @@
 #
 PROJECT = cold_ui
 
-PROGRAM = cold_ui
-
 GIT_GROUP = rsdoiel
 
 VERSION = $(shell grep '"version":' codemeta.json | cut -d\"  -f 4)
@@ -30,15 +28,15 @@ endif
 
 TS_MODS = $(shell ls -1 *.ts | grep -v _test.ts | grep -v deps.ts | grep -v version.ts)
 
-build: version.ts CITATION.cff about.md $(TS_MODS) docs bin compile
+build: version.ts CITATION.cff about.md $(TS_MODS) docs bin compile htdocs
 
 bin: .FORCE
 	mkdir -p bin
 
-compile: $(TS_MODS) $(PROGRAM).ts
-	deno check --all $(PROGRAM).ts
-	deno run --allow-read --allow-net $(PROGRAM).ts --help >$(PROGRAM).1.md
-	deno compile --allow-read --allow-net --output bin/$(PROGRAM)$(EXT) $(PROGRAM).ts 
+compile: $(TS_MODS)
+	deno check --all cold_ui.ts
+	deno check --all ds_importer.ts
+	deno task build
 
 version.ts: codemeta.json .FORCE
 	echo '' | pandoc --from t2t --to plain \
@@ -74,16 +72,28 @@ format: $(shell ls -1 *.ts | grep -v version.ts)
 $(shell ls -1 *.ts | grep -v version.ts): .FORCE
 	deno fmt $@
 
-dataset_collections: people.ds/collection.json groups.ds/collection.json vocabularies.ds/collection.json
+setup_dataset: test.ds/collection.json people.ds/collection.json groups.ds/collection.json import_people_csv import_groups_csv
 
 people.ds/collection.json:
-	dataset init people.ds 'sqlite://collection.db'
+	if [ ! -d people.ds ]; then dataset init people.ds 'sqlite://collection.db'; fi
 
 groups.ds/collection.json:
-	dataset init groups.ds 'sqlite://collection.db'
+	if [ ! -d groups.ds ]; then dataset init groups.ds 'sqlite://collection.db'; fi
 
-vocabularies.ds/collection.json:
-	dataset init vocabularies.ds 'sqlite://collection.db'
+test.ds/collection.json:
+	if [ ! -d test.ds ]; then dataset init test.ds 'sqlite://collection.db'; fi
+
+import_people_csv: .FORCE
+	deno task import_people_csv
+
+import_groups_csv: .FORCE
+	deno task import_groups_csv
+
+reload_dataset:
+	deno task reload_data
+
+htdocs: .FORCE
+	make -f htdocs.mak
 
 test: .FORCE
 	deno task test
@@ -95,6 +105,8 @@ clean: .FORCE
 	rm -fR docs/*
 	rm -fR bin/$(PROGRAM)$(EXT)
 	rm -fR dist/
+	-make -f website.mak clean
+	-make -f htdocs.mak clean
 
 
 status:

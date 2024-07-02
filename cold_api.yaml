@@ -44,7 +44,24 @@ collections:
     frame_write: true
     # This sets versioning behavior
     versions: true
-  - dataset: vocabularies.ds
+###   - dataset: vocabularies.ds
+###     # What follows are object level permissions
+###     keys: true
+###     create: true
+###     read: true
+###     update: true
+###     delete: true
+###     # These are attachment related permissions
+###     attachments: true
+###     attach: true
+###     retrieve: true
+###     prune: true
+###     # These are frame level permissions
+###     frame_read: true
+###     frame_write: true
+###     # This sets versioning behavior
+###     versions: true
+  - dataset: test.ds
     # What follows are object level permissions
     keys: true
     create: true

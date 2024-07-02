@@ -1,6 +1,6 @@
 %cold_ui(1) user manual | 0.0.1 2024-07-01
 % R. S.Doiel
-% 2024-07-01 d75c67a
+% 2024-07-01 4448d59
 
 # NAME
 
