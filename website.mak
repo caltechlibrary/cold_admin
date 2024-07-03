@@ -18,7 +18,8 @@ $(HTML_PAGES): $(MD_PAGES) .FORCE
 	@if [ $@ = "README.html" ]; then mv README.html index.html; fi
 
 pagefind: .FORCE
-	pagefind --verbose --force-language en-US --exclude-selectors="nav,header,footer" --output-path ./pagefind --site .
+	# NOTE: I am not including most of the archive in PageFind index since it doesn't make sense in this case.
+	pagefind --verbose --glob="{*.html,docs/*.html}" --force-language en-US --exclude-selectors="nav,header,footer" --output-path ./pagefind --site .
 	git add pagefind
 
 clean:

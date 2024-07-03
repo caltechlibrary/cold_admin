@@ -38,6 +38,11 @@ compile: $(TS_MODS)
 	deno check --all ds_importer.ts
 	deno task build
 
+check: $(TS_MODS)
+	deno check --all cold_ui.ts
+	deno check --all ds_importer.ts
+	deno check --all dataset.ts
+
 version.ts: codemeta.json .FORCE
 	echo '' | pandoc --from t2t --to plain \
                 --metadata-file codemeta.json \
@@ -67,7 +72,7 @@ $(MAN_PAGES): .FORCE
 website: .FORCE
 	make -f website.mak
 
-format: $(shell ls -1 *.ts | grep -v version.ts)
+format: $(shell ls -1 *.ts | grep -v version.ts | grep -v deps.ts)
 
 $(shell ls -1 *.ts | grep -v version.ts): .FORCE
 	deno fmt $@
