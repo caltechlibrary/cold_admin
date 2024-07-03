@@ -88,19 +88,26 @@ export class DatasetApiClient {
    * @param {string} body holds the JSON encoded key/value pairs for the query
    * @returns {Promise<Repsonse>}
    */
-  async query(query_name: string, fields: string[], body: string): Promise<Response> {
+  async query(
+    query_name: string,
+    fields: string[],
+    body: string,
+  ): Promise<Response> {
     if (fields.length === 0) {
       return fetch(`${this.dataset_api}/query/${query_name}`, {
-			headers: { 'content-type': 'application/json' },
-			method: 'POST',
-			body: body
+        headers: { "content-type": "application/json" },
+        method: "POST",
+        body: body,
       });
     } else {
-      return fetch(`${this.dataset_api}/query/${query_name}/${fields.join('/')}`, {
-			headers: { 'content-type': 'application/json' },
-			method: 'POST',
-			body: body
-      });
+      return fetch(
+        `${this.dataset_api}/query/${query_name}/${fields.join("/")}`,
+        {
+          headers: { "content-type": "application/json" },
+          method: "POST",
+          body: body,
+        },
+      );
     }
   }
 }
@@ -222,23 +229,27 @@ export class Dataset {
    * there were no results or an error. Errors will be reported in the datasetd
    * log.
    */
-  async query(query_name: string, fields: string[], kv: object): Promise<object | undefined> {
-	if (fields.length > 0) {
-		const body = JSON.stringify(kv);
-    	const resp = await this._ds.query(query_name, fields, body);
-		if (resp.ok) {
-			let results = await resp.json();
-			console.log("DEBUG query results", results);
-			return results;
-		}
-	} else {
-    	const resp = await this._ds.query(query_name, [], '');
-		if (resp.ok) {
-			let results = await resp.json();
-			console.log("DEBUG query results (no fields or kv)", results);
-			return results;
-		}
-	}
-	return undefined;
+  async query(
+    query_name: string,
+    fields: string[],
+    kv: object,
+  ): Promise<object | undefined> {
+    if (fields.length > 0) {
+      const body = JSON.stringify(kv);
+      const resp = await this._ds.query(query_name, fields, body);
+      if (resp.ok) {
+        let results = await resp.json();
+        console.log("DEBUG query results", results);
+        return results;
+      }
+    } else {
+      const resp = await this._ds.query(query_name, [], "");
+      if (resp.ok) {
+        let results = await resp.json();
+        console.log("DEBUG query results (no fields or kv)", results);
+        return results;
+      }
+    }
+    return undefined;
   }
 }

@@ -1,9 +1,9 @@
 /**
  * groups.ts implements the groups object handler for listing, creating, retrieving, updating and delete group objects.
  */
-
 import { matchType } from "./options.ts";
 import { Dataset } from "./dataset.ts";
+import { renderPage } from "./render.ts";
 
 const ds = new Dataset(8485, "groups.ds");
 
@@ -39,10 +39,9 @@ export class Group {
 
   migrateCsv(row: any): boolean {
     if (row.hasOwnProperty("key")) {
-      this.clgid = row.key;
       this.include_in_feeds = true;
+      this.clgid = row.key;
     } else {
-      this.include_in_feeds = false;
       return false;
     }
     if (row.hasOwnProperty("name")) {
@@ -120,6 +119,7 @@ export class Group {
   toJSON(): string {
     return JSON.stringify({
       clgid: this.clgid,
+      include_in_feeds: this.include_in_feeds,
       name: this.name,
       alternative: this.alternative,
       email: this.email,
@@ -192,7 +192,6 @@ export async function handleGroups(
   });
 }
 
-
 /**
  * handleGetGroups handle GET actions on group object(s).
  *
@@ -220,24 +219,28 @@ async function handleGetGroups(
   if (pathname.endsWith("/groups") || pathname.endsWith("/groups/")) {
     /* display a list of groups */
     console.log("We have a request for group list");
-    const keys: string[] = await ds.keys();
-    const body =
-      `<doctype html>\n<html lang="en">handleGetGroups listing not implemented: ${req}<p><code><pre>${keys}</pre></code></html>`;
-    return new Response(body, {
-      status: 501,
-      headers: { "content-type": "text/html" },
-    });
+    const group_list = await ds.query("group_names", [], {});
+    if (group_list !== undefined) {
+      return renderPage("group_list.mustache", {
+        base_url: "http://localhost:8180",
+        group_list: group_list,
+      });
+    } else {
+      return renderPage("group_list.mustache", {
+        base_url: "http://localhost:8180",
+        group_list: [],
+      });
+    }
   } else {
     /* retrieve a specific record */
     const cut_pos = pathname.lastIndexOf("/");
     const clgid = pathname.slice(cut_pos + 1);
-    const obj = ds.read(clgid);
+    const obj = await ds.read(clgid);
     console.log("We have a request for group object", clgid);
-    const body =
-      `<doctype html>\n<html lang="en">handleGetGroups show group id ${clgid} Not implemented: ${req}<p><code><pre>${obj}</pre></code></html>`;
-    return new Response(body, {
-      status: 501,
-      headers: { "content-type": "text/html" },
+    return renderPage("group.mustache", {
+      base_url: "http://localhost:8180",
+      group: obj,
+      debug_src: JSON.stringify(obj),
     });
   }
 }

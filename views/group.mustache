@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+</head>
+<header>header goes here</header>
+<nav>
+<li>
+nav goes here</li>
+<li><a href="{{base_url}}/" title="return to dashboard">Dashboard</a></li>
+<li><a href="{{base_url}}/groups/" title="return to group list">Groups</a></li>
+</nav>
+<section>
+body goes here
+<h1>{{group.name}}</h1>
+<div class="identifier">{{clgid}}</div>
+<ul>
+{{#group.alternative}}
+<li>({{.}})</li>
+{{/group.alternative}}
+</ul>
+
+<div class="description">{{#group.description}}{{.}}{{/group.description}}</div>
+
+<div class="website">{{#group.website}}group website: <a href="{{.}}" title="group website">{{.}}</a>{{/group.website}}</div>
+
+<div class="feeds_link">{{#group.include_in_feeds}}feeds (/groups/&lt;clgid&gt;): <a href="https://feeds.library.caltech.edu/groups/{{group.clgid}}" title="group in feeds">{{group.clgid}}</a>{{/group.include_in_feeds}}</div>
+
+<div class="pi">{{#group.pi}}P.I.: {{.}}{{/group.pi}}</div>
+
+<div class="labeled_dates">
+<span class="dates">{{#group.start_date}}start: {{.}}{{/group.start_date}} {{#group.is_approx_start}}(approx){{/group.is_approx_start}}</span>
+<span class="dates">{{#group.end_date}}end: {{.}}{{/group.end_date}} {{#group.is_approx_end}}(approx}){{/group.is_approx_end}}</span>
+</div>
+
+<div class="activity">{{#group.activity}}Activity: {{.}} {{/group.activity}}</div>
+
+<div class="email">contact email: {{#group.email}}<a href="mailto:{{.}}">{{.}}</a>{{/group.email}}</div>
+
+<div class="identifiers">
+  <div class="parent">{{#group.parent}}parent: {{.}}{{/group.parent}}</div>
+  <div class="ror">{{#group.ror}}ror: {{.}}{{/group.ror}}</div>
+  <div class="isni">{{#group.isni}}isni: {{.}}{{/group.isni}}</div>
+  <div class="ringold">{{#group.ringold}}ringold: {{.}}{{/group.ringold}}</div>
+  <div class="prefix">{{#group.prefix}}doi prefix: {{.}}{{/group.prefix}}</div>
+  <div class="viaf">{{#group.viaf}}viaf: {{.}}{{/group.viaf}}</div>
+</div>
+
+<div class="labeled_dates">
+<span class="dates">{{#group.date}}created: {{.}}{{/group.date}}</span>
+</div>
+
+
+<p>
+</section>
+<footer>footer goes here</footer>
+<code>{{debug_src}}</code>
+</html>
