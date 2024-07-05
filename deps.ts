@@ -17,6 +17,9 @@ export * as mustache from "https://deno.land/x/mustache_ts/mustache.ts";
 export * as markdown from "https://deno.land/x/deno_markdown/mod.ts";
 export * as common_mark from "https://deno.land/x/rusty_markdown/mod.ts";
 
+/* Caltech Library Modules */
+export { Dataset, DatasetApiClient } from "https://caltechlibrary.github.io/ts_dataset/mod.ts";
+
 /* 3rd Party Packages */
 //export * as mustache from 'https://deno.land/x/mustache/mod.ts';
 

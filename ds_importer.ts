@@ -2,29 +2,10 @@
  * ds_importer.ts this is a TypeScript program that imports data from a CSV file into a dataset
  * collection via datasetd JSON API.
  */
+import { DatasetApiClient } from "./deps.ts";
 import { parse as csv_parse } from "@std/csv";
 import { Group } from "./groups.ts";
 import { People } from "./people.ts";
-
-/**
- * createCollectionObject
- * @param {string} key
- * @param {string} body (JSON source of object)
- * @returns {Repsonse}
- */
-async function createCollectionObject(
-  port: number,
-  c_name: string,
-  key: string,
-  body: string,
-): Promise<Response> {
-  const datasetAPI = `http://localhost:${port}/api/${c_name}/object/${key}`;
-  return fetch(datasetAPI, {
-    headers: { "content-type": "application/json" },
-    method: "POST",
-    body: body,
-  });
-}
 
 /**
  * dsImporter takes a CSV file and for each row turns it into an object and
@@ -43,6 +24,8 @@ async function dsImporter(
   /* Open csv_file and read out each row forming an object */
   /* For each row POST the object to the collection at http://localhost/8485/api/object */
   console.log("reading", csv_file);
+  const ds_client = new DatasetApiClient(port, c_name);
+
   const text = (await Deno.readTextFile(csv_file)).trim();
   const row_count = function (text: string): number {
     const matches = text.match(/\n/g);
@@ -70,16 +53,11 @@ async function dsImporter(
         error_count += 1;
         continue;
       }
-      const resp = await createCollectionObject(
-        port,
-        c_name,
-        key,
-        obj.toJSON(),
-      );
-      if (resp.ok) {
+      const ok = await ds_client.create(key, obj.toJSON());
+      if (ok) {
         success_count += 1;
       } else {
-        console.log("import group failed,", resp);
+        console.log("import group failed,", ok);
         error_count += 1;
       }
     } else if (sheet[i].hasOwnProperty("cl_people_id")) {
@@ -95,16 +73,11 @@ async function dsImporter(
         error_count += 1;
         continue;
       }
-      const resp = await createCollectionObject(
-        port,
-        c_name,
-        key,
-        obj.toJSON(),
-      );
-      if (resp.ok) {
+      const ok = await ds_client.create(key,obj.toJSON());
+      if (ok) {
         success_count += 1;
       } else {
-        console.log("import group failed,", resp);
+        console.log("import people failed,", ok);
         error_count += 1;
       }
     }

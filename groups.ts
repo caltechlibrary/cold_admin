@@ -1,8 +1,8 @@
 /**
  * groups.ts implements the groups object handler for listing, creating, retrieving, updating and delete group objects.
  */
+import { Dataset } from "./deps.ts";
 import { matchType } from "./options.ts";
-import { Dataset } from "./dataset.ts";
 import { renderPage } from "./render.ts";
 
 const ds = new Dataset(8485, "groups.ds");
