@@ -7,3 +7,5 @@ _codemeta.json
 *.swp
 *~
 *.bak
+people.csv
+groups.csv
