@@ -116,8 +116,11 @@ export class Group {
     return true;
   }
 
-  toJSON(): string {
-    return JSON.stringify({
+  /**
+   * asObject() returns a simple object version of a instantiated Group object.
+   */
+  asObject(): Object {
+    return {
       clgid: this.clgid,
       include_in_feeds: this.include_in_feeds,
       name: this.name,
@@ -141,7 +144,14 @@ export class Group {
       ror: this.ror,
       updated: this.updated,
       Scope: this.Scope,
-    });
+    };
+  }
+
+  /**
+   * toJSON() returns a clean JSON representation of the group object.
+   */
+  toJSON(): string {
+    return JSON.stringify(this.asObject());
   }
 }
 
@@ -232,12 +242,19 @@ async function handleGetGroups(
       });
     }
   } else {
+    /* decide if we are in display view or edit view and pick the right template */
+  	const params = url.searchParams;
+  	let view = params.get('view');
+	let tmpl = 'group.mustache';
+  	if ((view !== undefined) && (view === 'edit')) {
+	  	tmpl = 'group_edit.mustache';
+  	}
     /* retrieve a specific record */
     const cut_pos = pathname.lastIndexOf("/");
     const clgid = pathname.slice(cut_pos + 1);
     const obj = await ds.read(clgid);
-    console.log("We have a request for group object", clgid);
-    return renderPage("group.mustache", {
+    console.log(`We have a request for group object ${view}`, clgid);
+    return renderPage(tmpl, {
       base_url: "http://localhost:8180",
       group: obj,
       debug_src: JSON.stringify(obj),

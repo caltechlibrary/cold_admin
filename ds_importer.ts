@@ -2,7 +2,7 @@
  * ds_importer.ts this is a TypeScript program that imports data from a CSV file into a dataset
  * collection via datasetd JSON API.
  */
-import { DatasetApiClient } from "./deps.ts";
+import { Dataset, DatasetApiClient } from "./deps.ts";
 import { parse as csv_parse } from "@std/csv";
 import { Group } from "./groups.ts";
 import { People } from "./people.ts";
@@ -24,7 +24,7 @@ async function dsImporter(
   /* Open csv_file and read out each row forming an object */
   /* For each row POST the object to the collection at http://localhost/8485/api/object */
   console.log("reading", csv_file);
-  const ds_client = new DatasetApiClient(port, c_name);
+  const ds = new Dataset(port, c_name);
 
   const text = (await Deno.readTextFile(csv_file)).trim();
   const row_count = function (text: string): number {
@@ -53,7 +53,7 @@ async function dsImporter(
         error_count += 1;
         continue;
       }
-      const ok = await ds_client.create(key, obj.toJSON());
+      const ok = await ds.create(key, obj.asObject());
       if (ok) {
         success_count += 1;
       } else {
@@ -73,7 +73,7 @@ async function dsImporter(
         error_count += 1;
         continue;
       }
-      const ok = await ds_client.create(key,obj.toJSON());
+      const ok = await ds.create(key,obj.asObject());
       if (ok) {
         success_count += 1;
       } else {

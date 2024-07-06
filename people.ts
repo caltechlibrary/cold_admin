@@ -112,8 +112,8 @@ export class People {
     return true;
   }
 
-  toJSON(): string {
-    return JSON.stringify({
+  asObject(): Object {
+    return {
       clpid: this.clpid,
       include_in_feeds: this.include_in_feeds,
       family_name: this.family_name,
@@ -139,7 +139,11 @@ export class People {
       faculty: this.faculty,
       alumn: this.alumn,
       updated: this.updated,
-    });
+    };
+  }
+
+  toJSON(): string {
+	  return JSON.stringify(this.asObject());
   }
 }
 
