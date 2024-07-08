@@ -4,6 +4,7 @@
 import { Dataset } from "./deps.ts";
 import { matchType } from "./options.ts";
 import { renderPage } from "./render.ts";
+import { formDataToObject, pathIdentifier } from "./identifiers.ts";
 
 const ds = new Dataset(8485, "groups.ds");
 
@@ -47,7 +48,7 @@ export class Group {
     if (row.hasOwnProperty("name")) {
       this.name = row.name;
     }
-    if (row.hasOwnProperty("alternative") && (row.alternative !== "")) {
+    if (row.hasOwnProperty("alternative") && row.alternative !== "") {
       this.alternative = row.alternative.trim().split(/;/g);
     }
     if (row.hasOwnProperty("email")) {
@@ -108,7 +109,7 @@ export class Group {
     if (row.hasOwnProperty("updated")) {
       this.updated = row.updated;
     } else {
-      this.updated = (new Date()).toLocaleDateString("en-US");
+      this.updated = new Date().toLocaleDateString("en-US");
     }
     if (row.hasOwnProperty("Scope")) {
       this.Scope = row.Scope;
@@ -188,16 +189,9 @@ export async function handleGroups(
   if (req.method === "POST") {
     return await handlePostGroups(req, options);
   }
-  if (req.method === "PUT") {
-    return await handlePutGroups(req, options);
-  }
-  if (req.method === "DELETE") {
-    return await handleDeleteGroups(req, options);
-  }
-  console.log("FIXME: handleGroups() not implemented");
-  const body = "<html>handleGroups Not implemented</html>";
+  const body = `<html>${req.method} not supported</html>`;
   return new Response(body, {
-    status: 501,
+    status: 405,
     headers: { "content-type": "text/html" },
   });
 }
@@ -221,41 +215,40 @@ async function handleGetGroups(
 ): Promise<Response> {
   /* parse the URL */
   const url = new URL(req.url);
-  const pathname: string = url.pathname;
-  console.log("DEBUG req", req, typeof req);
-  console.log("DEBUG url", url, typeof url);
-  console.log("DEBUG pathname", pathname, typeof pathname);
-  console.log("FIXME: handleGetGroups() not implemented");
-  if (pathname.endsWith("/groups") || pathname.endsWith("/groups/")) {
+  const clgid = pathIdentifier(req.url);
+  const params = url.searchParams;
+  let view = params.get("view");
+  let tmpl = "group_list.mustache";
+  if (view === undefined) {
+    tmpl = "group_list.mustache";
+  } else if (view === "edit") {
+    tmpl = "group_edit.mustache";
+  }
+
+  if (tmpl === "group_list.mustache") {
     /* display a list of groups */
-    console.log("We have a request for group list");
     const group_list = await ds.query("group_names", [], {});
     if (group_list !== undefined) {
-      return renderPage("group_list.mustache", {
-        base_url: "http://localhost:8180",
+      return renderPage(tmpl, {
+        base_path: "",
         group_list: group_list,
       });
     } else {
-      return renderPage("group_list.mustache", {
-        base_url: "http://localhost:8180",
+      return renderPage(tmpl, {
+        base_path: "",
         group_list: [],
       });
     }
   } else {
     /* decide if we are in display view or edit view and pick the right template */
-    const params = url.searchParams;
-    let view = params.get("view");
-    let tmpl = "group.mustache";
-    if ((view !== undefined) && (view === "edit")) {
-      tmpl = "group_edit.mustache";
-    }
     /* retrieve a specific record */
-    const cut_pos = pathname.lastIndexOf("/");
-    const clgid = pathname.slice(cut_pos + 1);
+    const clgid = pathIdentifier(req.url);
+    const isCreateObject = clgid === "";
     const obj = await ds.read(clgid);
-    console.log(`We have a request for group object ${view}`, clgid);
+    console.log(`We have a GET for group object ${clgid}, view = ${view}`);
     return renderPage(tmpl, {
-      base_url: "http://localhost:8180",
+      base_path: "",
+      isCreateObject: isCreateObject,
       group: obj,
       debug_src: JSON.stringify(obj),
     });
@@ -274,50 +267,48 @@ async function handlePostGroups(
   req: Request,
   options: { debug: boolean; htdocs: string; apiUrl: string },
 ): Promise<Response> {
-  console.log("FIXME: handlePostGroups() not implemented");
-  const body = "<html>handlePostGroups Not implemented</html>";
-  return new Response(body, {
-    status: 501,
-    headers: { "content-type": "text/html" },
-  });
-}
+  let clgid = pathIdentifier(req.url);
+  const isCreateObject = clgid === "";
 
-/**
- * handlePutGroups handle PUT actions on group object(s).
- *
- * @param {Request} req holds the request to the group handler
- * @param {debug: boolean, htdocs: string} options holds options passed from
- * handleGroups.
- * @returns {Response}
- */
-async function handlePutGroups(
-  req: Request,
-  options: { debug: boolean; htdocs: string; apiUrl: string },
-): Promise<Response> {
-  console.log("FIXME: handlePutGroups() not implemented");
-  const body = "<html>handlePutGroups Not implemented</html>";
-  return new Response(body, {
-    status: 501,
-    headers: { "content-type": "text/html" },
-  });
-}
-
-/**
- * handleDeleteGroups handle DELETE actions on group object(s).
- *
- * @param {Request} req holds the request to the group handler
- * @param {debug: boolean, htdocs: string} options holds options passed from
- * handleGroups.
- * @returns {Response}
- */
-async function handleDeleteGroups(
-  req: Request,
-  options: { debug: boolean; htdocs: string; apiUrl: string },
-): Promise<Response> {
-  console.log("FIXME: handleDeleteGroups() not implemented");
-  const body = "<html>handleDeleteGroups Not implemented</html>";
-  return new Response(body, {
-    status: 501,
+  if (req.body !== null) {
+    const form = await req.formData();
+    let obj: Object = formDataToObject(form);
+    console.log(
+      `DEBUG form data after converting to object -> ${JSON.stringify(obj)}`,
+    );
+    if (!obj.clgid) {
+      console.log("clgid missing", obj);
+      return new Response(`missing group identifier`, {
+        status: 400,
+        headers: { "content-type": "text/html" },
+      });
+    }
+    if (isCreateObject) {
+      console.log("DEBUG detected create request");
+      clgid = obj.clgid;
+    }
+    if (obj.clgid !== clgid) {
+      return new Response(
+        `mismatched group identifier ${clgid} != ${obj.clgid}`,
+        {
+          status: 400,
+          headers: { "content-type": "text/html" },
+        },
+      );
+    }
+    if (isCreateObject) {
+      console.log(`send to dataset create object ${clgid}`);
+    } else {
+      console.log(`send to dataset update object ${clgid}`);
+    }
+    console.log(`DEBUG redirect ("${clgid}") to /groups/${clgid}`);
+    return new Response(`<html>Redirect to /groups/${clgid}</html>`, {
+      status: 303,
+      headers: { Location: `./groups/${clgid}` },
+    });
+  }
+  return new Response(`<html>problem creating group data</html>`, {
+    status: 400,
     headers: { "content-type": "text/html" },
   });
 }

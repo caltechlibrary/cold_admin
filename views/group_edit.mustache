@@ -4,20 +4,21 @@
 </head>
 <header>header goes here</header>
 <nav>
-<li><a href="{{base_url}}/" title="return to dashboard">Dashboard</a></li>
-<li><a href="{{base_url}}/groups/" title="return to group list">Groups</a></li>
-<li><a href="{{base_url}}/groups/{{group.clgid}}">View {{group.clgid}}</a></li>
+<li><a href="{{base_path}}/" title="return to dashboard">Dashboard</a></li>
+<li><a href="{{base_path}}/groups/" title="return to group list">Groups</a></li>
+<li><a href="{{base_path}}/groups/{{group.clgid}}">View {{group.clgid}}</a></li>
 </nav>
 <section>
-<h1>Edit: {{group.name}}</h1>
-<form><!-- FIXME: need to hook up method and action after I got the form sketched -->
+<h1>{{#isCreateObject}}Create:{{/isCreateObject}}{{^isCreateObject}}Edit:{{/isCreateObject}} {{group.name}}</h1>
+
+<form action="{{base_path}}/groups/{{group.clgid}}" method="post">
 
 <div>
-<label set="clgid">clgid</label> <input type="text" id="clgid" name="clgid" value="{{group.clgid}}" readonly />
+<label set="clgid">clgid</label> <input type="text" id="clgid" name="clgid" value="{{group.clgid}}" {{^isCreateObject}}readonly{{/isCreateObject}} />
 </div>
 
 <div>
-<label set="alternative">Alternate Names (one per line)<label></br>
+<label set="alternative">Alternate Names (one per line)</label><br >
 <textarea id="alternative" name="alternative" rows="10" cols="60">
 {{#group.alternative}}
 {{ . }}
@@ -91,10 +92,9 @@
 </div>
 
 <div>
-<input type="submit" id="submit" name="submit" value="submit"> <input type="reset" id="cancel" name="cancel" value="cancel">
+<input type="submit" id="submit" name="submit" value="submit"> <input type="reset" id="reset" name="reset" value="reset">
 </div>
-</div>
-
+</form>
 
 <p>
 </section>
