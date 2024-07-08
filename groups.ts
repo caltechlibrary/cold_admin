@@ -243,12 +243,12 @@ async function handleGetGroups(
     }
   } else {
     /* decide if we are in display view or edit view and pick the right template */
-  	const params = url.searchParams;
-  	let view = params.get('view');
-	let tmpl = 'group.mustache';
-  	if ((view !== undefined) && (view === 'edit')) {
-	  	tmpl = 'group_edit.mustache';
-  	}
+    const params = url.searchParams;
+    let view = params.get("view");
+    let tmpl = "group.mustache";
+    if ((view !== undefined) && (view === "edit")) {
+      tmpl = "group_edit.mustache";
+    }
     /* retrieve a specific record */
     const cut_pos = pathname.lastIndexOf("/");
     const clgid = pathname.slice(cut_pos + 1);

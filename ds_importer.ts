@@ -73,7 +73,7 @@ async function dsImporter(
         error_count += 1;
         continue;
       }
-      const ok = await ds.create(key,obj.asObject());
+      const ok = await ds.create(key, obj.asObject());
       if (ok) {
         success_count += 1;
       } else {

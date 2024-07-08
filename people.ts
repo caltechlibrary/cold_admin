@@ -143,7 +143,7 @@ export class People {
   }
 
   toJSON(): string {
-	  return JSON.stringify(this.asObject());
+    return JSON.stringify(this.asObject());
   }
 }
 
