@@ -276,7 +276,7 @@ async function handlePostGroups(
     console.log(
       `DEBUG form data after converting to object -> ${JSON.stringify(obj)}`,
     );
-    if (!obj.clgid) {
+    if (!("clgid" in obj)) {
       console.log("clgid missing", obj);
       return new Response(`missing group identifier`, {
         status: 400,
@@ -285,7 +285,7 @@ async function handlePostGroups(
     }
     if (isCreateObject) {
       console.log("DEBUG detected create request");
-      clgid = obj.clgid;
+      clgid = obj.clgid as unknown as string;
     }
     if (obj.clgid !== clgid) {
       return new Response(
@@ -298,8 +298,26 @@ async function handlePostGroups(
     }
     if (isCreateObject) {
       console.log(`send to dataset create object ${clgid}`);
+      if (!(await ds.create(clgid, obj))) {
+        return new Response(
+          `<html>problem creating object ${clpid}, try again later`,
+          {
+            status: 500,
+            headers: { "content-type": "text/html" },
+          },
+        );
+      }
     } else {
       console.log(`send to dataset update object ${clgid}`);
+      if (!(await ds.update(clgid, object))) {
+        return new Response(
+          `<html>problem updating object ${clpid}, try again later`,
+          {
+            status: 500,
+            headers: { "content-type": "text/html" },
+          },
+        );
+      }
     }
     console.log(`DEBUG redirect ("${clgid}") to /groups/${clgid}`);
     return new Response(`<html>Redirect to /groups/${clgid}</html>`, {
