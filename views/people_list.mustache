@@ -5,14 +5,14 @@
 <header>header goes here</header>
 <nav>
 <li><a href="{{base_path}}/" title="return to dashboard">Dashboard</a></li>
-<li><a href="{{base_path}}/groups/?view=create">Add Group</a></li>
+<li><a href="{{base_path}}/people/?view=create">Add Group</a></li>
 </nav>
 <section>
 <h1>CaltechGROUPS</h1>
 <ul>
-{{#group_list}}
-  <li><a href="{{base_path}}/groups/{{clgid}}" title="view group details">{{group_name}}</a></li>
-{{/group_list}}
+{{#people_list}}
+  <li><a href="{{base_path}}/people/{{clpid}}" title="view people details">{{family_name}}, {{given_name}}</a></li>
+{{/people_list}}
 </ul>
 </section>
 <footer>footer goes here</footer>

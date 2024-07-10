@@ -3,7 +3,11 @@
 #
 PROJECT = cold_ui
 
-GIT_GROUP = rsdoiel
+PROGRAMS = ds_importer cold_ui
+
+DIST_FOLDERS = bin/* man/* htdocs/*
+
+GIT_GROUP = caltechlibrary
 
 VERSION = $(shell grep '"version":' codemeta.json | cut -d\"  -f 4)
 
@@ -26,9 +30,12 @@ ifeq ($(OS), Windows)
         EXT = .exe
 endif
 
+#PREFIX = /usr/local/bin
+PREFIX = $(HOME)
+
 TS_MODS = $(shell ls -1 *.ts | grep -v _test.ts | grep -v deps.ts | grep -v version.ts)
 
-build: version.ts CITATION.cff about.md $(TS_MODS) docs bin compile htdocs
+build: version.ts CITATION.cff about.md $(TS_MODS) docs bin compile htdocs installer.sh installer.ps1
 
 bin: .FORCE
 	mkdir -p bin
@@ -68,6 +75,8 @@ man: $(MAN_PAGES)
 $(MAN_PAGES): .FORCE
 	mkdir -p man/man1
 	pandoc $@.md --from markdown --to man -s >man/man1/$@
+
+$(HTML_PAGES): website
 
 website: .FORCE
 	make -f website.mak
@@ -124,5 +133,78 @@ save:
 publish:
 	make -f website.mak
 	bash publish.bash
+
+install: build man
+	@echo "Installing programs in $(PREFIX)/bin"
+	@for FNAME in $(PROGRAMS); do if [ -f "./bin/$${FNAME}$(EXT)" ]; then mv -v "./bin/$${FNAME}$(EXT)" "$(PREFIX)/bin/$${FNAME}$(EXT)"; fi; done
+	@echo ""
+	@echo "Make sure $(PREFIX)/bin is in your PATH"
+	@echo "Installing man pages in $(PREFIX)/man/man1"
+	@mkdir -p $(PREFIX)/man/man1
+	@for FNAME in $(MAN_PAGES); do cp -v man/man1/$$FNAME $(PREFIX)/man/man1/; done
+	@echo "Make sure $(PREFIX)/man is in your MANPATH"
+
+uninstall: .FORCE
+	@echo "Removing programs in $(PREFIX)/bin"
+	@for FNAME in $(PROGRAMS); do if [ -f "$(PREFIX)/bin/$${FNAME}$(EXE)" ]; then rm -v "$(PREFIX)/bin/$${FNAME}$(EXT)"; fi; done
+	@echo "Removing manpages in $(PREFIX)/man"
+	@for FNAME in $(MAN_PAGES); do if [ -f "$(PREFIX)/man/man1/$${FNAME}" ]; then rm -v "$(PREFIX)/man/man1/$${FNAME}"; fi; done
+
+
+installer.sh: .FORCE
+	@echo '' | pandoc --metadata title="Installer" --metadata git_org_or_person="$(GIT_GROUP)" --metadata-file codemeta.json --template codemeta-bash-installer.tmpl >installer.sh
+	chmod 775 installer.sh
+	git add -f installer.sh
+
+installer.ps1: .FORCE
+	@echo '' | pandoc --metadata title="Installer" --metadata git_org_or_person="$(GIT_GROUP)" --metadata-file codemeta.json --template codemeta-ps1-installer.tmpl >installer.ps1
+	chmod 775 installer.ps1
+	git add -f installer.ps1
+
+
+release: clean CITATION.cff version.ts $(HTML_PAGES) distribute_docs dist/Linux-x86_64 dist/Linux-aarch64 dist/macOS-x86_64 dist/macOS-arm64 dist/Windows-x86_64
+
+dist/Linux-x86_64: .FORCE
+	@mkdir -p dist/bin
+	@for FNAME in $(PROGRAMS); do deno compile --output dist/bin/$$FNAME --target x86_64-unknown-linux-gnu "$${FNAME}.ts"; done
+	@cd dist && zip -r $(PROJECT)-v$(VERSION)-Linux-x86_64.zip LICENSE codemeta.json CITATION.cff *.md $(DIST_FOLDERS)
+	@rm -fR dist/bin
+
+dist/Linux-aarch64: .FORCE
+	@mkdir -p dist/bin
+	@for FNAME in $(PROGRAMS); do deno compile --output dist/bin/$$FNAME --target aarch64-unknown-linux-gnu "$${FNAME}.ts"; done
+	@cd dist && zip -r $(PROJECT)-v$(VERSION)-Linux-aarch64.zip LICENSE codemeta.json CITATION.cff *.md $(DIST_FOLDERS)
+	@rm -fR dist/bin
+
+dist/macOS-x86_64: .FORCE
+	@mkdir -p dist/bin
+	@for FNAME in $(PROGRAMS); do deno compile --output dist/bin/$$FNAME --target x86_64-apple-darwin cold_ui.ts "$${FNAME}.ts"; done
+	@cd dist && zip -r $(PROJECT)-v$(VERSION)-macOS-x86_64.zip LICENSE codemeta.json CITATION.cff *.md $(DIST_FOLDERS)
+	@rm -fR dist/bin
+
+dist/macOS-arm64: .FORCE
+	@mkdir -p dist/bin
+	@for FNAME in $(PROGRAMS); do deno compile --output dist/bin/$$FNAME --target aarch64-apple-darwin cold_ui.ts "$${FNAME}.ts"; done
+	@cd dist && zip -r $(PROJECT)-v$(VERSION)-macOS-arm64.zip LICENSE codemeta.json CITATION.cff *.md $(DIST_FOLDERS)
+	@rm -fR dist/bin
+
+dist/Windows-x86_64: .FORCE
+	@mkdir -p dist/bin
+	@for FNAME in $(PROGRAMS); do deno compile --output "dist/bin/$${FNAME}.exe" --target x86_64-pc-windows-msvc cold_ui.ts "$${FNAME}.ts"; done
+	@cd dist && zip -r $(PROJECT)-v$(VERSION)-Windows-x86_64.zip LICENSE codemeta.json CITATION.cff *.md $(DIST_FOLDERS)
+	@rm -fR dist/bin
+
+distribute_docs: man CITATION.cff about.md .FORCE
+	if [ -d dist ]; then rm -fR dist; fi
+	mkdir -p dist
+	cp -v codemeta.json dist/
+	cp -v CITATION.cff dist/
+	cp -v README.md dist/
+	cp -v LICENSE dist/
+	cp -v INSTALL.md dist/
+	cp -vR man dist/
+	cp -vR docs dist/
+	cp -vR htdocs dist/
+
 
 .FORCE:

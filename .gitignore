@@ -2,6 +2,7 @@ deno.lock
 version.ts
 bin/*
 man/*
+dist/*
 _codemeta.json
 *.ds/
 *.swp
@@ -9,3 +10,4 @@ _codemeta.json
 *.bak
 people.csv
 groups.csv
+TODO.html

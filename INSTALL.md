@@ -10,6 +10,27 @@ Installation for development of **cold_ui**
 
 You will need to build **cold_ui** for your specific system configuration.  You need to rebuild the static web content (very likely) you'll need to have Git, GNU Make, Pandoc 3 and Deno >= 1.44 available and working on your system.
 
+Quick install with curl or irm
+------------------------------
+
+There is an experimental installer.sh script that can be run with the
+following command to install latest table release. This may work for
+macOS, Linux and if you're using Windows with the Unix subsystem. This
+would be run from your shell (e.g. Terminal on macOS).
+
+~~~
+curl https://caltechlibrary.github.io/cold_ui/installer.sh | sh
+~~~
+
+This will install dataset and datasetd in your `$HOME/bin` directory.
+
+If you are running Windows 10 or 11 use the Powershell command
+below.
+
+~~~
+irm https://caltechlibrary.github.io/cold_ui/installer.ps1 | iex
+~~~
+
 Required software
 -----------------
 

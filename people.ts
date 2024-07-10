@@ -1,7 +1,12 @@
 /**
  * people.ts implements the people object handler for listing, creating, retrieving, updating and delete group objects.
  */
+import { Dataset } from "./deps.ts";
 import { matchType } from "./options.ts";
+import { renderPage } from "./render.ts";
+import { formDataToObject, pathIdentifier } from "./identifiers.ts";
+
+const ds = new Dataset(8485, "people.ds");
 
 /**
  * People implements a Caltech People object
@@ -32,6 +37,8 @@ export class People {
   faculty: boolean = false;
   alumn: boolean = false;
   updated: string = "";
+  authors_id: string = "";
+  thesis_id: string = "";
 
   migrateCsv(row: any): boolean {
     // NOTE: Skipping the follow legacy columns: thesis_id,advisor_id,authors_id
@@ -107,7 +114,7 @@ export class People {
     if (row.hasOwnProperty("updated")) {
       this.updated = row.updated;
     } else {
-      this.updated = (new Date()).toLocaleDateString("en-US");
+      this.updated = new Date().toLocaleDateString("en-US");
     }
     return true;
   }
@@ -169,26 +176,19 @@ export class People {
  * ColdUIHandler.
  * @returns {Response}
  */
-export function handlePeople(
+export async function handlePeople(
   req: Request,
   options: { debug: boolean; htdocs: string },
-): Response {
+): Promise<Response> {
   if (req.method === "GET") {
-    return handleGetPeople(req, options);
+    return await handleGetPeople(req, options);
   }
   if (req.method === "POST") {
-    return handlePostPeople(req, options);
+    return await handlePostPeople(req, options);
   }
-  if (req.method == "PUT") {
-    return handlePutPeople(req, options);
-  }
-  if (req.method == "DELETE") {
-    return handleDeletePeople(req, options);
-  }
-  console.log("FIXME: handlePeople() not fully implemented");
-  const body = "<html>handlePeople Not implemented</html>";
+  const body = `<html>${req.method} not supported</html>`;
   return new Response(body, {
-    status: 501,
+    status: 405,
     headers: { "content-type": "text/html" },
   });
 }
@@ -197,80 +197,140 @@ export function handlePeople(
  * handleGetPeople hands two end points that returns either a list of people records
  * or a specific people record.
  *
- * @param {Request} req holds the request to the group handler
+ * @param {Request} req holds the request to the people handler
  * @param {debug: boolean, htdocs: string} options holds options passed from
  * handlePeople.
- * @returns {Response}
+ * @returns {Promise<Response>}
+ *
+ * The expected paths are in the form
+ *
+ * - `/` list the people by name (`?q=...` would perform a search by name fields)
+ * - `/{clpid}` indicates retrieving a single object by the Caltech Library people id
  */
-function handleGetPeople(
+async function handleGetPeople(
   req: Request,
   options: { debug: boolean; htdocs: string },
-): Response {
-  console.log("FIXME: handleGetPeople() not fully implemented");
-  const body = "<html>handleGetPeople Not implemented</html>";
-  return new Response(body, {
-    status: 501,
-    headers: { "content-type": "text/html" },
-  });
+): Promise<Response> {
+  /* parse the URL */
+  const url = new URL(req.url);
+  const clpid = pathIdentifier(req.url);
+  const params = url.searchParams;
+  let view = params.get("view");
+  let tmpl = "people_list.mustache";
+  /* decide if we are in display view or edit view and pick the right template */
+  if (clpid !== undefined && clpid !== "") {
+    if (view !== undefined && view === "edit") {
+      tmpl = "people_edit.mustache";
+    } else {
+      tmpl = "people.mustache";
+    }
+  } else {
+    if (view !== "undefined" && view === "create") {
+      tmpl = "people_edit.mustache";
+    }
+  }
+  if (tmpl === "people_list.mustache") {
+    /* display a list of people */
+    const people_list = await ds.query("people_names", [], {});
+    if (people_list !== undefined) {
+      return renderPage(tmpl, {
+        base_path: "",
+        people_list: people_list,
+      });
+    } else {
+      return renderPage(tmpl, {
+        base_path: "",
+        people_list: [],
+      });
+    }
+  } else {
+    /* retrieve a specific record */
+    const clpid = pathIdentifier(req.url);
+    const isCreateObject = clpid === "";
+    const obj = await ds.read(clpid);
+    console.log(`We have a GET for people object ${clpid}, view = ${view}`);
+    return renderPage(tmpl, {
+      base_path: "",
+      isCreateObject: isCreateObject,
+      people: obj,
+      debug_src: JSON.stringify(obj),
+    });
+  }
 }
 
 /**
  * handlePostPeople implements the bare object end point used to create
  * a new people record.
  *
- * @param {Request} req holds the request to the group handler
+ * @param {Request} req holds the request to the people handler
  * @param {debug: boolean, htdocs: string} options holds options passed from
  * handlePeople.
- * @returns {Response}
+ * @returns {Promise<Response>}
  */
-function handlePostPeople(
+async function handlePostPeople(
   req: Request,
   options: { debug: boolean; htdocs: string },
-): Response {
-  console.log("FIXME: handlePostPeople() not fully implemented");
-  const body = "<html>handlePostPeople Not implemented</html>";
-  return new Response(body, {
-    status: 501,
-    headers: { "content-type": "text/html" },
-  });
-}
+): Promise<Response> {
+  let clpid = pathIdentifier(req.url);
+  const isCreateObject = clpid === "";
 
-/**
- * handlePutPeople implements an object update for a specific person record.
- *
- * @param {Request} req holds the request to the group handler
- * @param {debug: boolean, htdocs: string} options holds options passed from
- * handlePeople.
- * @returns {Response}
- */
-function handlePutPeople(
-  req: Request,
-  options: { debug: boolean; htdocs: string },
-): Response {
-  console.log("FIXME: handlePutPeople() not fully implemented");
-  const body = "<html>handlePutPeople Not implemented</html>";
-  return new Response(body, {
-    status: 501,
-    headers: { "content-type": "text/html" },
-  });
-}
-
-/**
- * handleDeletePeople hanldes the removal of a people record.
- *
- * @param {Request} req holds the request to the group handler
- * @param {debug: boolean, htdocs: string} options holds options passed from
- * handlePeople.
- * @returns {Response}
- */
-function handleDeletePeople(
-  req: Request,
-  options: { debug: boolean; htdocs: string },
-): Response {
-  console.log("FIXME: handleDeletePeople() not fully implemented");
-  const body = "<html>handleDeletePeople Not implemented</html>";
-  return new Response(body, {
-    status: 501,
+  if (req.body !== null) {
+    const form = await req.formData();
+    let obj: Object = formDataToObject(form);
+    console.log(
+      `DEBUG form data after converting to object -> ${JSON.stringify(obj)}`,
+    );
+    if (!("clpid" in obj)) {
+      console.log("clpid missing", obj);
+      return new Response(`missing people identifier`, {
+        status: 400,
+        headers: { "content-type": "text/html" },
+      });
+    }
+    if (isCreateObject) {
+      console.log("DEBUG detected create request");
+      clgid = obj.clpid as unknown as string;
+    }
+    if (obj.clpid !== clpid) {
+      return new Response(
+        `mismatched group identifier ${clpid} != ${obj.clpid}`,
+        {
+          status: 400,
+          headers: { "content-type": "text/html" },
+        },
+      );
+    }
+    if (isCreateObject) {
+      console.log(`send to dataset create object ${clpid}`);
+      if (!(await ds.create(clpid, obj))) {
+        return new Response(
+          `<html>problem creating object ${clpid}, try again later`,
+          {
+            status: 500,
+            headers: { "content-type": "text/html" },
+          },
+        );
+      }
+    } else {
+      console.log(`send to dataset update object ${clpid}`);
+      if (!(await ds.update(clpid, obj))) {
+        return new Response(
+          `<html>problem updating object ${clpid}, try again later`,
+          {
+            status: 500,
+            headers: { "content-type": "text/html" },
+          },
+        );
+      }
+    }
+    console.log(`DEBUG redirect ("${clpid}") to /people/${clpid}`);
+    return new Response(`<html>Redirect to /people/${clpid}</html>`, {
+      status: 303,
+      headers: { Location: `./people/${clpid}` },
+    });
+  }
+  return new Response(`<html>problem creating people data</html>`, {
+    status: 400,
     headers: { "content-type": "text/html" },
   });
 }

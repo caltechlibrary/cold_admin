@@ -14,7 +14,11 @@
 <form action="{{base_path}}/groups/{{group.clgid}}" method="post">
 
 <div>
-<label set="clgid">clgid</label> <input type="text" id="clgid" name="clgid" value="{{group.clgid}}" {{^isCreateObject}}readonly{{/isCreateObject}} />
+<label set="clgid">clgid</label> <input type="text" id="clgid" name="clgid" value="{{group.clgid}}" {{^isCreateObject}}readonly{{/isCreateObject}} required="true" />
+</div>
+
+<div>
+<label set="name">clgid</label> <input type="text" id="name" name="name" value="{{group.name}}" required="true" />
 </div>
 
 <div>

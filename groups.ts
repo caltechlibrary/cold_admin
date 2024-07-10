@@ -37,6 +37,10 @@ export class Group {
   ror: string = "";
   updated: string = "";
   Scope: string = "";
+  /* authors_id */
+  authors_id: string = "";
+  /* thesis_id */
+  thesis_id: string = "";
 
   migrateCsv(row: any): boolean {
     if (row.hasOwnProperty("key")) {
@@ -219,10 +223,16 @@ async function handleGetGroups(
   const params = url.searchParams;
   let view = params.get("view");
   let tmpl = "group_list.mustache";
-  if (view === undefined) {
-    tmpl = "group_list.mustache";
-  } else if (view === "edit") {
-    tmpl = "group_edit.mustache";
+  if ((clgid !== undefined) && (clgid !== "")) {
+    if ((view !== undefined) && (view === "edit")) {
+      tmpl = "group_edit.mustache";
+    } else {
+      tmpl = "group.mustache";
+    }
+  } else {
+    if (view !== "undefined" && (view === "create")) {
+      tmpl = "group_edit.mustache";
+    }
   }
 
   if (tmpl === "group_list.mustache") {
@@ -300,7 +310,7 @@ async function handlePostGroups(
       console.log(`send to dataset create object ${clgid}`);
       if (!(await ds.create(clgid, obj))) {
         return new Response(
-          `<html>problem creating object ${clpid}, try again later`,
+          `<html>problem creating object ${clgid}, try again later`,
           {
             status: 500,
             headers: { "content-type": "text/html" },
@@ -309,9 +319,9 @@ async function handlePostGroups(
       }
     } else {
       console.log(`send to dataset update object ${clgid}`);
-      if (!(await ds.update(clgid, object))) {
+      if (!(await ds.update(clgid, obj))) {
         return new Response(
-          `<html>problem updating object ${clpid}, try again later`,
+          `<html>problem updating object ${clgid}, try again later`,
           {
             status: 500,
             headers: { "content-type": "text/html" },

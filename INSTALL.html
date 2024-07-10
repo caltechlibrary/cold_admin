@@ -43,6 +43,18 @@ to your specific web server configuration.</p>
 system configuration. You need to rebuild the static web content (very
 likely) you’ll need to have Git, GNU Make, Pandoc 3 and Deno &gt;= 1.44
 available and working on your system.</p>
+<h2 id="quick-install-with-curl-or-irm">Quick install with curl or
+irm</h2>
+<p>There is an experimental installer.sh script that can be run with the
+following command to install latest table release. This may work for
+macOS, Linux and if you’re using Windows with the Unix subsystem. This
+would be run from your shell (e.g. Terminal on macOS).</p>
+<pre><code>curl https://caltechlibrary.github.io/cold_ui/installer.sh | sh</code></pre>
+<p>This will install dataset and datasetd in your <code>$HOME/bin</code>
+directory.</p>
+<p>If you are running Windows 10 or 11 use the Powershell command
+below.</p>
+<pre><code>irm https://caltechlibrary.github.io/cold_ui/installer.ps1 | iex</code></pre>
 <h2 id="required-software">Required software</h2>
 <p>Adjusting the web content to your host system requires the
 following</p>
