@@ -1,8 +1,29 @@
 /**
  * render.ts holds the page rendering functions for cold_ui.
  */
-import { renderFile } from "https://deno.land/x/mustache/mod.ts";
+import {
+  Handlebars,
+  HandlebarsConfig,
+} from "https://deno.land/x/handlebars/mod.ts";
 import * as path from "@std/path";
+
+const cwd: string = Deno.cwd();
+
+/**
+ * Default uses this config:
+ */
+const DEFAULT_HANDLEBARS_CONFIG: HandlebarsConfig = {
+  baseDir: "views",
+  extname: ".mustache",
+  partialsDir: "partials/",
+  layoutsDir: "layouts/",
+  cachePartials: false,
+  defaultLayout: "",
+  helpers: undefined,
+  compilerOptions: undefined,
+};
+
+const handle = new Handlebars(DEFAULT_HANDLEBARS_CONFIG);
 
 /**
  * renderPage takes a template path and a page object and returns a Response object.
@@ -14,17 +35,16 @@ import * as path from "@std/path";
 export async function renderPage(
   template: string,
   page_object: object,
+  partials: string[],
 ): Promise<Response> {
-  const t_name = path.join(Deno.cwd(), "views", template);
-  let body = await renderFile(t_name, page_object);
+  let body = await handle.renderView(template, page_object);
   if (body !== undefined) {
     return new Response(body, {
       status: 200,
       headers: { "content-type": "text/html" },
     });
   }
-  body =
-    `<doctype html>\n<html lang="en">something went wrong, failed to render ${t_name}.</html>`;
+  body = `<doctype html>\n<html lang="en">something went wrong, failed to render ${t_name}.</html>`;
   return new Response(body, {
     status: 501,
     headers: { "content-type": "text/html" },

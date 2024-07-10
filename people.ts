@@ -1,5 +1,5 @@
 /**
- * people.ts implements the people object handler for listing, creating, retrieving, updating and delete group objects.
+ * people.ts implements the people object handler for listing, creating, retrieving, updating and delete people objects.
  */
 import { Dataset } from "./deps.ts";
 import { matchType } from "./options.ts";
@@ -64,7 +64,7 @@ export class People {
       this.viaf = row.viaf_id;
     }
     if (row.hasOwnProperty("lcnaf")) {
-      this.lcnaf = row.lacnaf;
+      this.lcnaf = row.lcnaf;
     }
     if (row.hasOwnProperty("isni")) {
       this.isni = row.isni;
@@ -216,20 +216,20 @@ async function handleGetPeople(
   const clpid = pathIdentifier(req.url);
   const params = url.searchParams;
   let view = params.get("view");
-  let tmpl = "people_list.mustache";
+  let tmpl = "people_list";
   /* decide if we are in display view or edit view and pick the right template */
   if (clpid !== undefined && clpid !== "") {
     if (view !== undefined && view === "edit") {
-      tmpl = "people_edit.mustache";
+      tmpl = "people_edit";
     } else {
-      tmpl = "people.mustache";
+      tmpl = "people";
     }
   } else {
     if (view !== "undefined" && view === "create") {
-      tmpl = "people_edit.mustache";
+      tmpl = "people_edit";
     }
   }
-  if (tmpl === "people_list.mustache") {
+  if (tmpl === "people_list") {
     /* display a list of people */
     const people_list = await ds.query("people_names", [], {});
     if (people_list !== undefined) {
@@ -253,7 +253,7 @@ async function handleGetPeople(
       base_path: "",
       isCreateObject: isCreateObject,
       people: obj,
-      debug_src: JSON.stringify(obj),
+      debug_src: JSON.stringify(obj, null, 2),
     });
   }
 }
@@ -293,7 +293,7 @@ async function handlePostPeople(
     }
     if (obj.clpid !== clpid) {
       return new Response(
-        `mismatched group identifier ${clpid} != ${obj.clpid}`,
+        `mismatched people identifier ${clpid} != ${obj.clpid}`,
         {
           status: 400,
           headers: { "content-type": "text/html" },

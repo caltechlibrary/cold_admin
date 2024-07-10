@@ -1,57 +1,62 @@
 <!DOCTYPE html>
 <html lang="en-US">
-<head>
-</head>
-<header>header goes here</header>
+{{>head}}
+<body>
+{{>header}}
 <nav>
-<li><a href="{{base_url}}/" title="return to dashboard">Dashboard</a></li>
-<li><a href="{{base_url}}/groups/" title="return to group list">Groups</a></li>
-<li><a href="{{base_url}}/groups/{{group.clgid}}?view=edit">Edit {{group.clgid}}</a></li>
+<ul>
+<li><a href="{{base_path}}/" title="return to dashboard">Dashboard</a></li>
+<li><a href="{{base_path}}/groups/" title="return to group list">Groups</a></li>
+<li><a href="{{base_path}}/groups/{{group.clgid}}?view=edit">Edit {{group.clgid}}</a></li>
+</ul>
 </nav>
 <section>
 
 <h1>{{group.name}}</h1>
 <div class="identifier">{{clgid}}</div>
 
+{{#if group.alternative}}
 <ul>
-{{#group.alternative}}
-<li>({{.}})</li>
-{{/group.alternative}}
+{{#each group.alternative}}
+<li>({{this}})</li>
+{{/each}}
 </ul>
+{{/if}}
 
-<div class="description">{{#group.description}}{{.}}{{/group.description}}</div>
+{{#if group.description}}<div class="description">{{group.description}}</div>{{/if}}
 
-<div class="website">{{#group.website}}group website: <a href="{{.}}" title="group website">{{.}}</a>{{/group.website}}</div>
+{{#if group.website}}<div class="website">Group website: <a href="{{group.website}}" title="group website">{{group.website}}</a></div>{{/if}}
 
-<div class="feeds_link">{{#group.include_in_feeds}}feeds (/groups/&lt;clgid&gt;): <a href="https://feeds.library.caltech.edu/groups/{{group.clgid}}" title="group in feeds">{{group.clgid}}</a>{{/group.include_in_feeds}}</div>
+{{#if group.include_in_feeds}}<div class="feeds_link">View in feeds: <a href="https://feeds.library.caltech.edu/groups/{{group.clgid}}" title="group in feeds" target="_blank">{{group.clgid}}</a></div>{{/if}}
 
-<div class="pi">{{#group.pi}}P.I.: {{.}}{{/group.pi}}</div>
+{{#if group.pi}}<div class="pi">P.I.: {{group.pi}}</div>{{/if}}
 
 <div class="labeled_dates">
-<span class="dates">{{#group.start_date}}start: {{.}}{{/group.start_date}} {{#group.is_approx_start}}(approx){{/group.is_approx_start}}</span>
-<span class="dates">{{#group.end_date}}end: {{.}}{{/group.end_date}} {{#group.is_approx_end}}(approx}){{/group.is_approx_end}}</span>
+{{#if group.start_date}}<span class="dates">Started: {{group.start_date}} {{#if group.is_approx_start}}(approx){{/if}}</span>{{/if}}
+{{#if group.end_date}}<span class="dates">Ended: {{group.start_date}} {{#if group.is_approx_end}}(approx}){{/if}}</span>{{/if}}
 </div>
 
-<div class="activity">{{#group.activity}}Activity: {{.}} {{/group.activity}}</div>
+{{#if group.activity}}<div class="activity">Activity: {{group.activity}}</div>{{/if}}
 
-<div class="email">contact email: {{#group.email}}<a href="mailto:{{.}}">{{.}}</a>{{/group.email}}</div>
+{{#if group.email}}<div class="email">contact email: <a href="mailto:{{group.email}}">{{group.email}}</a></div>{{/if}}
 
 <div class="identifiers">
-  <div class="parent">{{#group.parent}}parent: {{.}}{{/group.parent}}</div>
-  <div class="ror">{{#group.ror}}ror: {{.}}{{/group.ror}}</div>
-  <div class="isni">{{#group.isni}}isni: {{.}}{{/group.isni}}</div>
-  <div class="ringold">{{#group.ringold}}ringold: {{.}}{{/group.ringold}}</div>
-  <div class="prefix">{{#group.prefix}}doi prefix: {{.}}{{/group.prefix}}</div>
-  <div class="viaf">{{#group.viaf}}viaf: {{.}}{{/group.viaf}}</div>
+  {{#if group.parent}}<div class="parent">parent: {{group.parent}}</div>{{/if}}
+  {{#if group.ror}}<div class="ror">ror: {{group.ror}}</div>{{/if}}
+  {{#if group.isni}}<div class="isni">isni: {{group.isni}}</div>{{/if}}
+  {{#if group.ringold}}<div class="ringold">ringold: {{group.ringold}}</div>{{/if}}
+  {{#if group.prefix}}<div class="prefix">doi prefix: {{group.prefix}}</div>{{/if}}
+  {{#if group.viaf}}<div class="viaf">viaf: {{group.viaf}}</div>{{/if}}
 </div>
 
 <div class="labeled_dates">
-<span class="dates">{{#group.date}}created: {{.}}{{/group.date}}</span>
+{{#if group.date}}<span class="dates">created: {{group.date}}</span>{{/if}}
 </div>
 
 
 <p>
 </section>
-<footer>footer goes here</footer>
-<code>{{debug_src}}</code>
+{{>footer}}
+<code><pre>{{debug_src}}</pre></code>
+</body>
 </html>

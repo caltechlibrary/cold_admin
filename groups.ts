@@ -222,20 +222,20 @@ async function handleGetGroups(
   const clgid = pathIdentifier(req.url);
   const params = url.searchParams;
   let view = params.get("view");
-  let tmpl = "group_list.mustache";
-  if ((clgid !== undefined) && (clgid !== "")) {
-    if ((view !== undefined) && (view === "edit")) {
-      tmpl = "group_edit.mustache";
+  let tmpl = "group_list";
+  if (clgid !== undefined && clgid !== "") {
+    if (view !== undefined && view === "edit") {
+      tmpl = "group_edit";
     } else {
-      tmpl = "group.mustache";
+      tmpl = "group";
     }
   } else {
-    if (view !== "undefined" && (view === "create")) {
-      tmpl = "group_edit.mustache";
+    if (view !== "undefined" && view === "create") {
+      tmpl = "group_edit";
     }
   }
 
-  if (tmpl === "group_list.mustache") {
+  if (tmpl === "group_list") {
     /* display a list of groups */
     const group_list = await ds.query("group_names", [], {});
     if (group_list !== undefined) {
@@ -260,7 +260,7 @@ async function handleGetGroups(
       base_path: "",
       isCreateObject: isCreateObject,
       group: obj,
-      debug_src: JSON.stringify(obj),
+      debug_src: JSON.stringify(obj, null, 2),
     });
   }
 }

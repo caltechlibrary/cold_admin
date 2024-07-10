@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en-US">
-<head>
-</head>
-<header>header goes here</header>
+{{>head}}
+<body>
+{{>header}}
 <nav>
+<ul>
 <li><a href="{{base_path}}/" title="return to dashboard">Dashboard</a></li>
 <li><a href="{{base_path}}/people/?view=create">Add Group</a></li>
+</ul>
 </nav>
 <section>
 <h1>CaltechGROUPS</h1>
@@ -15,5 +17,6 @@
 {{/people_list}}
 </ul>
 </section>
-<footer>footer goes here</footer>
+{{>footer}}
+</body>
 </html>

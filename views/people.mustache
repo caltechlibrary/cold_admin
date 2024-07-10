@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-US">
-<head>
-</head>
-<header>header goes here</header>
+{{>head}}
+<body>
+{{>header}}
 <nav>
-<li><a href="{{base_url}}/" title="return to dashboard">Dashboard</a></li>
-<li><a href="{{base_url}}/people/" title="return to group list">People</a></li>
-<li><a href="{{base_url}}/people/{{people.clpid}}?view=edit">Edit {{people.clpid}}</a></li>
+<ul>
+<li><a href="{{base_path}}/" title="return to dashboard">Dashboard</a></li>
+<li><a href="{{base_path}}/people/" title="return to group list">People</a></li>
+<li><a href="{{base_path}}/people/{{people.clpid}}?view=edit">Edit {{people.clpid}}</a></li>
+</ul>
 </nav>
 <section>
 
@@ -57,6 +59,7 @@
 
 <p>
 </section>
-<footer>footer goes here</footer>
+{{>footer}}
 <code>{{debug_src}}</code>
+</body>
 </html>

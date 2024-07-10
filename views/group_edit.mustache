@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-US">
-<head>
-</head>
-<header>header goes here</header>
+{{>head}}
+<body>
+{{>header}}
 <nav>
+<ul>
 <li><a href="{{base_path}}/" title="return to dashboard">Dashboard</a></li>
 <li><a href="{{base_path}}/groups/" title="return to group list">Groups</a></li>
 <li><a href="{{base_path}}/groups/{{group.clgid}}">View {{group.clgid}}</a></li>
+</ul>
 </nav>
 <section>
 <h1>{{#isCreateObject}}Create:{{/isCreateObject}}{{^isCreateObject}}Edit:{{/isCreateObject}} {{group.name}}</h1>
@@ -18,7 +20,7 @@
 </div>
 
 <div>
-<label set="name">clgid</label> <input type="text" id="name" name="name" value="{{group.name}}" required="true" />
+<label set="name">Name</label> <input type="text" id="name" name="name" value="{{group.name}}" required="true" />
 </div>
 
 <div>
@@ -102,6 +104,7 @@
 
 <p>
 </section>
-<footer>footer goes here</footer>
-<code>{{debug_src}}</code>
+{{>footer}}
+<code><pre>{{debug_src}}</pre></code>
+</body>
 </html>
