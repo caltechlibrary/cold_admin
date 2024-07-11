@@ -1,5 +1,6 @@
 {
   "tasks": {
+	"setup": "init people.ds 'sqlite://collection.db' ; dataset init groups.ds 'sqlite://collection.db' ; dataset init test.ds 'sqlite://collection.db'",
     "json_api": "datasetd cold_api.yaml",
     "json_api_debug": "datasetd --debug cold_api.yaml",
     "reset_data": "dsquery groups.ds 'delete from groups' ; dsquery people.ds 'delete from people'",
