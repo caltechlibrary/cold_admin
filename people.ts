@@ -289,7 +289,7 @@ async function handlePostPeople(
     }
     if (isCreateObject) {
       console.log("DEBUG detected create request");
-      clgid = obj.clpid as unknown as string;
+      clpid = obj.clpid as unknown as string;
     }
     if (obj.clpid !== clpid) {
       return new Response(
@@ -300,6 +300,8 @@ async function handlePostPeople(
         },
       );
     }
+    /*  NOTE: Make sure we update obj.updated */
+    obj["updated"] = new Date().toDateString();
     if (isCreateObject) {
       console.log(`send to dataset create object ${clpid}`);
       if (!(await ds.create(clpid, obj))) {

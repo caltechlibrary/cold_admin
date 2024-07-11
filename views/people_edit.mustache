@@ -20,11 +20,11 @@
 </div>
 
 <div>
-<label set="family_name">Family Name</label> <input type="text" id="family_name" name="family name" value="{{people.family_name}}" required="true" />
+<label set="family_name">Family Name</label> <input type="text" id="family_name" name="family_name" value="{{people.family_name}}" required="true" />
 </div>
 
 <div>
-<label set="given_name">Given/Lived Name</label> <input type="text" id="given_name" name="given name" value="{{people.given_name}}" required="true" />
+<label set="given_name">Given/Lived Name</label> <input type="text" id="given_name" name="given_name" value="{{people.given_name}}" required="true" />
 </div>
 
 <div>
@@ -57,7 +57,7 @@
 </div>
 
 <div>
-<label set="division">Status</label> <input type="text" id="division" name="division" value="{{people.division}}">
+<label set="division">Division</label> <input type="text" id="division" name="division" value="{{people.division}}">
 </div>
 
 
@@ -115,7 +115,7 @@
 </div>
 
 <div>
-<label set="updated">updated</label> <input type="text" id="updated" name="updated" value="{{people.updated}}" readonly>
+{{#if people.updated}}<label set="updated">updated</label> {{people.updated}}{{/if}}
 </div>
 
 <div>

@@ -12,7 +12,7 @@
 </nav>
 <section>
 
-<h1>{{people.family_name}}, {{people.given_name}}</h1>
+<h1>{{people.family_name}}{{#if people.given_name}}, {{people.given_name}}{{/if}}</h1>
 
 <div class="identifier">clpid: {{people.clpid}}</div>
 
