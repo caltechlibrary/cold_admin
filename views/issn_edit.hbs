@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-US">
+{{>head}}
+<body>
+{{>header}}
+<nav>
+<ul>
+<li><a href="{{base_path}}/" title="return to dashboard">Dashboard</a></li>
+<li><a href="{{base_path}}/issn/" title="return to issn list">ISSNs</a></li>
+<li><a href="{{base_path}}/issn/{{issn.issn}}">View {{issn.issn}}</a></li>
+</ul>
+</nav>
+<section>
+<h1>{{#isCreateObject}}Create:{{/isCreateObject}}{{^isCreateObject}}Edit:{{/isCreateObject}} {{issn.name}}</h1>
+
+<form action="{{base_path}}/issn/{{issn.issn}}" method="post">
+
+<div>
+<label set="issn">issn</label> <input type="text" id="issn" name="issn" value="{{issn.issn}}" {{^isCreateObject}}readonly{{/isCreateObject}} required="true" />
+</div>
+
+<div>
+<label set="name">Name</label> <input type="text" id="name" name="name" value="{{issn.name}}" required="true" />
+</div>
+
+<div>
+<label set="description">Description</label><br >
+<textarea id="description" name="description" rows="10" cols="60">{{issn.description}}</textarea>
+</div>
+
+<div>
+<label set="include_in_feeds">Include in feeds <input type="checkbox" id="include_in_feeds" name="include_in_feeds" {{#issn.include_in_feeds}}checked{{/issn.include_in_feeds}}> </label>
+</div>
+
+<div>
+<label set="updated">record updated</label> <input type="text" id="updated" name="updated" value="{{issn.updated}}" readonly>
+</div>
+
+<div>
+<input type="submit" id="submit" name="submit" value="submit"> <input type="reset" id="reset" name="reset" value="reset">
+</div>
+</form>
+
+<p>
+</section>
+{{>footer}}
+<code><pre>{{debug_src}}</pre></code>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en-US">
+{{>head}}
+<body>
+{{>header}}
+<nav>
+<ul>
+<li><a href="{{base_path}}/" title="return to dashboard">Dashboard</a></li>
+<li><a href="{{base_path}}/issn/" title="return to issn list">ISSNs</a></li>
+<li><a href="{{base_path}}/issn/{{issn.issn}}?view=edit">Edit {{issn.issn}}</a></li>
+</ul>
+</nav>
+<section>
+
+<h1>{{issn.name}}</h1>
+<div class="identifier">{{issn}}</div>
+
+{{#if issn.description}}<div class="description">{{issn.description}}</div>{{/if}}
+
+{{#if issn.include_in_feeds}}<div class="feeds_link">View in feeds: <a href="https://feeds.library.caltech.edu/issn/{{issn.issn}}" title="issn in feeds" target="_blank">{{issn.issn}}</a></div>{{/if}}
+
+<div class="labeled_dates">
+{{#if issn.updated}}<span class="updated">updated: {{issn.updated}}</span>{{/if}}
+</div>
+
+
+<p>
+</section>
+{{>footer}}
+<code><pre>{{debug_src}}</pre></code>
+</body>
+</html>

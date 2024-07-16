@@ -5,15 +5,15 @@
 <nav>
 <ul>
 <li><a href="{{base_path}}/" title="return to dashboard">Dashboard</a></li>
-<li><a href="{{base_path}}/funders/?view=create">Add Funder</a></li>
+<li><a href="{{base_path}}/subjects/?view=create">Add Funder</a></li>
 </ul>
 </nav>
 <section>
 <h1>CaltechFUNDERS</h1>
 <ul>
-{{#funder_list}}
-  <li><a href="{{base_path}}/funders/{{clfid}}" title="view funder details">{{name}}</a></li>
-{{/funder_list}}
+{{#subject_list}}
+  <li><a href="{{base_path}}/subjects/{{clsid}}" title="view subject details">{{name}}</a></li>
+{{/subject_list}}
 </ul>
 </section>
 {{>footer}}

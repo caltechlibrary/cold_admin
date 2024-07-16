@@ -1,7 +1,7 @@
 #
-# cold.yaml defines the controlled object list and datum application
-# from the perspective of a JSON API running via datasetd. 
-# 
+# cold_api.yaml defines the controlled object list and datum application
+# from the perspective of a JSON API running via datasetd.
+#
 # @author: R. S. Doiel <rsdoiel@caltech.edu>
 #
 host: localhost:8485
@@ -52,6 +52,82 @@ collections:
     # This is a test query which returns our test object.
     query:
       list_item: select src from test;
+    # What follows are object level permissions
+    keys: true
+    create: true
+    read: true
+    update: true
+    delete: true
+    # These are attachment related permissions
+    attachments: true
+    attach: true
+    retrieve: true
+    prune: true
+    # These are frame level permissions
+    frame_read: true
+    frame_write: true
+    # This sets versioning behavior
+    versions: true
+  - dataset: funders.ds
+    query:
+      funder_names: select json_object('clfid', src->'clfid', 'name', src->'name') as src from funders order by src->'name';
+    # What follows are object level permissions
+    keys: true
+    create: true
+    read: true
+    update: true
+    delete: true
+    # These are attachment related permissions
+    attachments: true
+    attach: true
+    retrieve: true
+    prune: true
+    # These are frame level permissions
+    frame_read: true
+    frame_write: true
+    # This sets versioning behavior
+    versions: true
+  - dataset: subjects.ds
+    query:
+      subject_names: select json_object('clsid', src->'clsid', 'name', src->'name') as src from subjects order by src->'name';
+    # What follows are object level permissions
+    keys: true
+    create: true
+    read: true
+    update: true
+    delete: true
+    # These are attachment related permissions
+    attachments: true
+    attach: true
+    retrieve: true
+    prune: true
+    # These are frame level permissions
+    frame_read: true
+    frame_write: true
+    # This sets versioning behavior
+    versions: true
+  - dataset: issn.ds
+    query:
+      issn_names: select json_object('issn', src->'issn', 'name', src->'name') as src from issn order by src->'name';
+    # What follows are object level permissions
+    keys: true
+    create: true
+    read: true
+    update: true
+    delete: true
+    # These are attachment related permissions
+    attachments: true
+    attach: true
+    retrieve: true
+    prune: true
+    # These are frame level permissions
+    frame_read: true
+    frame_write: true
+    # This sets versioning behavior
+    versions: true
+  - dataset: doi_prefix.ds
+    query:
+      doi_prefix_names: select json_object('doi_prefix', src->'doi_prefix', 'name', src->'name') as src from doi_prefix order by src->'name';
     # What follows are object level permissions
     keys: true
     create: true

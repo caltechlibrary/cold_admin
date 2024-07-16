@@ -32,3 +32,4 @@ export { OptionsProcessor } from "./options.ts";
 export { handlePeople } from "./people.ts";
 export { handleGroups } from "./groups.ts";
 export { handleFunders } from "./funders.ts";
+export { handleSubjects } from "./subjects.ts";
