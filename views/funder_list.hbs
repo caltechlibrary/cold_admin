@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en-US">
+{{>head}}
+{{>header}}
+<nav>
+<ul>
+<li><a href="{{base_path}}/" title="return to dashboard">Dashboard</a></li>
+<li><a href="{{base_path}}/funders/?view=create">Add Funder</a></li>
+</ul>
+</nav>
+<section>
+<h1>CaltechFUNDERS</h1>
+<ul>
+{{#funder_list}}
+  <li><a href="{{base_path}}/funders/{{clfid}}" title="view funder details">{{funder_name}}</a></li>
+{{/funder_list}}
+</ul>
+</section>
+{{>footer}}
+</html>
