@@ -34,7 +34,7 @@ const handle = new Handlebars(DEFAULT_HANDLEBARS_CONFIG);
  */
 export async function renderPage(
   template: string,
-  page_object: { [k: string]: string },
+  page_object: { [k: string]: string | object | boolean | undefined },
 ): Promise<Response> {
   let body: string = await handle.renderView(template, page_object);
   if (body !== undefined) {
@@ -43,7 +43,8 @@ export async function renderPage(
       headers: { "content-type": "text/html" },
     });
   }
-  body = `<doctype html>\n<html lang="en">something went wrong, failed to render ${template}.</html>`;
+  body =
+    `<doctype html>\n<html lang="en">something went wrong, failed to render ${template}.</html>`;
   return new Response(body, {
     status: 501,
     headers: { "content-type": "text/html" },

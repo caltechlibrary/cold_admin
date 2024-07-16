@@ -9,9 +9,44 @@ import { formDataToObject, pathIdentifier } from "./identifiers.ts";
 const ds = new Dataset(8485, "groups.ds");
 
 /**
+ * GroupInterface
+ */
+export interface GroupInterface {
+  clgid: string;
+  include_in_feeds: boolean;
+  name: string;
+  alternative: string[];
+  email: string;
+  date: string;
+  description: string;
+  start_date: string;
+  is_approx_start: boolean;
+  end_date: string;
+  is_approx_end: boolean;
+  //FIXME: should activity be called status?  In the people record status seems similar.
+  activity: string;
+  website: string;
+  pi: string;
+  parent: string;
+  /* prefix refers to the DOI prefix that some groups on campus have. */
+  prefix: string;
+  grid: string;
+  isni: string;
+  ringold: string;
+  viaf: string;
+  ror: string;
+  updated: string;
+  Scope: string;
+  /* authors_id */
+  authors_id: string;
+  /* thesis_id */
+  thesis_id: string;
+}
+
+/**
  * Group class defines the data shape of the group object managed by cold.
  */
-export class Group {
+export class Group implements GroupInterface {
   clgid: string = "";
   include_in_feeds: boolean = false;
   name: string = "";

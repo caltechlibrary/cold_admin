@@ -49,6 +49,9 @@ check: $(TS_MODS)
 	deno check --all cold_ui.ts
 	deno check --all ds_importer.ts
 	deno check --all dataset.ts
+	deno check --all groups.ts
+	deno check --all people.ts
+	deno check --all funders.ts
 
 version.ts: codemeta.json .FORCE
 	echo '' | pandoc --from t2t --to plain \

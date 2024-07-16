@@ -9,9 +9,41 @@ import { formDataToObject, pathIdentifier } from "./identifiers.ts";
 const ds = new Dataset(8485, "people.ds");
 
 /**
+ * PeopleInterface describes a People obejct.
+ */
+export interface PeopleInterface {
+  clpid: string;
+  include_in_feeds: boolean;
+  family_name: string;
+  given_name: string;
+  email: string;
+  archivesspace_id: string;
+  directory_user_id: string;
+  directory_person_type: string;
+  title: string;
+  bio: string;
+  division: string;
+  status: string;
+  viaf: string;
+  lcnaf: string;
+  isni: string;
+  wikidata: string;
+  snac: string;
+  orcid: string;
+  image_url: string;
+  education: string;
+  caltech: boolean;
+  jpl: boolean;
+  faculty: boolean;
+  alumn: boolean;
+  updated: string;
+  authors_id: string;
+  thesis_id: string;
+}
+/**
  * People implements a Caltech People object
  */
-export class People {
+export class People implements PeopleInterface {
   clpid: string = "";
   include_in_feeds: boolean = false;
   family_name: string = "";
@@ -276,7 +308,7 @@ async function handlePostPeople(
 
   if (req.body !== null) {
     const form = await req.formData();
-    let obj: Object = formDataToObject(form);
+    let obj = formDataToObject(form);
     console.log(
       `DEBUG form data after converting to object -> ${JSON.stringify(obj)}`,
     );
@@ -300,8 +332,6 @@ async function handlePostPeople(
         },
       );
     }
-    /*  NOTE: Make sure we update obj.updated */
-    obj["updated"] = new Date().toDateString();
     if (isCreateObject) {
       console.log(`send to dataset create object ${clpid}`);
       if (!(await ds.create(clpid, obj))) {

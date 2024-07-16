@@ -5,6 +5,7 @@ import {
   fmtHelp,
   handleGroups,
   handlePeople,
+  handleFunders,
   http,
   markdown,
   mustache,
@@ -105,6 +106,9 @@ export function ColdUIHandler(
   if (pathname.startsWith("/groups")) {
     return handleGroups(req, options);
   }
+  if (pathname.startsWith("/funders")) {
+    return handleFunders(req, options);
+  }
   if (options.debug) {
     console.log(
       "DEBUG: Handle the request for a static files or assets -> " + pathname,
@@ -174,13 +178,16 @@ const basePath = path.normalize(options.htdocs);
 console.log(`Starting COLD UI HTTP service at http://localhost:${options.port}
 Static content directory is ${basePath}
 `);
-const server = Deno.serve({
-  hostname: "localhost",
-  port: options.port,
-}, (req: Request): Response | Promise<Response> => {
-  return ColdUIHandler(req, {
-    debug: options.debug,
-    htdocs: options.htdocs,
-    apiUrl: options.apiUrl,
-  });
-});
+const server = Deno.serve(
+  {
+    hostname: "localhost",
+    port: options.port,
+  },
+  (req: Request): Response | Promise<Response> => {
+    return ColdUIHandler(req, {
+      debug: options.debug,
+      htdocs: options.htdocs,
+      apiUrl: options.apiUrl,
+    });
+  },
+);

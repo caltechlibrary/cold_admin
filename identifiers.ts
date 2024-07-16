@@ -3,6 +3,9 @@
  * and extraction from the URL pathname.
  */
 
+import { PeopleInterface } from "./people.ts";
+import { GroupInterface } from "./groups.ts";
+
 /**
  * pathIdentifier extracts the identifier from the last element of the URL pathname.
  * The application is expecting a multipart path and if the first "/" and "/" slash
@@ -30,10 +33,10 @@ export function pathIdentifier(u: string): string {
 /**
  * formDataToObject turn the form data into a simple object.
  *
- * @param {FormData} formData the form object to process
+ * @param {FormData} form data the form object to process
  * @returns {Object}
  */
-export function formDataToObject(form: FormData): Object {
+export function formDataToObject(form: FormData): object {
   const obj: { [k: string]: string | boolean } = {};
   for (const v of form.entries()) {
     const key: string = v[0];
@@ -48,5 +51,7 @@ export function formDataToObject(form: FormData): Object {
       }
     }
   }
+  /*  NOTE: Make sure we update obj.updated */
+  obj["updated"] = new Date().toLocaleDateString("en-US") as string;
   return obj;
 }
