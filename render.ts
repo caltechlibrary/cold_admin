@@ -14,7 +14,7 @@ const cwd: string = Deno.cwd();
  */
 const DEFAULT_HANDLEBARS_CONFIG: HandlebarsConfig = {
   baseDir: "views",
-  extname: ".mustache",
+  extname: ".hbs",
   partialsDir: "partials/",
   layoutsDir: "layouts/",
   cachePartials: false,
