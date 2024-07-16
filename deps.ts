@@ -29,9 +29,9 @@ export {
 /* COLD related packages */
 export { appInfo, fmtHelp } from "./version.ts";
 export { OptionsProcessor } from "./options.ts";
-export { handlePeople } from "./people.ts";
-export { handleGroups } from "./groups.ts";
-export { handleFunders } from "./funders.ts";
-export { handleSubjects } from "./subjects.ts";
-export { handleISSN } from "./issn.ts";
-export { handleDOIPrefix } from "./doi_prefix.ts";
+export { handlePeople, People } from "./people.ts";
+export { handleGroups, Group } from "./groups.ts";
+export { handleFunders, Funder } from "./funders.ts";
+export { handleSubjects, Subject } from "./subjects.ts";
+export { handleISSN, ISSN } from "./issn.ts";
+export { handleDOIPrefix, DOIPrefix } from "./doi_prefix.ts";

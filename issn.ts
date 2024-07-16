@@ -15,7 +15,7 @@ export interface ISSNInterface {
   issn: string;
   name: string;
   alternate_names: string[];
-  publiser_name: string;
+  publisher_name: string;
   publisher_address: string;
   publisher_location: string;
   description: string;
@@ -27,27 +27,31 @@ export interface ISSNInterface {
  */
 export class ISSN implements ISSNInterface {
   issn: string = "";
-  include_in_feeds: boolean = false;
   name: string = "";
-  alternate_names: string[];
-  publisher_name: string;
-  publisher_location: string;
-  publisher_address: string;
+  alternate_names: string[] = [];
+  publisher_name: string = "";
+  publisher_location: string = "";
+  publisher_address: string = "";
   description: string = "";
   updated: string = "";
 
   migrateCsv(row: any): boolean {
-    if (row.hasOwnProperty("key")) {
-      this.include_in_feeds = true;
-      this.issn = row.key;
+    if (row.hasOwnProperty("ISSN") && (row.issn !== "")) {
+      this.issn = row.ISSN;
     } else {
       return false;
     }
     if (row.hasOwnProperty("name")) {
       this.name = row.name;
     }
-    if (row.hasOwnProperty("alternative_names")) {
-      this.alternative_names = row.alernative_name.split(/;/g);
+    if (row.hasOwnProperty("Journal Name")) {
+      this.name = row["Journal Name"];
+    }
+	if (row.hasOwnProperty("Publisher")) {
+		this.publisher_name = row.Publisher;
+	}
+    if (row.hasOwnProperty("alternate_names")) {
+      this.alternate_names = row.alernate_name.split(/;/g);
 	}
     if (row.hasOwnProperty("publisher_name")) {
       this.publisher_name = row.publisher_name;
@@ -75,15 +79,13 @@ export class ISSN implements ISSNInterface {
   asObject(): Object {
     return {
       issn: this.issn,
-      include_in_feeds: this.include_in_feeds,
       name: this.name,
-	  alternative_names: this.alternative_names,
+	  alternate_names: this.alternate_names,
 	  publisher_name: this.publisher_name,
 	  publisher_location: this.publisher_location,
 	  publisher_address: this.publisher_address,
-      doi: this.doi,
       description: this.description,
-      updated: this.updated,
+      updated: this.updated
     };
   }
 

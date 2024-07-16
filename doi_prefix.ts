@@ -58,7 +58,6 @@ export class DOIPrefix implements DOIPrefixInterface {
       doi_prefix: this.doi_prefix,
       include_in_feeds: this.include_in_feeds,
       name: this.name,
-      doi: this.doi,
       description: this.description,
       updated: this.updated,
     };
