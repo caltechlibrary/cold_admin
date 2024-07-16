@@ -33,3 +33,5 @@ export { handlePeople } from "./people.ts";
 export { handleGroups } from "./groups.ts";
 export { handleFunders } from "./funders.ts";
 export { handleSubjects } from "./subjects.ts";
+export { handleISSN } from "./issn.ts";
+export { handleDOIPrefix } from "./doi_prefix.ts";

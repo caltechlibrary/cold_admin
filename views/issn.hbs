@@ -12,12 +12,25 @@
 </nav>
 <section>
 
-<h1>{{issn.name}}</h1>
-<div class="identifier">{{issn}}</div>
+<div class="identifier">ISSN: {{issn.issn}}</div>
+<h1>Serial Name: {{issn.name}}</h1>
 
-{{#if issn.description}}<div class="description">{{issn.description}}</div>{{/if}}
+{{#if issn.alternative_names}}
+Other names:
+<ul>
+{{#issn.alternative_names}}
+  <li>{{ . }}</li>
+{{/issn.alternative_names}}
+</ul>
+{{/if}}
 
-{{#if issn.include_in_feeds}}<div class="feeds_link">View in feeds: <a href="https://feeds.library.caltech.edu/issn/{{issn.issn}}" title="issn in feeds" target="_blank">{{issn.issn}}</a></div>{{/if}}
+{{#if issn.publisher_name}}<h2>Publisher Name: {{issn.publisher_name}}</h2>{{/if}}
+
+{{#if issn.publisher_location}}<div>Publisher Location: {{issn.publisher_location}}</div>{{/if}}
+
+{{#if issn.publisher_address}}<div>Publisher Address: {{issn.publisher_address}}</div>{{/if}}
+
+{{#if issn.description}}<p><div class="description">{{issn.description}}</div>{{/if}}
 
 <div class="labeled_dates">
 {{#if issn.updated}}<span class="updated">updated: {{issn.updated}}</span>{{/if}}

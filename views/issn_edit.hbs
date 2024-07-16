@@ -20,16 +20,34 @@
 </div>
 
 <div>
-<label set="name">Name</label> <input type="text" id="name" name="name" value="{{issn.name}}" required="true" />
+<label set="name">Serial Name</label> <input type="text" id="name" name="name" value="{{issn.name}}" required="true" />
 </div>
+
+<div>
+<label set="alternative_names">Other Names (one per line)</label>
+<textarea id="alternative_names" name="alternative_names" rows="10" cols="60">
+{{#issn.alternative_names}}
+{{ . }}
+{{/issn.alternative_names}}
+</textarea>
+</div>
+
+<div>
+<label set="publisher_name">Publisher Name</label> <input type="text" id="publisher_name" name="publisher_name" value="{{issn.publisher_name}}" required="true" />
+</div>
+
+<div>
+<label set="publisher_location">Publisher Location</label> <input type="text" id="publisher_location" name="publisher_location" value="{{issn.publisher_location}}" />
+</div>
+
+<div>
+<label set="publisher_address">Publisher Address</label> <input type="text" id="publisher_address" name="publisher_address" value="{{issn.publisher_address}}" />
+</div>
+
 
 <div>
 <label set="description">Description</label><br >
 <textarea id="description" name="description" rows="10" cols="60">{{issn.description}}</textarea>
-</div>
-
-<div>
-<label set="include_in_feeds">Include in feeds <input type="checkbox" id="include_in_feeds" name="include_in_feeds" {{#issn.include_in_feeds}}checked{{/issn.include_in_feeds}}> </label>
 </div>
 
 <div>

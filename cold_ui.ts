@@ -6,6 +6,9 @@ import {
   handleGroups,
   handlePeople,
   handleFunders,
+  handleSubjects,
+  handleISSN,
+  handleDOIPrefix,
   http,
   markdown,
   mustache,
@@ -108,6 +111,15 @@ export function ColdUIHandler(
   }
   if (pathname.startsWith("/funders")) {
     return handleFunders(req, options);
+  }
+  if (pathname.startsWith("/subjects")) {
+    return handleSubjects(req, options);
+  }
+  if (pathname.startsWith("/issn")) {
+    return handleISSN(req, options);
+  }
+  if (pathname.startsWith("/doi_prefix")) {
+    return handleDOIPrefix(req, options);
   }
   if (options.debug) {
     console.log(

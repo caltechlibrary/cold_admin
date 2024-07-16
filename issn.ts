@@ -9,23 +9,30 @@ import { formDataToObject, pathIdentifier } from "./identifiers.ts";
 const ds = new Dataset(8485, "issn.ds");
 
 /**
- * SubjectInterface
+ * ISSNInterface
  */
-export interface SubjectInterface {
+export interface ISSNInterface {
   issn: string;
-  include_in_feeds: boolean;
   name: string;
+  alternate_names: string[];
+  publiser_name: string;
+  publisher_address: string;
+  publisher_location: string;
   description: string;
   updated: string;
 }
 
 /**
- * Subject class defines the data shape of the issn object managed by cold.
+ * ISSN class defines the data shape of the issn object managed by cold.
  */
-export class Subject implements SubjectInterface {
+export class ISSN implements ISSNInterface {
   issn: string = "";
   include_in_feeds: boolean = false;
   name: string = "";
+  alternate_names: string[];
+  publisher_name: string;
+  publisher_location: string;
+  publisher_address: string;
   description: string = "";
   updated: string = "";
 
@@ -39,6 +46,18 @@ export class Subject implements SubjectInterface {
     if (row.hasOwnProperty("name")) {
       this.name = row.name;
     }
+    if (row.hasOwnProperty("alternative_names")) {
+      this.alternative_names = row.alernative_name.split(/;/g);
+	}
+    if (row.hasOwnProperty("publisher_name")) {
+      this.publisher_name = row.publisher_name;
+    }
+    if (row.hasOwnProperty("publisher_location")) {
+      this.publisher_location = row.publisher_location;
+	}
+    if (row.hasOwnProperty("publisher_address")) {
+      this.publisher_address = row.publisher_address;
+	}
     if (row.hasOwnProperty("description")) {
       this.description = row.description;
     }
@@ -58,6 +77,10 @@ export class Subject implements SubjectInterface {
       issn: this.issn,
       include_in_feeds: this.include_in_feeds,
       name: this.name,
+	  alternative_names: this.alternative_names,
+	  publisher_name: this.publisher_name,
+	  publisher_location: this.publisher_location,
+	  publisher_address: this.publisher_address,
       doi: this.doi,
       description: this.description,
       updated: this.updated,
@@ -73,7 +96,7 @@ export class Subject implements SubjectInterface {
 }
 
 /**
- * handleSubjects provides the dataset collection UI for managing Subjects.
+ * handleISSN provides the dataset collection UI for managing ISSN.
  * It is response for the following actions
  *
  * - list or search for issn
@@ -95,15 +118,15 @@ export class Subject implements SubjectInterface {
  * ColdUIHandler.
  * @returns {Response}
  */
-export async function handleSubjects(
+export async function handleISSN(
   req: Request,
   options: { debug: boolean; htdocs: string; apiUrl: string },
 ): Promise<Response> {
   if (req.method === "GET") {
-    return await handleGetSubjects(req, options);
+    return await handleGetISSN(req, options);
   }
   if (req.method === "POST") {
-    return await handlePostSubjects(req, options);
+    return await handlePostISSN(req, options);
   }
   const body = `<html>${req.method} not supported</html>`;
   return new Response(body, {
@@ -113,11 +136,11 @@ export async function handleSubjects(
 }
 
 /**
- * handleGetSubjects handle GET actions on issn object(s).
+ * handleGetISSN handle GET actions on issn object(s).
  *
  * @param {Request} req holds the request to the issn handler
  * @param {debug: boolean, htdocs: string} options holds options passed from
- * handleSubject.
+ * handleISSN.
  * @returns {Response}
  *
  * The expected paths are in the form
@@ -125,7 +148,7 @@ export async function handleSubjects(
  * - `/` list the issn by issn name (`?q=...` would perform a search by issn name)
  * - `/{issn}` indicates retrieving a single object by the Caltech Library issn id
  */
-async function handleGetSubjects(
+async function handleGetISSN(
   req: Request,
   options: { debug: boolean; htdocs: string; apiUrl: string },
 ): Promise<Response> {
@@ -178,14 +201,14 @@ async function handleGetSubjects(
 }
 
 /**
- * handlePostSubject handle POST actions on issn object(s).
+ * handlePostISSN handle POST actions on issn object(s).
  *
  * @param {Request} req holds the request to the issn handler
  * @param {debug: boolean, htdocs: string} options holds options passed from
- * handleSubject.
+ * handleISSN.
  * @returns {Response}
  */
-async function handlePostSubjects(
+async function handlePostISSN(
   req: Request,
   options: { debug: boolean; htdocs: string; apiUrl: string },
 ): Promise<Response> {

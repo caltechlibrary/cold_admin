@@ -9,9 +9,9 @@ import { formDataToObject, pathIdentifier } from "./identifiers.ts";
 const ds = new Dataset(8485, "doi_prefix.ds");
 
 /**
- * SubjectInterface
+ * DOIPrefixInterface
  */
-export interface SubjectInterface {
+export interface DOIPrefixInterface {
   doi_prefix: string;
   include_in_feeds: boolean;
   name: string;
@@ -20,9 +20,9 @@ export interface SubjectInterface {
 }
 
 /**
- * Subject class defines the data shape of the doi_prefix object managed by cold.
+ * DOIPrefix class defines the data shape of the doi_prefix object managed by cold.
  */
-export class Subject implements SubjectInterface {
+export class DOIPrefix implements DOIPrefixInterface {
   doi_prefix: string = "";
   include_in_feeds: boolean = false;
   name: string = "";
@@ -73,7 +73,7 @@ export class Subject implements SubjectInterface {
 }
 
 /**
- * handleSubjects provides the dataset collection UI for managing Subjects.
+ * handleDOIPrefix provides the dataset collection UI for managing DOIPrefix.
  * It is response for the following actions
  *
  * - list or search for doi_prefix
@@ -95,15 +95,15 @@ export class Subject implements SubjectInterface {
  * ColdUIHandler.
  * @returns {Response}
  */
-export async function handleSubjects(
+export async function handleDOIPrefix(
   req: Request,
   options: { debug: boolean; htdocs: string; apiUrl: string },
 ): Promise<Response> {
   if (req.method === "GET") {
-    return await handleGetSubjects(req, options);
+    return await handleGetDOIPrefix(req, options);
   }
   if (req.method === "POST") {
-    return await handlePostSubjects(req, options);
+    return await handlePostDOIPrefix(req, options);
   }
   const body = `<html>${req.method} not supported</html>`;
   return new Response(body, {
@@ -113,11 +113,11 @@ export async function handleSubjects(
 }
 
 /**
- * handleGetSubjects handle GET actions on doi_prefix object(s).
+ * handleGetDOIPrefix handle GET actions on doi_prefix object(s).
  *
  * @param {Request} req holds the request to the doi_prefix handler
  * @param {debug: boolean, htdocs: string} options holds options passed from
- * handleSubject.
+ * handleDOIPrefix.
  * @returns {Response}
  *
  * The expected paths are in the form
@@ -125,7 +125,7 @@ export async function handleSubjects(
  * - `/` list the doi_prefix by doi_prefix name (`?q=...` would perform a search by doi_prefix name)
  * - `/{doi_prefix}` indicates retrieving a single object by the Caltech Library doi_prefix id
  */
-async function handleGetSubjects(
+async function handleGetDOIPrefix(
   req: Request,
   options: { debug: boolean; htdocs: string; apiUrl: string },
 ): Promise<Response> {
@@ -178,14 +178,14 @@ async function handleGetSubjects(
 }
 
 /**
- * handlePostSubject handle POST actions on doi_prefix object(s).
+ * handlePostDOIPrefix handle POST actions on doi_prefix object(s).
  *
  * @param {Request} req holds the request to the doi_prefix handler
  * @param {debug: boolean, htdocs: string} options holds options passed from
- * handleSubject.
+ * handleDOIPrefix.
  * @returns {Response}
  */
-async function handlePostSubjects(
+async function handlePostDOIPrefix(
   req: Request,
   options: { debug: boolean; htdocs: string; apiUrl: string },
 ): Promise<Response> {
