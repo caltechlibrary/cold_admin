@@ -1,6 +1,7 @@
 /**
  * render.ts holds the page rendering functions for cold_ui.
  */
+//import { Handlebars, HandlebarsConfig } from "./hbs.ts";
 import {
   Handlebars,
   HandlebarsConfig,
@@ -60,7 +61,7 @@ export async function renderPage(
  */
 export async function makePage(
   template: string,
-  page_object: { [k: string]: string },
+  page_object: { [k: string]: string | object },
 ): Promise<string> {
   let body = await handle.renderView(template, page_object);
   if (body !== undefined) {

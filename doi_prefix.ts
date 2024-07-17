@@ -30,9 +30,9 @@ export class DOIPrefix implements DOIPrefixInterface {
   updated: string = "";
 
   migrateCsv(row: any): boolean {
-    if (row.hasOwnProperty("key")) {
+    if (row.hasOwnProperty("prefix")) {
       this.include_in_feeds = true;
-      this.doi_prefix = row.key;
+      this.doi_prefix = row.prefix;
     } else {
       return false;
     }
@@ -166,7 +166,10 @@ async function handleGetDOIPrefix(
     const doi_prefix = pathIdentifier(req.url);
     const isCreateObject = doi_prefix === "";
     const obj = await ds.read(doi_prefix);
-    console.log(`We have a GET for doi_prefix object ${doi_prefix}, view = ${view}`);
+    console.log(
+      `We have a GET for doi_prefix object ${doi_prefix}, view = ${view}`,
+      obj,
+    );
     return renderPage(tmpl, {
       base_path: "",
       isCreateObject: isCreateObject,
@@ -220,6 +223,11 @@ async function handlePostDOIPrefix(
     if (isCreateObject) {
       console.log(`send to dataset create object ${doi_prefix}`);
       if (!(await ds.create(doi_prefix, obj))) {
+        console.log(
+          `failed to send to dataset create object ${doi_prefix}, ${
+            JSON.stringify(obj)
+          }`,
+        );
         return new Response(
           `<html>problem creating object ${doi_prefix}, try again later`,
           {
@@ -240,7 +248,9 @@ async function handlePostDOIPrefix(
         );
       }
     }
-    console.log(`DEBUG redirect ("${doi_prefix}") to /doi_prefix/${doi_prefix}`);
+    console.log(
+      `DEBUG redirect ("${doi_prefix}") to /doi_prefix/${doi_prefix}`,
+    );
     return new Response(`<html>Redirect to /doi_prefix/${doi_prefix}</html>`, {
       status: 303,
       headers: { Location: `./doi_prefix/${doi_prefix}` },

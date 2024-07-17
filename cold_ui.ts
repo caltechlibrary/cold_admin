@@ -3,15 +3,13 @@ import {
   dotenv,
   existsSync,
   fmtHelp,
-  handleGroups,
-  handlePeople,
-  handleFunders,
-  handleSubjects,
-  handleISSN,
   handleDOIPrefix,
+  handleFunders,
+  handleGroups,
+  handleISSN,
+  handlePeople,
+  handleSubjects,
   http,
-  markdown,
-  mustache,
   OptionsProcessor,
   path,
   serveDir,
@@ -71,7 +69,7 @@ collections.
 }
 
 /**
- * ColdUIHandler is a function for handling and dispatching http requests.
+ * ColdReadWriteHandler is a function for handling and dispatching http requests.
  *
  * @param {Request} req holds the http request recieved from the http server
  * @param {debug: boolean, htdocs: string, apiUrl: string} options holds program options that are made available
@@ -89,11 +87,11 @@ collections.
  *     hostname: "localhost",
  *     port: options.port,
  *   }, (req: Request) => {
- *   	return ColdUIHandler(req, options);
+ *   	return ColdReadWriteHandler(req, options);
  *   });
  * ```
  */
-export function ColdUIHandler(
+export function ColdReadWriteHandler(
   req: Request,
   options: { debug: boolean; htdocs: string; apiUrl: string },
 ): Response | Promise<Response> {
@@ -133,73 +131,141 @@ export function ColdUIHandler(
   });
 }
 
+/**
+ * ColdReadOnlyHandler is a function for handling and dispatching http requests.
+ *
+ * @param {Request} req holds the http request recieved from the http server
+ * @param {debug: boolean, htdocs: string, apiUrl: string} options holds program options that are made available
+ * to additional COLD UI handlers.
+ * @returns {Response}
+ *
+ * @example
+ * ```
+ *   const options = {
+ *      debug: true,
+ *      htdocs: "./htdocs"
+ *   };
+ *
+ *   const server = Deno.serve({
+ *     hostname: "localhost",
+ *     port: options.port,
+ *   }, (req: Request) => {
+ *   	return ColdReadOnlyHandler(req, options);
+ *   });
+ * ```
+ */
+export function ColdReadOnlyHandler(
+  req: Request,
+  options: { debug: boolean; htdocs: string; apiUrl: string },
+): Response | Promise<Response> {
+  const pathname = new URL(req.url).pathname;
+  const basePath: string = path.normalize(options.htdocs);
+
+  if (options.debug) console.log("DEBUG request", req);
+
+  // Handle the various dataset collections management pages.
+  if (pathname.startsWith("/people") && req.method == "GET") {
+    return handlePeople(req, options);
+  }
+  if (pathname.startsWith("/groups") && req.method == "GET") {
+    return handleGroups(req, options);
+  }
+  if (pathname.startsWith("/funders") && req.method == "GET") {
+    return handleFunders(req, options);
+  }
+  if (pathname.startsWith("/subjects") && req.method == "GET") {
+    return handleSubjects(req, options);
+  }
+  if (pathname.startsWith("/issn") && req.method == "GET") {
+    return handleISSN(req, options);
+  }
+  if (pathname.startsWith("/doi_prefix") && req.method == "GET") {
+    return handleDOIPrefix(req, options);
+  }
+  if (options.debug) {
+    console.log(
+      "DEBUG: Handle the request for a static files or assets -> " + pathname,
+    );
+  }
+  // NOTE: If there isn't a specific handler implemented then assume you're
+  // requesting a static asset.
+  return serveDir(req, {
+    fsRoot: basePath,
+  });
+}
+
 //
 // Main function
 //
-const op: OptionsProcessor = new OptionsProcessor();
-const defaultPort: number = 8180;
-const defaultHtdocs: string = "./htdocs";
-const defaultApiUrl: string = "http://localhost:8495";
+function main() {
+  const op: OptionsProcessor = new OptionsProcessor();
+  const defaultPort: number = 8180;
+  const defaultHtdocs: string = "./htdocs";
+  const defaultApiUrl: string = "http://localhost:8495";
 
-op.booleanVar("help", false, "display help");
-op.booleanVar("license", false, "display license");
-op.booleanVar("version", false, "display version");
-op.booleanVar("debug", false, "turn on debug logging");
-op.numberVar(
-  "port",
-  defaultPort,
-  `set the port number, default ${defaultPort}`,
-);
-op.stringVar(
-  "htdocs",
-  defaultHtdocs,
-  `set the static content directory, default ${defaultHtdocs}`,
-);
-op.stringVar(
-  "apiUrl",
-  defaultApiUrl,
-  `set the url to the datasetd API provided for cold`,
-);
+  op.booleanVar("help", false, "display help");
+  op.booleanVar("license", false, "display license");
+  op.booleanVar("version", false, "display version");
+  op.booleanVar("debug", false, "turn on debug logging");
+  op.numberVar(
+    "port",
+    defaultPort,
+    `set the port number, default ${defaultPort}`,
+  );
+  op.stringVar(
+    "htdocs",
+    defaultHtdocs,
+    `set the static content directory, default ${defaultHtdocs}`,
+  );
+  op.stringVar(
+    "apiUrl",
+    defaultApiUrl,
+    `set the url to the datasetd API provided for cold`,
+  );
 
-op.parse(Deno.args);
+  op.parse(Deno.args);
 
-const options = op.options;
-const args = op.args;
+  const options = op.options;
+  const args = op.args;
 
-if (options.help) {
-  console.log(fmtHelp(helpText(op.help), appInfo));
-  Deno.exit(0);
-}
-if (options.license) {
-  console.log(appInfo.licenseText);
-  Deno.exit(0);
-}
-if (options.version) {
-  console.log(`${appInfo.appName} ${appInfo.version} ${appInfo.releaseHash}`);
-  Deno.exit(0);
-}
+  if (options.help) {
+    console.log(fmtHelp(helpText(op.help), appInfo));
+    Deno.exit(0);
+  }
+  if (options.license) {
+    console.log(appInfo.licenseText);
+    Deno.exit(0);
+  }
+  if (options.version) {
+    console.log(`${appInfo.appName} ${appInfo.version} ${appInfo.releaseHash}`);
+    Deno.exit(0);
+  }
 
-// Make sure we have a valid static content directory set.
-if (!existsSync(options.htdocs)) {
-  console.log(`Cannot find htdocs ${options.htdocs}, aborting`);
-  Deno.exit(1);
-}
+  // Make sure we have a valid static content directory set.
+  if (!existsSync(options.htdocs)) {
+    console.log(`Cannot find htdocs ${options.htdocs}, aborting`);
+    Deno.exit(1);
+  }
 
-const basePath = path.normalize(options.htdocs);
+  const basePath = path.normalize(options.htdocs);
 
-console.log(`Starting COLD UI HTTP service at http://localhost:${options.port}
+  console.log(`Starting COLD UI HTTP service at http://localhost:${options.port}
 Static content directory is ${basePath}
 `);
-const server = Deno.serve(
-  {
-    hostname: "localhost",
-    port: options.port,
-  },
-  (req: Request): Response | Promise<Response> => {
-    return ColdUIHandler(req, {
-      debug: options.debug,
-      htdocs: options.htdocs,
-      apiUrl: options.apiUrl,
-    });
-  },
-);
+  const server = Deno.serve(
+    {
+      hostname: "localhost",
+      port: options.port,
+    },
+    (req: Request): Response | Promise<Response> => {
+      return ColdReadWriteHandler(req, {
+        debug: options.debug,
+        htdocs: options.htdocs,
+        apiUrl: options.apiUrl,
+      });
+    },
+  );
+}
+
+// Run main()
+if (import.meta.main) main();

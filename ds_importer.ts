@@ -2,13 +2,7 @@
  * ds_importer.ts this is a TypeScript program that imports data from a CSV file into a dataset
  * collection via datasetd JSON API.
  */
-import { 
-	Dataset,
-	DatasetApiClient,
-	Group,
-	People,
-	ISSN
-} from "./deps.ts";
+import { Dataset, DatasetApiClient, Group, ISSN, People } from "./deps.ts";
 import { parse as csv_parse } from "@std/csv";
 
 /**
@@ -44,7 +38,7 @@ async function dsImporter(
   let error_count = 0;
   let success_count = 0;
   for (const i in sheet) {
-	if (sheet[i].hasOwnProperty("ISSN")) {
+    if (sheet[i].hasOwnProperty("ISSN")) {
       const key: string = function (key) {
         if (key === undefined) {
           return "";
@@ -104,7 +98,7 @@ async function dsImporter(
         console.log("import people failed,", ok);
         error_count += 1;
       }
-    } 
+    }
   }
   if (success_count > 0) {
     console.log(`${success_count} objects successfully imported`);

@@ -47,21 +47,21 @@ export class ISSN implements ISSNInterface {
     if (row.hasOwnProperty("Journal Name")) {
       this.name = row["Journal Name"];
     }
-	if (row.hasOwnProperty("Publisher")) {
-		this.publisher_name = row.Publisher;
-	}
+    if (row.hasOwnProperty("Publisher")) {
+      this.publisher_name = row.Publisher;
+    }
     if (row.hasOwnProperty("alternate_names")) {
       this.alternate_names = row.alernate_name.split(/;/g);
-	}
+    }
     if (row.hasOwnProperty("publisher_name")) {
       this.publisher_name = row.publisher_name;
     }
     if (row.hasOwnProperty("publisher_location")) {
       this.publisher_location = row.publisher_location;
-	}
+    }
     if (row.hasOwnProperty("publisher_address")) {
       this.publisher_address = row.publisher_address;
-	}
+    }
     if (row.hasOwnProperty("description")) {
       this.description = row.description;
     }
@@ -80,12 +80,12 @@ export class ISSN implements ISSNInterface {
     return {
       issn: this.issn,
       name: this.name,
-	  alternate_names: this.alternate_names,
-	  publisher_name: this.publisher_name,
-	  publisher_location: this.publisher_location,
-	  publisher_address: this.publisher_address,
+      alternate_names: this.alternate_names,
+      publisher_name: this.publisher_name,
+      publisher_location: this.publisher_location,
+      publisher_address: this.publisher_address,
       description: this.description,
-      updated: this.updated
+      updated: this.updated,
     };
   }
 

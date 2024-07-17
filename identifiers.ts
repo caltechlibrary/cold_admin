@@ -25,7 +25,7 @@ export function pathIdentifier(u: string): string {
   const pathname: string = new URL(u).pathname;
   const cut_pos = pathname.lastIndexOf("/");
   if (cut_pos != pathname.indexOf("/")) {
-    return pathname.slice(cut_pos + 1);
+    return decodeURI(pathname.slice(cut_pos + 1));
   }
   return "";
 }

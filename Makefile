@@ -110,7 +110,7 @@ reload_dataset:
 	deno task reload_data
 
 htdocs: .FORCE
-	make -f htdocs.mak
+	deno task htdocs
 
 test: .FORCE
 	deno task test
