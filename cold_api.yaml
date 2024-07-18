@@ -4,7 +4,7 @@
 #
 # @author: R. S. Doiel <rsdoiel@caltech.edu>
 #
-host: localhost:8485
+host: localhost:8185
 # This htdocs directory is provided by cold_ui so we don't enable it.
 #htdocs: htdocs
 collections:

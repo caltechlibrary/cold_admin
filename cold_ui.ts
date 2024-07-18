@@ -54,14 +54,14 @@ for JSON API to each collection.
   txt.push(`
 # EXAMPLE
 
-{app_name} is setup to run at <http://localhost:8000>. The static content hosted in
+{app_name} is setup to run at <http://localhost:8180>. The static content hosted in
 the "/var/www/html/cold/app" directory.  The datasetd service is setup to run at
 <http://localhost:8485> supporting the people, groups and vocabularies dataset
 collections.
 
 ~~~shell
-{app_name} -port=8000 -htdocs=/var/www/html/cold/app \
-           -apiUrl=http://localhost:8485
+{app_name} -port=8100 -htdocs=/var/www/html/cold/app \
+           -apiUrl=http://localhost:8185
 ~~~
 
 `);
@@ -201,7 +201,7 @@ function main() {
   const op: OptionsProcessor = new OptionsProcessor();
   const defaultPort: number = 8180;
   const defaultHtdocs: string = "./htdocs";
-  const defaultApiUrl: string = "http://localhost:8495";
+  const defaultApiUrl: string = "http://localhost:8185";
 
   op.booleanVar("help", false, "display help");
   op.booleanVar("license", false, "display license");
