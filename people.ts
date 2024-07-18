@@ -1,12 +1,16 @@
 /**
  * people.ts implements the people object handler for listing, creating, retrieving, updating and delete people objects.
  */
-import { Dataset } from "./deps.ts";
-import { matchType } from "./options.ts";
-import { renderPage } from "./render.ts";
-import { formDataToObject, pathIdentifier } from "./identifiers.ts";
+import {
+  Dataset,
+  jsonApiPort,
+  matchType,
+  renderPage,
+  formDataToObject,
+  pathIdentifier,
+} from "./deps.ts";
 
-const ds = new Dataset(8485, "people.ds");
+const ds = new Dataset(jsonApiPort, "people.ds");
 
 /**
  * PeopleInterface describes a People obejct.

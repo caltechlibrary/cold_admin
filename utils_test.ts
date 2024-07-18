@@ -1,5 +1,8 @@
-import { assert, assertStrictEquals } from "@std/assert";
-import { formDataToObject, pathIdentifier } from "./identifiers.ts";
+import {
+  assertStrictEquals,
+  formDataToObject,
+  pathIdentifier,
+} from "./deps.ts";
 
 Deno.test("testPathIdentifier", () => {
   let uri = "http://localhost:8180/groups/LIGO";

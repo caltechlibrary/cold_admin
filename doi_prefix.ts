@@ -1,12 +1,15 @@
 /**
  * doi_prefix.ts implements the doi_prefix object handler for listing, creating, retrieving, updating and delete doi_prefix objects.
  */
-import { Dataset } from "./deps.ts";
-import { matchType } from "./options.ts";
-import { renderPage } from "./render.ts";
-import { formDataToObject, pathIdentifier } from "./identifiers.ts";
+import {
+  Dataset,
+  jsonApiPort,
+  renderPage,
+  formDataToObject,
+  pathIdentifier,
+} from "./deps.ts";
 
-const ds = new Dataset(8485, "doi_prefix.ds");
+const ds = new Dataset(jsonApiPort, "doi_prefix.ds");
 
 /**
  * DOIPrefixInterface
@@ -224,9 +227,9 @@ async function handlePostDOIPrefix(
       console.log(`send to dataset create object ${doi_prefix}`);
       if (!(await ds.create(doi_prefix, obj))) {
         console.log(
-          `failed to send to dataset create object ${doi_prefix}, ${
-            JSON.stringify(obj)
-          }`,
+          `failed to send to dataset create object ${doi_prefix}, ${JSON.stringify(
+            obj,
+          )}`,
         );
         return new Response(
           `<html>problem creating object ${doi_prefix}, try again later`,

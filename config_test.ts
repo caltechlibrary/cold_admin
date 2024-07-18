@@ -1,9 +1,8 @@
-import { assertStrictEquals } from "@std/assert";
-import { ConfigureHandler } from "./config.ts";
+import { assertStrictEquals, ConfigureHandler } from "./deps.ts";
 
 Deno.test("testConfigureHandler", () => {
   const ch = new ConfigureHandler();
-  let expectedApiUrl: string = "http://localhost:8485";
+  let expectedApiUrl: string = "http://localhost:8185";
   let expectedHtdocs: string = "htdocs";
   let expectedDebug: boolean = false;
 

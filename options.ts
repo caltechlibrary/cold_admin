@@ -33,13 +33,16 @@ export function matchType(source: any, target: any): any {
     return target as string;
   }
   if (sourceType == "number") {
-    return (new Number(target)).valueOf();
+    return new Number(target).valueOf();
   }
   if (sourceType === "boolean") {
     if (typeof target == "string") {
       const val = target.toLocaleLowerCase();
       if (
-        val === "true" || val === "t" || val === "1" || val === "yes" ||
+        val === "true" ||
+        val === "t" ||
+        val === "1" ||
+        val === "yes" ||
         val === "ok"
       ) {
         return true;
@@ -239,15 +242,13 @@ export class OptionsProcessor {
         let optname = parts.shift();
         let rest = parts.shift();
         // handle case where arg's value is next arg
-        if ((rest === undefined) || (rest === "")) {
-          if (
-            ((i + 1) < args.length) && (args[i + 1].startsWith("-") === false)
-          ) {
+        if (rest === undefined || rest === "") {
+          if (i + 1 < args.length && args[i + 1].startsWith("-") === false) {
             rest = args[i + 1];
             i++;
           }
         }
-        if ((optname !== undefined) && this.defaults.hasOwnProperty(optname)) {
+        if (optname !== undefined && this.defaults.hasOwnProperty(optname)) {
           const defval = this.defaults[optname];
           let optval = matchType(defval, rest);
           if (rest === "") {

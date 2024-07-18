@@ -1,4 +1,15 @@
-import { matchType } from "./options.ts";
+import { matchType } from "./deps.ts";
+
+export const jsonApiPort: number = 8185;
+export const httpPort: number = 8100;
+
+export interface ConfigInterface {
+  debug: boolean;
+  htdocs: string;
+  httpPort: number;
+  jsonApiPort: number;
+  jsonApiUrl: string;
+}
 
 /**
  * ConfigureHandler is a configuration builder for Cold UI.
@@ -6,7 +17,9 @@ import { matchType } from "./options.ts";
 export class ConfigureHandler {
   debug: boolean = false;
   htdocs: string = "htdocs";
-  apiUrl: string = "http://localhost:8485";
+  httpPort: number = httpPort;
+  jsonApiPort: number = jsonApiPort;
+  jsonApiUrl: string = `http://localhost:${this.jsonApiPort}`;
 
   /**
    * set will set the configuration attributes suitable to pass around to
@@ -19,15 +32,29 @@ export class ConfigureHandler {
   set(key: string, value: any): boolean {
     if (key === "debug") {
       this.debug = matchType(this.debug, value);
-      return (this.debug !== undefined);
+      return this.debug !== undefined;
     }
     if (key === "htdocs") {
       this.htdocs = matchType(this.htdocs, value);
-      return (this.htdocs !== undefined);
+      return this.htdocs !== undefined;
+    }
+    if (key === "httpPort") {
+      this.httpPort = matchType(this.httpPort, value);
+      return this.httpPort !== undefined;
     }
     if (key === "apiUrl") {
       this.apiUrl = matchType(this.apiUrl, value);
-      return (this.apiUrl !== undefined);
+      return this.apiUrl !== undefined;
+    }
+    if (key === "jsonApiPort") {
+      this.jsonApiPort = matchType(this.jsonApiPort, value);
+      this.apiUrl = `http://localhost:${this.jsonApiPort}`;
+      return this.jsonApiPort !== undefined;
+    }
+    if (key === "jsonApiPort") {
+      this.jsonApiPort = matchType(this.jsonApiPort, value);
+      this.jsonApiUrl = `http://localhost:${this.jsonApiPort}`;
+      return this.jsonApiPort !== undefined && this.jsonApiUrl !== undefined;
     }
     return false;
   }
@@ -36,11 +63,13 @@ export class ConfigureHandler {
    * cfg returns a configuration object suitable to pass to the handlers.
    * @returns {debug: boolean, htdocs: string, apiUrl: string}
    */
-  cfg(): { debug: boolean; htdocs: string; apiUrl: string } {
+  cfg(): ConfigInterface {
     return {
       debug: this.debug,
       htdocs: this.htdocs,
-      apiUrl: this.apiUrl,
+      httpPort: this.httpPort,
+      jsonApiUrl: this.jsonApiUrl,
+      jsonApiPort: this.jsonApiPort,
     };
   }
 }

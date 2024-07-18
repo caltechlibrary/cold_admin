@@ -1,13 +1,13 @@
 #!/usr/bin/env deno
 
-import { common_mark, extract, makePage, path } from "./deps.ts";
+import { common_mark, extractYaml, makePage, path } from "./deps.ts";
 
 export async function renderHtdocs(startDir: string) {
   for await (const dirEntry of Deno.readDir(startDir)) {
     const f_name = dirEntry.name as unknown as string;
     if (f_name.endsWith(".md")) {
       console.log(`Reading ${path.join(startDir, f_name)}`);
-      const text = extract(
+      const text = extractYaml(
         await Deno.readTextFile(path.join(startDir, f_name)),
       );
 

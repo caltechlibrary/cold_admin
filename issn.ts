@@ -1,12 +1,15 @@
 /**
  * issn.ts implements the issn object handler for listing, creating, retrieving, updating and delete issn objects.
  */
-import { Dataset } from "./deps.ts";
-import { matchType } from "./options.ts";
-import { renderPage } from "./render.ts";
-import { formDataToObject, pathIdentifier } from "./identifiers.ts";
+import {
+  Dataset,
+  jsonApiPort,
+  renderPage,
+  formDataToObject,
+  pathIdentifier,
+} from "./deps.ts";
 
-const ds = new Dataset(8485, "issn.ds");
+const ds = new Dataset(jsonApiPort, "issn.ds");
 
 /**
  * ISSNInterface
@@ -36,7 +39,7 @@ export class ISSN implements ISSNInterface {
   updated: string = "";
 
   migrateCsv(row: any): boolean {
-    if (row.hasOwnProperty("ISSN") && (row.issn !== "")) {
+    if (row.hasOwnProperty("ISSN") && row.issn !== "") {
       this.issn = row.ISSN;
     } else {
       return false;
@@ -235,13 +238,10 @@ async function handlePostISSN(
       issn = obj.issn as unknown as string;
     }
     if (obj.issn !== issn) {
-      return new Response(
-        `mismatched issn identifier ${issn} != ${obj.issn}`,
-        {
-          status: 400,
-          headers: { "content-type": "text/html" },
-        },
-      );
+      return new Response(`mismatched issn identifier ${issn} != ${obj.issn}`, {
+        status: 400,
+        headers: { "content-type": "text/html" },
+      });
     }
     if (isCreateObject) {
       console.log(`send to dataset create object ${issn}`);

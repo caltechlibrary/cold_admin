@@ -1,10 +1,7 @@
 /**
- * identifiers.ts modules holds the method related to handling identifiers. E.g. validatin
+ * utils.ts modules holds the method related to handling identifiers. E.g. validatin
  * and extraction from the URL pathname.
  */
-
-import { PeopleInterface } from "./people.ts";
-import { GroupInterface } from "./groups.ts";
 
 /**
  * pathIdentifier extracts the identifier from the last element of the URL pathname.

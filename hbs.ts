@@ -1,10 +1,5 @@
+import { walk, globToRegExp, join, normalize } from "./deps.ts";
 import HandlebarsJS from "https://esm.sh/handlebars@4.7.8";
-import { walk } from "https://deno.land/std@0.181.0/fs/mod.ts";
-import {
-  globToRegExp,
-  join,
-  normalize,
-} from "https://deno.land/std@0.181.0/path/mod.ts";
 const { readFile } = Deno;
 
 export { HandlebarsJS };
@@ -127,7 +122,8 @@ export class Handlebars {
       for (const path of paths) {
         const templateName: string = path
           .replace(
-            getNormalizePath(this.config.baseDir) + "/" +
+            getNormalizePath(this.config.baseDir) +
+              "/" +
               this.config!.partialsDir,
             "",
           )
@@ -148,12 +144,9 @@ export class Handlebars {
   private async getTemplatesPath(path: string): Promise<string[]> {
     const arr: string[] = [];
 
-    for await (
-      const w of walk(
-        path,
-        { match: [globToRegExp("**/*" + this.config!.extname)] },
-      )
-    ) {
+    for await (const w of walk(path, {
+      match: [globToRegExp("**/*" + this.config!.extname)],
+    })) {
       if (w.isFile) {
         arr.push(getNormalizePath(w.path));
       }

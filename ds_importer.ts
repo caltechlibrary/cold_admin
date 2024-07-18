@@ -2,8 +2,15 @@
  * ds_importer.ts this is a TypeScript program that imports data from a CSV file into a dataset
  * collection via datasetd JSON API.
  */
-import { Dataset, DatasetApiClient, Group, ISSN, People } from "./deps.ts";
-import { parse as csv_parse } from "@std/csv";
+import {
+  Dataset,
+  DatasetApiClient,
+  Group,
+  ISSN,
+  People,
+  csv_parse,
+  jsonApiPort,
+} from "./deps.ts";
 
 /**
  * dsImporter takes a CSV file and for each row turns it into an object and
@@ -25,13 +32,13 @@ async function dsImporter(
   const ds = new Dataset(port, c_name);
 
   const text = (await Deno.readTextFile(csv_file)).trim();
-  const row_count = function (text: string): number {
+  const row_count = (function (text: string): number {
     const matches = text.match(/\n/g);
     if (matches !== null) {
       return matches.length;
     }
     return 0;
-  }(text);
+  })(text);
   console.log("number of rows read", row_count);
   const sheet = await csv_parse(text, { skipFirstRow: true });
   console.log("number of objects found", sheet.length);
@@ -39,14 +46,14 @@ async function dsImporter(
   let success_count = 0;
   for (const i in sheet) {
     if (sheet[i].hasOwnProperty("ISSN")) {
-      const key: string = function (key) {
+      const key: string = (function (key) {
         if (key === undefined) {
           return "";
         }
         return key;
-      }(sheet[i].ISSN);
+      })(sheet[i].ISSN);
       const obj = new ISSN();
-      if (!await obj.migrateCsv(sheet[i])) {
+      if (!(await obj.migrateCsv(sheet[i]))) {
         console.log(`failed to migrate row (${i})`, i, "of", csv_file);
         error_count += 1;
         continue;
@@ -59,14 +66,14 @@ async function dsImporter(
         error_count += 1;
       }
     } else if (sheet[i].hasOwnProperty("key")) {
-      const key: string = function (key) {
+      const key: string = (function (key) {
         if (key === undefined) {
           return "";
         }
         return key;
-      }(sheet[i].key);
+      })(sheet[i].key);
       const obj = new Group();
-      if (!await obj.migrateCsv(sheet[i])) {
+      if (!(await obj.migrateCsv(sheet[i]))) {
         console.log("failed to migrate row", i, "of", csv_file);
         error_count += 1;
         continue;
@@ -79,14 +86,14 @@ async function dsImporter(
         error_count += 1;
       }
     } else if (sheet[i].hasOwnProperty("cl_people_id")) {
-      const key = function (key) {
+      const key = (function (key) {
         if (key === undefined) {
           return "";
         }
         return key;
-      }(sheet[i].cl_people_id);
+      })(sheet[i].cl_people_id);
       const obj = new People();
-      if (!await obj.migrateCsv(sheet[i])) {
+      if (!(await obj.migrateCsv(sheet[i]))) {
         console.log("failed to migrate row", i, "of", csv_file);
         error_count += 1;
         continue;
@@ -113,7 +120,7 @@ async function dsImporter(
 /*
  * main
  */
-const ds_port = 8485;
+const ds_port = jsonApiPort;
 if (Deno.args.length != 2) {
   console.log("USAGE: deno ds_importer.ts DATASET_C_NAME CSV_FILENAME");
   console.log("NOTE: datasetd must be running on port 8485");

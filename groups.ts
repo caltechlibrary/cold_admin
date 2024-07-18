@@ -1,12 +1,16 @@
 /**
  * groups.ts implements the groups object handler for listing, creating, retrieving, updating and delete group objects.
  */
-import { Dataset } from "./deps.ts";
-import { matchType } from "./options.ts";
-import { renderPage } from "./render.ts";
-import { formDataToObject, pathIdentifier } from "./identifiers.ts";
+import {
+  Dataset,
+  jsonApiPort,
+  matchType,
+  renderPage,
+  formDataToObject,
+  pathIdentifier,
+} from "./deps.ts";
 
-const ds = new Dataset(8485, "groups.ds");
+const ds = new Dataset(jsonApiPort, "groups.ds");
 
 /**
  * GroupInterface
