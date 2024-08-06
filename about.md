@@ -46,6 +46,7 @@ lists held in dataset collections.
 - HTML
 - JavaScript
 - JSON
+- SQL
 - Typescript
 - YAML
 

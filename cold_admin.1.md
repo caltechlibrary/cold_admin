@@ -1,6 +1,6 @@
 %cold_admin(1) user manual | 0.0.1 2024-08-06
 % R. S.Doiel
-% 2024-08-06 1d71bf5
+% 2024-08-06 367ecf3
 
 # NAME
 
