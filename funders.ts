@@ -2,14 +2,14 @@
  * funders.ts implements the funder object handler for listing, creating, retrieving, updating and delete funder objects.
  */
 import {
+  apiPort,
   Dataset,
   formDataToObject,
-  jsonApiPort,
   pathIdentifier,
   renderPage,
 } from "./deps.ts";
 
-const ds = new Dataset(jsonApiPort, "funders.ds");
+const ds = new Dataset(apiPort, "funders.ds");
 
 /**
  * FunderInterface
@@ -116,8 +116,7 @@ export class Funder implements FunderInterface {
  * - `DELETE /{id}` delete an object
  *
  * @param {Request} req holds the request to the funder handler
- * @param {debug: boolean, htdocs: string} options holds options passed from
- * ColdUIHandler.
+ * @param {debug: boolean, htdocs: string} options holds options passed from ColdReadWriteHandlerr.
  * @returns {Response}
  */
 export async function handleFunders(

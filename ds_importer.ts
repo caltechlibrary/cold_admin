@@ -3,12 +3,12 @@
  * collection via datasetd JSON API.
  */
 import {
+  apiPort,
   csv_parse,
   Dataset,
   DatasetApiClient,
   Group,
   ISSN,
-  jsonApiPort,
   People,
 } from "./deps.ts";
 
@@ -120,7 +120,7 @@ async function dsImporter(
 /*
  * main
  */
-const ds_port = jsonApiPort;
+const ds_port = apiPort;
 if (Deno.args.length != 2) {
   console.log("USAGE: deno ds_importer.ts DATASET_C_NAME CSV_FILENAME");
   console.log("NOTE: datasetd must be running on port 8485");

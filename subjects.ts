@@ -2,14 +2,14 @@
  * subjects.ts implements the subject object handler for listing, creating, retrieving, updating and delete subject objects.
  */
 import {
+  apiPort,
   Dataset,
   formDataToObject,
-  jsonApiPort,
   pathIdentifier,
   renderPage,
 } from "./deps.ts";
 
-const ds = new Dataset(jsonApiPort, "subjects.ds");
+const ds = new Dataset(apiPort, "subjects.ds");
 
 /**
  * SubjectInterface
@@ -99,8 +99,7 @@ export class Subject implements SubjectInterface {
  * - `DELETE /{id}` delete an object
  *
  * @param {Request} req holds the request to the subject handler
- * @param {debug: boolean, htdocs: string} options holds options passed from
- * ColdUIHandler.
+ * @param {debug: boolean, htdocs: string} options holds options passed from ColdReadWriteHandlerr.
  * @returns {Response}
  */
 export async function handleSubjects(

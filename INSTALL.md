@@ -1,14 +1,14 @@
 
-Installation for development of **cold_ui**
-===========================================
+Installation for development of **cold_admin**
+==============================================
 
-**cold_ui** is experimental software providing a human user interface for managing controlled object lists and datum (e.g. controlled vocabularies) hosted in a dataset collections. The application is split with two layers of responsibility. The UI is written in Typescript and run via [Deno](https://deno.land). A JSON API used by cold_ui is provided by datasetd for managing the people, groups and vocabularies collections.
+**cold_admin** is experimental software providing an administrative interface for managing controlled object lists and datum (e.g. controlled vocabularies) hosted in a dataset collections. The application is split with two layers of responsibility. The Admin UI is written in Typescript and run via [Deno](https://deno.land). A JSON API used by __cold_admin__ is provided by datasetd for managing the people, groups and vocabularies collections.
 
-**cold_ui** can be configured via the command, the environment or YAML configuration file.
+**cold_admin** can be configured via the command, shell environment or YAML file.
 
-**cold_ui** is intended to run behind a front facing web server (e.g. Apache 2 or NginX) that access control and authentication. This can be configured in Apache 2 or NginX by use of Shibboleth or BasicAuth.  An example apache2 configuration block is included in the source repository for **cold**. It will require adaptation to your specific web server configuration.
+**cold_admin** is intended to run behind a front facing web server (e.g. Apache 2 or NginX) that implements access control and authentication. This can be configured in Apache 2 or NginX by use of Shibboleth or BasicAuth.  An example apache2 configuration block is included in the source repository for **cold**. It will require adaptation to your specific web server configuration.
 
-You will need to build **cold_ui** for your specific system configuration.  You need to rebuild the static web content (very likely) you'll need to have Git, GNU Make, Pandoc 3 and Deno >= 1.44 available and working on your system.
+You will need to build **cold_admin** for your specific system configuration.  You need to rebuild the static web content (very likely) you'll need to have Git, GNU Make, Pandoc 3 and Deno >= 1.45.5 available and working on your system.
 
 Quick install with curl or irm
 ------------------------------
@@ -19,7 +19,7 @@ macOS, Linux and if you're using Windows with the Unix subsystem. This
 would be run from your shell (e.g. Terminal on macOS).
 
 ~~~
-curl https://caltechlibrary.github.io/cold_ui/installer.sh | sh
+curl https://caltechlibrary.github.io/cold_admin/installer.sh | sh
 ~~~
 
 This will install dataset and datasetd in your `$HOME/bin` directory.
@@ -28,7 +28,7 @@ If you are running Windows 10 or 11 use the Powershell command
 below.
 
 ~~~
-irm https://caltechlibrary.github.io/cold_ui/installer.ps1 | iex
+irm https://caltechlibrary.github.io/cold_admin/installer.ps1 | iex
 ~~~
 
 Required software
@@ -42,10 +42,10 @@ Adjusting the web content to your host system requires the following
 4. Pandoc > 3 (both cli and server)
 5. GNU Make
 
-Running cold_ui on Unix systems
+Running cold_admin on Unix systems
 -------------------------------
 
-NOTE: Currently Pandoc 2 ships with many packaging systems (e.g. Ubuntu 22.04 LTS). **cold_ui** requires Pandoc 3. To get Pandoc v3 you can check the [Pandoc](https://pandoc.org) [Download Page](https://pandoc.org/downloads) for your platform. You can also compile Pandoc but you will need a modern Haskell installed (e.g. via [gchup](https://www.haskell.org/ghcup/)). 
+NOTE: Currently Pandoc 2 ships with many packaging systems (e.g. Ubuntu 22.04 LTS). **cold_admin** requires Pandoc 3. To get Pandoc v3 you can check the [Pandoc](https://pandoc.org) [Download Page](https://pandoc.org/downloads) for your platform. You can also compile Pandoc but you will need a modern Haskell installed (e.g. via [gchup](https://www.haskell.org/ghcup/)). 
 
 Here's an example of the commands you could use for development.
 
@@ -87,14 +87,14 @@ cp -vi $(find . -type f -name pandoc) $HOME/bin/pandoc-server
 cd
 ~~~
 
-Building cold_ui on Linux/macOS
--------------------------------
+Building cold_admin on Linux/macOS
+----------------------------------
 
 1. Clone the Git repository for cold and run with Make
     a. `cd`
-    b. `git clone https://github.com/caltechlibrary/cold_ui src/github.com/caltechlibrary/cold_ui`
-    b. `cd src/github.com/caltechlibrary/cold_ui`
-2. Run `make` to compile cold_ui
+    b. `git clone https://github.com/caltechlibrary/cold_admin src/github.com/caltechlibrary/cold_admin`
+    b. `cd src/github.com/caltechlibrary/cold_admin`
+2. Run `make` to compile cold_admin
 3. Run `make dataset_collections` to create SQLite3 based dataset collections for people, groups, vocabularies
 4. Run tmux, launch datasetd then split the window and our deno task
     a. tmux
@@ -107,9 +107,9 @@ Get datasetd going
 Here's an example of the steps I'd take on my M1 Mac Mini. 
 
 ~~~
-git clone git@github.com:caltechlibrary/cold_ui \
-    src/github.com/caltechlibrary/cold_ui
-cd src/github.com/caltechlibrary/cold_ui
+git clone git@github.com:caltechlibrary/cold_admin \
+    src/github.com/caltechlibrary/cold_admin
+cd src/github.com/caltechlibrary/cold_admin
 make
 make dataset_collections
 tmux

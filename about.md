@@ -2,15 +2,15 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
-title: cold_ui
-abstract: "cold_ui is a localhost web service for managing controlled
+title: cold_admin
+abstract: "cold_admin is a localhost web service for managing controlled
 object lists held in dataset collections."
 authors:
   - family-names: Doiel
     given-names: R. S.
     orcid: https://orcid.org/0000-0003-0900-6903
 
-repository-code: https://github.com/caltechlibrary/cold_ui
+repository-code: https://github.com/caltechlibrary/cold_admin
 version: 0.0.1
 
 keywords:
@@ -24,7 +24,7 @@ keywords:
 About this software
 ===================
 
-## cold_ui 0.0.1
+## cold_admin 0.0.1
 
 ### Authors
 
@@ -32,12 +32,12 @@ About this software
 
 
 
-cold_ui is a localhost web service for managing controlled object lists
-held in dataset collections.
+cold_admin is a localhost web service for managing controlled object
+lists held in dataset collections.
 
 
-- GitHub: <https://github.com/caltechlibrary/cold_ui>
-- Issues: <https://github.com/caltechlibrary/cold_ui/issues>
+- GitHub: <https://github.com/caltechlibrary/cold_admin>
+- Issues: <https://github.com/caltechlibrary/cold_admin/issues>
 
 
 ### Programming languages
@@ -51,12 +51,11 @@ held in dataset collections.
 
 ### Software Requirements
 
-- Deno &gt;= 1.44.4
+- Deno &gt;= 1.45.5
 - GNU Make
-- Pandoc &gt;= 3
+- Pandoc &gt;= 3.1
 - datasetd &gt;= 2.1
 
 ### Operating Systems
 
 - Linux
-- macOS

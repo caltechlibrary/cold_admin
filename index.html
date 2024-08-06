@@ -22,22 +22,34 @@
 </nav>
 
 <section>
-<h1 id="cold-ui">COLD UI</h1>
-<p>This project implemented the human user interface for <a
+<h1 id="cold-admin">COLD Admin</h1>
+<blockquote>
+<p>COLD - controlled object lists and datum</p>
+</blockquote>
+<p>This project implements the administrative interface for <a
 href="https://github.com/caltechlibrary/cold">cold</a>. It is
 implemented in TypeScript, compiled into an executable via <a
 href="https://deno.land">Deno</a>. It is intended to run as a service
-behind the <a href="https://github.com/caltechlibrary/newt">Newt</a>
-data router.</p>
+via systemd in Linux or other POSIX system. Objects are stored in <a
+href="https://caltechlibrary.github.io/dataset">dataset</a> collection.
+The collections are accessed via JSON API provided by <a
+href="https://caltechlibrary.github.io/datatset/datasetd.1.html">datasetd</a>.
+Dataset collections are using <a href="https://sqlite.org">SQLite 3</a>
+for object storage.j</p>
 <h2 id="requirements">Requirements</h2>
-<ul>
-<li><a href="https://deno.land">Deno</a> &gt;= 1.44</li>
-<li><a href="https://pandoc.org">Pandoc</a> &gt;= 3</li>
-</ul>
+<p>= <a href="https://github.com/caltechlibrary/dataset">Dataset</a>
+&gt;= 2.1.3 - <a href="https://deno.land">Deno</a> &gt;= 1.45.5 (used to
+build the app and compile services) - <a
+href="https://pandoc.org">Pandoc</a> &gt;= 3 (render documentation and
+version.ts)</p>
 <h2 id="additional-resources">Additional Resources</h2>
 <ul>
-<li>COLD UI <a href="user_manual.html">User Manual</a></li>
+<li>COLD Admin <a href="user_manual.html">User Manual</a></li>
 </ul>
+<h2 id="report-problems-and-issues">Report problems and issues</h2>
+<p>See <a
+href="https://github.com/caltechlibrary/cold_admin/issues">Github
+Issues</a></p>
 </section>
 
 <footer>

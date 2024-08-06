@@ -1,9 +1,9 @@
 #
 # A Deno project makefile
 #
-PROJECT = cold_ui
+PROJECT = cold_admin
 
-PROGRAMS = ds_importer cold_ui
+PROGRAMS = ds_importer cold_admin
 
 DIST_FOLDERS = bin/* man/* htdocs/*
 
@@ -35,18 +35,20 @@ PREFIX = $(HOME)
 
 TS_MODS = $(shell ls -1 *.ts | grep -v _test.ts | grep -v deps.ts | grep -v version.ts)
 
-build: version.ts CITATION.cff about.md $(TS_MODS) docs bin compile htdocs installer.sh installer.ps1
+build: version.ts CITATION.cff about.md $(TS_MODS) docs htdocs bin compile installer.sh installer.ps1
 
 bin: .FORCE
 	mkdir -p bin
 
 compile: $(TS_MODS)
-	deno check --all cold_ui.ts
-	deno check --all ds_importer.ts
+	deno check *.ts #--all cold_admin.ts
+	#deno check --all cold_admin.ts
+	#deno check --all ds_importer.ts
 	deno task build
+	./bin/cold_admin$(EXT) --help >cold_admin.1.md
 
 check: $(TS_MODS)
-	deno check --all cold_ui.ts
+	deno check --all cold_admin.ts
 	deno check --all ds_importer.ts
 	deno check --all dataset.ts
 	deno check --all groups.ts
@@ -181,23 +183,23 @@ dist/Linux-aarch64: .FORCE
 
 dist/macOS-x86_64: .FORCE
 	@mkdir -p dist/bin
-	@for FNAME in $(PROGRAMS); do deno compile --output dist/bin/$$FNAME --target x86_64-apple-darwin cold_ui.ts "$${FNAME}.ts"; done
+	@for FNAME in $(PROGRAMS); do deno compile --output dist/bin/$$FNAME --target x86_64-apple-darwin cold_admin.ts "$${FNAME}.ts"; done
 	@cd dist && zip -r $(PROJECT)-v$(VERSION)-macOS-x86_64.zip LICENSE codemeta.json CITATION.cff *.md $(DIST_FOLDERS)
 	@rm -fR dist/bin
 
 dist/macOS-arm64: .FORCE
 	@mkdir -p dist/bin
-	@for FNAME in $(PROGRAMS); do deno compile --output dist/bin/$$FNAME --target aarch64-apple-darwin cold_ui.ts "$${FNAME}.ts"; done
+	@for FNAME in $(PROGRAMS); do deno compile --output dist/bin/$$FNAME --target aarch64-apple-darwin cold_admin.ts "$${FNAME}.ts"; done
 	@cd dist && zip -r $(PROJECT)-v$(VERSION)-macOS-arm64.zip LICENSE codemeta.json CITATION.cff *.md $(DIST_FOLDERS)
 	@rm -fR dist/bin
 
 dist/Windows-x86_64: .FORCE
 	@mkdir -p dist/bin
-	@for FNAME in $(PROGRAMS); do deno compile --output "dist/bin/$${FNAME}.exe" --target x86_64-pc-windows-msvc cold_ui.ts "$${FNAME}.ts"; done
+	@for FNAME in $(PROGRAMS); do deno compile --output "dist/bin/$${FNAME}.exe" --target x86_64-pc-windows-msvc cold_admin.ts "$${FNAME}.ts"; done
 	@cd dist && zip -r $(PROJECT)-v$(VERSION)-Windows-x86_64.zip LICENSE codemeta.json CITATION.cff *.md $(DIST_FOLDERS)
 	@rm -fR dist/bin
 
-distribute_docs: man CITATION.cff about.md .FORCE
+distribute_docs: man htdocs CITATION.cff about.md .FORCE 
 	if [ -d dist ]; then rm -fR dist; fi
 	mkdir -p dist
 	cp -v codemeta.json dist/

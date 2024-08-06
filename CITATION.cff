@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
-title: "cold_ui"
-abstract: "cold_ui is a localhost web service for managing controlled
+title: "cold_admin"
+abstract: "cold_admin is a localhost web service for managing controlled
 object lists held in dataset collections."
 authors:
   - family-names: Doiel
@@ -11,7 +11,7 @@ authors:
 
 
 
-repository-code: "https://github.com/caltechlibrary/cold_ui"
+repository-code: "https://github.com/caltechlibrary/cold_admin"
 version: 0.0.1
 
 keywords: [ "metadata", "objects", "controlled vocabulary" ]

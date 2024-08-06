@@ -37,9 +37,8 @@ function helpText(helpOpt: { [k: string]: string }): string {
 
 # DESCRIPTION
 
-{app_name} provides the human user interface for cold. It uses
-a set of dataset collections for persistence and relies on datasetd
-for JSON API to each collection.
+{app_name} provides the admin interface for cold. Cold is implemented using dataset collections
+for object persistence and relies on datasetd for JSON API to each collection.
 
 # OPTIONS
 

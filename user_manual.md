@@ -1,7 +1,7 @@
 
 # User Manual
 
-- [cold ui](cold_ui.1.md)
+- [cold admim](cold_admin.1.md)
 - [developer docs](docs/)
 - [installation](INSTALL.md)
 

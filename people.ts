@@ -2,15 +2,15 @@
  * people.ts implements the people object handler for listing, creating, retrieving, updating and delete people objects.
  */
 import {
+  apiPort,
   Dataset,
   formDataToObject,
-  jsonApiPort,
   matchType,
   pathIdentifier,
   renderPage,
 } from "./deps.ts";
 
-const ds = new Dataset(jsonApiPort, "people.ds");
+const ds = new Dataset(apiPort, "people.ds");
 
 /**
  * PeopleInterface describes a People obejct.
@@ -208,8 +208,7 @@ export class People implements PeopleInterface {
  * - `DELETE /{clpid}` delete and object
  *
  * @param {Request} req holds the request to the people handler
- * @param {debug: boolean, htdocs: string} options holds options passed from
- * ColdUIHandler.
+ * @param {debug: boolean, htdocs: string} options holds options passed from ColdReadWriteHandlerr.
  * @returns {Response}
  */
 export async function handlePeople(

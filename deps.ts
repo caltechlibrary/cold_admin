@@ -20,7 +20,7 @@ export {
 } from "https://caltechlibrary.github.io/ts_dataset/mod.ts";
 
 /* COLD related packages */
-export { ConfigureHandler, jsonApiPort, httpPort } from "./config.ts";
+export { ConfigureHandler, apiPort, httpPort } from "./config.ts";
 export { makePage, renderPage } from "./render.ts";
 export { appInfo, fmtHelp } from "./version.ts";
 export { OptionsProcessor, matchType } from "./options.ts";
@@ -31,6 +31,6 @@ export { handleSubjects, Subject } from "./subjects.ts";
 export { handleISSN, ISSN } from "./issn.ts";
 export { handleDOIPrefix, DOIPrefix } from "./doi_prefix.ts";
 export { formDataToObject, pathIdentifier } from "./utils.ts";
-export { ColdReadWriteHandler, ColdReadOnlyHandler } from "./cold_ui.ts";
+export { ColdReadWriteHandler, ColdReadOnlyHandler } from "./cold_admin.ts";
 
 

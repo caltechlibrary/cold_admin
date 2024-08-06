@@ -1,5 +1,9 @@
 import { walk } from "https://deno.land/std@0.224.0/fs/walk.ts";
-import  { globToRegExp, join, normalize } from "https://deno.land/std@0.224.0/path/mod.ts";
+import {
+  globToRegExp,
+  join,
+  normalize,
+} from "https://deno.land/std@0.224.0/path/mod.ts";
 import HandlebarsJS from "https://esm.sh/handlebars@4.7.8";
 const { readFile } = Deno;
 

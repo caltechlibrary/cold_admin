@@ -14,20 +14,17 @@
             "givenName": "R. S."
         }
     ],
-    "codeRepository": "https://github.com/caltechlibrary/cold_ui",
-    "dateCreated": "2024-06-24",
-    "dateModified": "2024-06-29",
-    "description": "cold_ui is a localhost web service for managing controlled object lists held in dataset collections.",
-    "downloadUrl": "https://github.com/caltechlibrary/cold_ui/release/latest",
+    "codeRepository": "https://github.com/caltechlibrary/cold_admin",
+    "description": "cold_admin is a localhost web service for managing controlled object lists held in dataset collections.",
+    "downloadUrl": "https://github.com/caltechlibrary/cold_admin/release/latest",
     "keywords": [
         "metadata",
         "objects",
         "controlled vocabulary"
     ],
-    "name": "cold_ui",
+    "name": "cold_admin",
     "operatingSystem": [
-        "Linux",
-        "macOS"
+        "Linux"
     ],
     "programmingLanguage": [
         "CSS",
@@ -39,12 +36,16 @@
     ],
     "releaseNotes": "Proof of concept",
     "softwareRequirements": [
-        "Deno >= 1.44.4",
+        "Deno >= 1.45.5",
         "GNU Make",
-        "Pandoc >= 3",
+        "Pandoc >= 3.1",
         "datasetd >= 2.1"
     ],
     "version": "0.0.1",
+    "dateCreated": "2024-06-24",
+    "dateModified": "2024-08-06",
+	"dateRelease": "2024-08-06",
+    "releaseNotes": "Cold Admin is a proof of concept and subject to change and not suitable for production.",
     "developmentStatus": "concept",
-    "issueTracker": "https://github.com/caltechlibrary/cold_ui/issues"
+    "issueTracker": "https://github.com/caltechlibrary/cold_admin/issues"
 }

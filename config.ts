@@ -1,14 +1,14 @@
 import { matchType } from "./deps.ts";
 
-export const jsonApiPort: number = 8185;
+export const apiPort: number = 8185;
 export const httpPort: number = 8100;
 
 export interface ConfigInterface {
   debug: boolean;
   htdocs: string;
   httpPort: number;
-  jsonApiPort: number;
-  jsonApiUrl: string;
+  apiPort: number;
+  apiUrl: string;
 }
 
 /**
@@ -18,8 +18,8 @@ export class ConfigureHandler {
   debug: boolean = false;
   htdocs: string = "htdocs";
   httpPort: number = httpPort;
-  jsonApiPort: number = jsonApiPort;
-  jsonApiUrl: string = `http://localhost:${this.jsonApiPort}`;
+  apiPort: number = apiPort;
+  apiUrl: string = `http://localhost:${this.apiPort}`;
 
   /**
    * set will set the configuration attributes suitable to pass around to
@@ -46,15 +46,10 @@ export class ConfigureHandler {
       this.apiUrl = matchType(this.apiUrl, value);
       return this.apiUrl !== undefined;
     }
-    if (key === "jsonApiPort") {
-      this.jsonApiPort = matchType(this.jsonApiPort, value);
-      this.apiUrl = `http://localhost:${this.jsonApiPort}`;
-      return this.jsonApiPort !== undefined;
-    }
-    if (key === "jsonApiPort") {
-      this.jsonApiPort = matchType(this.jsonApiPort, value);
-      this.jsonApiUrl = `http://localhost:${this.jsonApiPort}`;
-      return this.jsonApiPort !== undefined && this.jsonApiUrl !== undefined;
+    if (key === "apiPort") {
+      this.apiPort = matchType(this.apiPort, value);
+      this.apiUrl = `http://localhost:${this.apiPort}`;
+      return this.apiPort !== undefined;
     }
     return false;
   }
@@ -68,8 +63,8 @@ export class ConfigureHandler {
       debug: this.debug,
       htdocs: this.htdocs,
       httpPort: this.httpPort,
-      jsonApiUrl: this.jsonApiUrl,
-      jsonApiPort: this.jsonApiPort,
+      apiUrl: this.apiUrl,
+      apiPort: this.apiPort,
     };
   }
 }

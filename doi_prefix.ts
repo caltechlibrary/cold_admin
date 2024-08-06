@@ -2,14 +2,14 @@
  * doi_prefix.ts implements the doi_prefix object handler for listing, creating, retrieving, updating and delete doi_prefix objects.
  */
 import {
+  apiPort,
   Dataset,
   formDataToObject,
-  jsonApiPort,
   pathIdentifier,
   renderPage,
 } from "./deps.ts";
 
-const ds = new Dataset(jsonApiPort, "doi_prefix.ds");
+const ds = new Dataset(apiPort, "doi_prefix.ds");
 
 /**
  * DOIPrefixInterface
@@ -93,8 +93,7 @@ export class DOIPrefix implements DOIPrefixInterface {
  * - `DELETE /{id}` delete an object
  *
  * @param {Request} req holds the request to the doi_prefix handler
- * @param {debug: boolean, htdocs: string} options holds options passed from
- * ColdUIHandler.
+ * @param {debug: boolean, htdocs: string} options holds options passed from ColdReadWriteHandlerr.
  * @returns {Response}
  */
 export async function handleDOIPrefix(
