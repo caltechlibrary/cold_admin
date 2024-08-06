@@ -37,7 +37,7 @@ Required software
 Adjusting the web content to your host system requires the following
 
 1. Git (to clone the cold repository on GitHub)
-2. Deno >= 1.44
+2. Deno >= 1.45.5
 2. dataset >= 2.1
 4. Pandoc > 3 (both cli and server)
 5. GNU Make

@@ -1,9 +1,5 @@
-//import * as fs from "https://deno.land/std@0.224.0/fs/walk.ts";
-/* export { ensureFile, copy, ensureDir, move, walk } from "https://deno.land/std@0.224.0/fs/mod.ts"; */
 import { walk } from "https://deno.land/std@0.224.0/fs/walk.ts";
-/* "https://deno.land/std@0.224.0/fs/walk/mod.ts"; */
 import  { globToRegExp, join, normalize } from "https://deno.land/std@0.224.0/path/mod.ts";
-//import { globToRegExp, join, normalize, walk } from "./deps.ts";
 import HandlebarsJS from "https://esm.sh/handlebars@4.7.8";
 const { readFile } = Deno;
 

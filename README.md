@@ -5,7 +5,7 @@ This project implemented the human user interface for [cold](https://github.com/
 
 ## Requirements
 
-- [Deno](https://deno.land) >= 1.44
+- [Deno](https://deno.land) >= 1.45.5
 - [Pandoc](https://pandoc.org) >= 3
 
 ## Additional Resources
