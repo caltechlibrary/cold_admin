@@ -1,14 +1,7 @@
 /**
  * render.ts holds the page rendering functions for cold_ui.
  */
-//import { Handlebars, HandlebarsConfig } from "./hbs.ts";
-import {
-  Handlebars,
-  HandlebarsConfig,
-} from "https://deno.land/x/handlebars/mod.ts";
-import * as path from "@std/path";
-
-const cwd: string = Deno.cwd();
+import { Handlebars, HandlebarsConfig } from "./hbs.ts";
 
 /**
  * Default uses this config:

@@ -3,13 +3,13 @@
  * collection via datasetd JSON API.
  */
 import {
+  csv_parse,
   Dataset,
   DatasetApiClient,
   Group,
   ISSN,
-  People,
-  csv_parse,
   jsonApiPort,
+  People,
 } from "./deps.ts";
 
 /**

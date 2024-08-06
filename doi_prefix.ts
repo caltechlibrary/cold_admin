@@ -3,10 +3,10 @@
  */
 import {
   Dataset,
-  jsonApiPort,
-  renderPage,
   formDataToObject,
+  jsonApiPort,
   pathIdentifier,
+  renderPage,
 } from "./deps.ts";
 
 const ds = new Dataset(jsonApiPort, "doi_prefix.ds");
@@ -227,9 +227,11 @@ async function handlePostDOIPrefix(
       console.log(`send to dataset create object ${doi_prefix}`);
       if (!(await ds.create(doi_prefix, obj))) {
         console.log(
-          `failed to send to dataset create object ${doi_prefix}, ${JSON.stringify(
-            obj,
-          )}`,
+          `failed to send to dataset create object ${doi_prefix}, ${
+            JSON.stringify(
+              obj,
+            )
+          }`,
         );
         return new Response(
           `<html>problem creating object ${doi_prefix}, try again later`,

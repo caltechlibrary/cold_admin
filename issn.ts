@@ -3,10 +3,10 @@
  */
 import {
   Dataset,
-  jsonApiPort,
-  renderPage,
   formDataToObject,
+  jsonApiPort,
   pathIdentifier,
+  renderPage,
 } from "./deps.ts";
 
 const ds = new Dataset(jsonApiPort, "issn.ds");

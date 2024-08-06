@@ -3,11 +3,11 @@
  */
 import {
   Dataset,
+  formDataToObject,
   jsonApiPort,
   matchType,
-  renderPage,
-  formDataToObject,
   pathIdentifier,
+  renderPage,
 } from "./deps.ts";
 
 const ds = new Dataset(jsonApiPort, "people.ds");
