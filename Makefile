@@ -3,6 +3,8 @@
 #
 PROJECT = cold_admin
 
+PACKAGE =  $(shell ls -1 *.ts | grep -v 'version.ts')
+
 PROGRAMS = ds_importer cold_admin
 
 DIST_FOLDERS = bin/* man/* htdocs/*

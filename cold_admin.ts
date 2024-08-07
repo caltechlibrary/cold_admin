@@ -130,69 +130,6 @@ export function ColdReadWriteHandler(
   });
 }
 
-/**
- * ColdReadOnlyHandler is a function for handling and dispatching http requests.
- *
- * @param {Request} req holds the http request recieved from the http server
- * @param {debug: boolean, htdocs: string, apiUrl: string} options holds program options that are made available
- * to additional COLD UI handlers.
- * @returns {Response}
- *
- * @example
- * ```
- *   const options = {
- *      debug: true,
- *      htdocs: "./htdocs"
- *   };
- *
- *   const server = Deno.serve({
- *     hostname: "localhost",
- *     port: options.port,
- *   }, (req: Request) => {
- *   	return ColdReadOnlyHandler(req, options);
- *   });
- * ```
- */
-export function ColdReadOnlyHandler(
-  req: Request,
-  options: { debug: boolean; htdocs: string; apiUrl: string },
-): Response | Promise<Response> {
-  const pathname = new URL(req.url).pathname;
-  const basePath: string = path.normalize(options.htdocs);
-
-  if (options.debug) console.log("DEBUG request", req);
-
-  // Handle the various dataset collections management pages.
-  if (pathname.startsWith("/people") && req.method == "GET") {
-    return handlePeople(req, options);
-  }
-  if (pathname.startsWith("/groups") && req.method == "GET") {
-    return handleGroups(req, options);
-  }
-  if (pathname.startsWith("/funders") && req.method == "GET") {
-    return handleFunders(req, options);
-  }
-  if (pathname.startsWith("/subjects") && req.method == "GET") {
-    return handleSubjects(req, options);
-  }
-  if (pathname.startsWith("/issn") && req.method == "GET") {
-    return handleISSN(req, options);
-  }
-  if (pathname.startsWith("/doi_prefix") && req.method == "GET") {
-    return handleDOIPrefix(req, options);
-  }
-  if (options.debug) {
-    console.log(
-      "DEBUG: Handle the request for a static files or assets -> " + pathname,
-    );
-  }
-  // NOTE: If there isn't a specific handler implemented then assume you're
-  // requesting a static asset.
-  return serveDir(req, {
-    fsRoot: basePath,
-  });
-}
-
 //
 // Main function
 //

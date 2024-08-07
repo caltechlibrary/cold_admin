@@ -31,6 +31,6 @@ export { handleSubjects, Subject } from "./subjects.ts";
 export { handleISSN, ISSN } from "./issn.ts";
 export { handleDOIPrefix, DOIPrefix } from "./doi_prefix.ts";
 export { formDataToObject, pathIdentifier } from "./utils.ts";
-export { ColdReadWriteHandler, ColdReadOnlyHandler } from "./cold_admin.ts";
+export { ColdReadWriteHandler } from "./cold_admin.ts";
 
 
