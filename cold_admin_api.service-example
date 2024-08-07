@@ -6,13 +6,13 @@ ConditionPathExists=!/Sites/cold/cold_admin/cold_admin_not_to_be_run
 
 [Service]
 EnvironmentFile=-/Sites/cold/cold_admin/cold_admin.env
-ExecStartPre=/Sites/cold/cold_admin/bin/cold_admin --version
-ExecStart=/Sites/cold/cold_admin/bin/cold_admin
-ExecReload=/usr/local/bin/cold_admin
+ExecStartPre=/usr/local/bin/datasetd --version
+ExecStart=/usr/local/bin/datasetd /Sites/cold/cold_admin/cold_admin_api.yaml
+ExecReload=/usr/local/bin/datasetd /Sites/cold/cold_admin/cold_admin_api.yaml
 ExecReload=/bin/kill -HUP $MAINPID
 Type=notify
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
-Alias=cold_admin.service
+Alias=cold_admin_api.service

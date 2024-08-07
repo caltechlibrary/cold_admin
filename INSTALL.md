@@ -127,4 +127,20 @@ To shutdown the running services I do the following
 - Press ctl-c to quit in the datasetd window to stop the JSON API
 - Press ctl-c to quit `deno task start` or run `deno task stop`
 
+### Deployments
+
+**cold_admin**  and **datasetd**
+Deploying cold_admin on a remote system requires some manual setup.  My current recommendation is the following.
+
+1. Clone the repository to `/Sites/cold/cold_admin`
+2. Configure Apache to restrict access to `/Sites/cold/admin` to the library staff only.
+3. Configure Apache to reverse proxy the port that cold_admin runs on with the path `/apps/cold/admin/` prefix
+4. Copy `cold_admin.service-example` to `cold_admin.service`, edit it and move it appropirate place in your Systemd service directory
+5. Enable the cold_admin service using `systemctl`
+6. Copy `cold_admin_ds.service-example` to `cold_admin_ds.service`, edit it and move it to the appropriate place in your Systemd service directory
+7. Enable the **cold_admin_ds** service using `systemctl`
+8. Start up the **cold_admin_ds** service using `systemctl` and test with cURL
+9. Startup up the **cold_admin** service using `systemctl` and test with a browser
+
+
 
