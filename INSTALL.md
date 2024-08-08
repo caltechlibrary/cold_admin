@@ -31,6 +31,9 @@ below.
 irm https://caltechlibrary.github.io/cold_admin/installer.ps1 | iex
 ~~~
 
+NOTE: You will need to install [dataset](https://github.com/caltechlibrary/dataset) if it is not available. You need to install dataset
+in `/usr/local`.
+
 Required software
 -----------------
 
@@ -126,5 +129,4 @@ To shutdown the running services I do the following
 
 - Press ctl-c to quit in the datasetd window to stop the JSON API
 - Press ctl-c to quit `deno task start` or run `deno task stop`
-
 
