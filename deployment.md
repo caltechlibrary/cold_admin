@@ -1,7 +1,19 @@
 
 # Deploying **cold** and **cold_admin**
 
-Deploying cold and and cold admin on a remote system requires manual setup.  My current recommendation is the following.
+Deploying cold and and cold admin on a remote system requires manual setup.  You will need the following software to successfully build and deploy.
+
+- Deno >= 1.45.5
+- Dataset >= 2.1.17
+- Pandoc >= 3.1
+- GNU Make
+- Git
+- Tmux highly recommended
+- eLinks or Lynx recommended (to test form the console)
+
+## Deployment steps
+
+My current recommendation is the following.
 
 1. Setup the directory to old he web application if it doesn't exist.
 2. Clone the repository **recursively** to `/Sites/cold`
@@ -26,7 +38,8 @@ Deploying cold and and cold admin on a remote system requires manual setup.  My 
     a. `sudo systemctl start cold.service`
     b. `sudo systemctl start cold_admin.service`
     c. `sudo systemctl start cold_admin_api.service`
-19. Test the public and admin services using elinks. If you get a gateway error it means datasetd isn't runining correctly in port 8112. Debug with curl, systemctl status, journalctl.
+19. In the admin directory use the Deno task setup to create your dataset collections
+20. Test the public and admin services using elinks. If you get a gateway error it means datasetd isn't runining correctly in port 8112. Debug with curl, systemctl status, journalctl.
 
 You can configure Apache to reverse proxy to the cold service running on port 8110 allowing public access. Apache should
 be configured similar but with access restricted to staff for the cold_admin service running on port 8111.
@@ -60,6 +73,7 @@ sudo systemctl enable cold_admin_api.service
 sudo systemctl start cold.service
 sudo systemctl start cold_admin.service
 sudo systemctl start cold_admin_api.service
+deno task setup
 elinks http://localhost:8110
 elinks http://localhost:8111
 ~~~
