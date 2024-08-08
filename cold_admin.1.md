@@ -1,6 +1,6 @@
 %cold_admin(1) user manual | 0.0.1 2024-08-08
 % R. S.Doiel
-% 2024-08-08 3f4e164
+% 2024-08-08 4d2b14d
 
 # NAME
 
@@ -31,7 +31,7 @@ debug
 : turn on debug logging
 
 port
-: set the port number, default 8180
+: set the port number, default 8111
 
 htdocs
 : set the static content directory, default ./htdocs
@@ -42,13 +42,13 @@ apiUrl
 
 # EXAMPLE
 
-cold_admin is setup to run at <http://localhost:8180>. The static content hosted in
+cold_admin is setup to run at <http://localhost:8111>. The static content hosted in
 the "/var/www/html/cold/app" directory.  The datasetd service is setup to run at
-<http://localhost:8485> supporting the people, groups and vocabularies dataset
+<http://localhost:8112> supporting the people, groups and vocabularies dataset
 collections.
 
 ~~~shell
-cold_admin -port=8100 -htdocs=/var/www/html/cold/app            -apiUrl=http://localhost:8185
+cold_admin -port=8111 -htdocs=/var/www/html/cold/app            -apiUrl=http://localhost:8112
 ~~~
 
 

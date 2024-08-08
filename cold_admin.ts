@@ -53,14 +53,14 @@ for object persistence and relies on datasetd for JSON API to each collection.
   txt.push(`
 # EXAMPLE
 
-{app_name} is setup to run at <http://localhost:8180>. The static content hosted in
+{app_name} is setup to run at <http://localhost:8111>. The static content hosted in
 the "/var/www/html/cold/app" directory.  The datasetd service is setup to run at
-<http://localhost:8485> supporting the people, groups and vocabularies dataset
+<http://localhost:8112> supporting the people, groups and vocabularies dataset
 collections.
 
 ~~~shell
-{app_name} -port=8100 -htdocs=/var/www/html/cold/app \
-           -apiUrl=http://localhost:8185
+{app_name} -port=8111 -htdocs=/var/www/html/cold/app \
+           -apiUrl=http://localhost:8112
 ~~~
 
 `);
@@ -135,9 +135,9 @@ export function ColdReadWriteHandler(
 //
 function main() {
   const op: OptionsProcessor = new OptionsProcessor();
-  const defaultPort: number = 8180;
+  const defaultPort: number = 8111;
   const defaultHtdocs: string = "./htdocs";
-  const defaultApiUrl: string = "http://localhost:8185";
+  const defaultApiUrl: string = "http://localhost:8112";
 
   op.booleanVar("help", false, "display help");
   op.booleanVar("license", false, "display license");

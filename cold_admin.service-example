@@ -6,7 +6,6 @@ ConditionPathExists=!/Sites/cold/admin/cold_admin_not_to_be_run
 
 [Service]
 WorkingDirectory=/Sites/cold/admin
-EnvironmentFile=-/Sites/cold/admin/cold_admin.env
 ExecStart=/Sites/cold/admin/bin/cold_admin
 Type=simple
 Restart=always

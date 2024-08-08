@@ -5,7 +5,7 @@ import {
 } from "./deps.ts";
 
 Deno.test("testPathIdentifier", () => {
-  let uri = "http://localhost:8180/groups/LIGO";
+  let uri = "http://localhost:8111/groups/LIGO";
   const expected = "LIGO";
   const got = pathIdentifier(uri);
   assertStrictEquals(got, expected, `expected ${expected}, got ${got}`);

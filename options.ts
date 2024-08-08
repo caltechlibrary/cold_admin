@@ -114,7 +114,7 @@ export function firstAndRest(source: string, re: RegExp): [string, string] {
  * ```
  *  op = new OptionsProcessor();
  *  op.boolVar("help", false, "display help message");
- *  op.stringVar("url", "http://localhost:8000", "set the URL");
+ *  op.stringVar("url", "http://localhost:8111", "set the URL");
  *  op.numberVar("retry", 3, "set the default number of retries");
  *  op.parse(Deno.args)
  *  if (op.options.help) {
