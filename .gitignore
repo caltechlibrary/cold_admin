@@ -13,3 +13,4 @@ groups.csv
 issn_journal_publisher.*
 TODO.html
 *.env
+*.service

@@ -5,12 +5,10 @@ After=network.target
 ConditionPathExists=!/Sites/cold/admin/cold_admin_not_to_be_run
 
 [Service]
+WorkingDirectory=/Sites/cold/admin
 EnvironmentFile=-/Sites/cold/admin/cold_admin.env
-ExecStartPre=/Sites/cold/admin/bin/cold_admin --version
 ExecStart=/Sites/cold/admin/bin/cold_admin
-ExecReload=/Sites/cold/admin/bin/cold_admin
-ExecReload=/bin/kill -HUP $MAINPID
-Type=notify
+Type=simple
 Restart=always
 
 [Install]
