@@ -50,7 +50,7 @@ turn on debug logging
 </dd>
 <dt>port</dt>
 <dd>
-set the port number, default 8180
+set the port number, default 8111
 </dd>
 <dt>htdocs</dt>
 <dd>
@@ -62,12 +62,12 @@ set the url to the datasetd API provided for cold
 </dd>
 </dl>
 <h1 id="example">EXAMPLE</h1>
-<p>cold_admin is setup to run at <a href="http://localhost:8180"
-class="uri">http://localhost:8180</a>. The static content hosted in the
+<p>cold_admin is setup to run at <a href="http://localhost:8111"
+class="uri">http://localhost:8111</a>. The static content hosted in the
 “/var/www/html/cold/app” directory. The datasetd service is setup to run
-at <a href="http://localhost:8485" class="uri">http://localhost:8485</a>
+at <a href="http://localhost:8112" class="uri">http://localhost:8112</a>
 supporting the people, groups and vocabularies dataset collections.</p>
-<pre class="shell"><code>cold_admin -port=8100 -htdocs=/var/www/html/cold/app            -apiUrl=http://localhost:8185</code></pre>
+<pre class="shell"><code>cold_admin -port=8111 -htdocs=/var/www/html/cold/app            -apiUrl=http://localhost:8112</code></pre>
 </section>
 
 <footer>

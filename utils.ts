@@ -13,7 +13,7 @@
  *
  * @example
  * ```
- *    const uri = new URL('https://localhost:8180/groups/LIGO');
+ *    const uri = new URL('https://localhost:8111/groups/LIGO');
  *    const clgid = pathIdentifier(uri);
  *    console.log("group identifier is", clgid);
  * ```

@@ -121,9 +121,9 @@ dataset cold_api.yaml
 deno task start
 ~~~
 
-The cold ui application is visible to your web browser at <http://localhost:8180>
+The cold admin application is visible to your web browser at <http://localhost:8111>
 
-The datasetd JSON API is visible at <http://localhost:8485>
+The datasetd JSON API is visible at <http://localhost:8112>
 
 To shutdown the running services I do the following
 
