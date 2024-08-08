@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>COLD (Controlled Object List and Datum (Concept))</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://caltechlibrary.github.io/css/site.css">
+</head>
+<body>
+<header>
+<a href="http://library.caltech.edu" title="link to Caltech Library Homepage"><img src="https://caltechlibrary.github.io/assets/liblogo.gif" alt="Caltech Library logo"></a>
+</header>
+<nav>
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="index.html">README</a></li>
+    <li><a href="LICENSE">LICENSE</a></li>
+    <li><a href="INSTALL.html">INSTALL</a></li>
+    <li><a href="user_manual.html">User Manual</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="https://github.com/caltechlibrary/cold">GitHub</a></li>
+</ul>
+</nav>
+
+<section>
+<h1 id="deployment-cold_admin-and-datasetd">Deployment
+<strong>cold_admin</strong> and <strong>datasetd</strong></h1>
+<h2 id="cold_admin"><strong>cold_admin</strong></h2>
+<p>Deploying cold_admin on a remote system requires some manual setup.
+My current recommendation is the following.</p>
+<ol type="1">
+<li>Clone the repository to <code>/Sites/cold/admin</code></li>
+<li>Configure Apache to restrict access to
+<code>/Sites/cold/admin</code> to the library staff only.</li>
+<li>Configure Apache to reverse proxy the port that cold_admin runs on
+with the path <code>/apps/cold/admin/</code> prefix</li>
+<li>Copy <code>cold_admin.service-example</code> to
+<code>cold_admin.service</code>, edit it and move it appropirate place
+in your Systemd service directory</li>
+<li>Symbolicly link <code>cold_admin_service</code> to
+<code>/etc/systemd/system/</code></li>
+<li>Copy <code>cold_admin_api.service-example</code> to
+<code>cold_admin_api.service</code></li>
+<li>Symbolicly link <code>cold_admin_service</code> to
+<code>/etc/systemd/system/</code></li>
+<li>Edit both service files and make the paths are correct.</li>
+<li>Reload the systemd daemon,
+<code>sudo systemctl daemon-reload</code></li>
+<li>Enable the services (just needed the first time),
+<code>sudo systemctl enable cold_admin.service; sudo systemctl enable cold_admin_api.service</code></li>
+<li>Start the services using <code>systemctl</code> in the usual
+way</li>
+</ol>
+<p>For a good description of how to setup new systemd services the
+Debian (works with Ubuntu too) way see <a
+href="https://wiki.debian.org/systemd/Services"
+class="uri">https://wiki.debian.org/systemd/Services</a>.</p>
+<h2 id="datasetd"><strong>datasetd</strong></h2>
+<p>For <strong>cold_admin</strong> you need datasetd. The example
+service files assume you’ve installed dataset in the
+<code>/usr/local</code> directory tree. If datasetd is not found there
+then you’ll get an error when you start the
+<code>cold_admin_api.service</code> under systemd.</p>
+</section>
+
+<footer>
+<span>&copy; 2024 <a href="https://www.library.caltech.edu/copyright">Caltech Library</a></span>
+<address>1200 E California Blvd, Mail Code 1-32, Pasadena, CA 91125-3200</address>
+<span><a href="mailto:library@caltech.edu">Email Us</a></span>
+<span>Phone: <a href="tel:+1-626-395-3405">(626)395-3405</a></span>
+</footer>
+</body>
+</html>
