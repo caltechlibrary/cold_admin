@@ -5,15 +5,15 @@
 {{>header}}
 <nav>
 <ul>
-<li><a href="{{base_path}}/" title="return to dashboard">Dashboard</a></li>
-<li><a href="{{base_path}}/groups/" title="return to group list">Groups</a></li>
-<li><a href="{{base_path}}/groups/{{group.clgid}}">View {{group.clgid}}</a></li>
+<li><a href="../" title="return to dashboard">Dashboard</a></li>
+<li><a href="./" title="return to group list">Groups</a></li>
+<li><a href="{{group.clgid}}">View {{group.clgid}}</a></li>
 </ul>
 </nav>
 <section>
 <h1>{{#isCreateObject}}Create:{{/isCreateObject}}{{^isCreateObject}}Edit:{{/isCreateObject}} {{group.name}}</h1>
 
-<form action="{{base_path}}/groups/{{group.clgid}}" method="post">
+<form action="{{group.clgid}}" method="post">
 
 <div>
 <label set="clgid">clgid</label> <input type="text" id="clgid" name="clgid" value="{{group.clgid}}" {{^isCreateObject}}readonly{{/isCreateObject}} required="true" />

@@ -5,15 +5,15 @@
 {{>header}}
 <nav>
 <ul>
-<li><a href="{{base_path}}/" title="return to dashboard">Dashboard</a></li>
-<li><a href="{{base_path}}/people/" title="return to group list">People</a></li>
-<li><a href="{{base_path}}/people/{{people.clpid}}">View {{people.clpid}}</a></li>
+<li><a href="../" title="return to dashboard">Dashboard</a></li>
+<li><a href="./" title="return to group list">People</a></li>
+<li><a href="{{people.clpid}}">View {{people.clpid}}</a></li>
 </ul>
 </nav>
 <section>
 <h1>{{#isCreateObject}}Create:{{/isCreateObject}}{{^isCreateObject}}Edit:{{/isCreateObject}} {{people.name}}</h1>
 
-<form action="{{base_path}}/people/{{people.clpid}}" method="post">
+<form action="{{people.clpid}}" method="post">
 
 <div>
 <label set="clpid">clpid</label> <input type="text" id="clpid" name="clpid" value="{{people.clpid}}" {{^isCreateObject}}readonly{{/isCreateObject}} required="true" />

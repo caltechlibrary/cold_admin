@@ -1,7 +1,7 @@
 import { matchType } from "./deps.ts";
 
-export const apiPort: number = 8185;
-export const httpPort: number = 8100;
+export const apiPort: number = 8112;
+export const httpPort: number = 8111;
 
 export interface ConfigInterface {
   debug: boolean;
