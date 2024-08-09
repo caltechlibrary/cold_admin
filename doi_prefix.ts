@@ -252,12 +252,9 @@ async function handlePostDOIPrefix(
         );
       }
     }
-    console.log(
-      `DEBUG redirect ("${doi_prefix}") to /doi_prefix/${doi_prefix}`,
-    );
-    return new Response(`<html>Redirect to /doi_prefix/${doi_prefix}</html>`, {
+    return new Response(`<html>Redirect to ${doi_prefix}</html>`, {
       status: 303,
-      headers: { Location: `./doi_prefix/${doi_prefix}` },
+      headers: { Location: `${doi_prefix}` },
     });
   }
   return new Response(`<html>problem creating doi_prefix data</html>`, {

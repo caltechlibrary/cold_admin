@@ -367,10 +367,9 @@ async function handlePostGroups(
         );
       }
     }
-    console.log(`DEBUG redirect ("${clgid}") to /groups/${clgid}`);
-    return new Response(`<html>Redirect to /groups/${clgid}</html>`, {
+    return new Response(`<html>Redirect to ${clgid}</html>`, {
       status: 303,
-      headers: { Location: `./groups/${clgid}` },
+      headers: { Location: `${clgid}` },
     });
   }
   return new Response(`<html>problem creating group data</html>`, {

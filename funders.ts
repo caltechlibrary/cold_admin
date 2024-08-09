@@ -265,10 +265,9 @@ async function handlePostFunders(
         );
       }
     }
-    console.log(`DEBUG redirect ("${clfid}") to /funders/${clfid}`);
-    return new Response(`<html>Redirect to /funders/${clfid}</html>`, {
+    return new Response(`<html>Redirect to ${clfid}</html>`, {
       status: 303,
-      headers: { Location: `./funders/${clfid}` },
+      headers: { Location: `${clfid}` },
     });
   }
   return new Response(`<html>problem creating funder data</html>`, {
