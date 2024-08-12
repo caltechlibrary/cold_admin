@@ -5,15 +5,16 @@
 {{>header}}
 <nav>
 <ul>
-<li><a href="{{base_path}}/" title="return to dashboard">Dashboard</a></li>
-<li><a href="{{base_path}}/issn/" title="return to issn list">ISSNs</a></li>
-<li><a href="{{base_path}}/issn/{{issn.issn}}">View {{issn.issn}}</a></li>
+<li><a href="/" title="return home">Home</a></li>
+<li><a href="../" title="return to dashboard">Dashboard</a></li>
+<li><a href="./" title="return to issn list">ISSNs</a></li>
+<li><a href="{{issn.issn}}">View {{issn.issn}}</a></li>
 </ul>
 </nav>
 <section>
 <h1>{{#isCreateObject}}Create:{{/isCreateObject}}{{^isCreateObject}}Edit:{{/isCreateObject}} {{issn.name}}</h1>
 
-<form action="{{base_path}}/issn/{{issn.issn}}" method="post">
+<form action="{{issn.issn}}" method="post">
 
 <div>
 <label set="issn">issn</label> <input type="text" id="issn" name="issn" value="{{issn.issn}}" {{^isCreateObject}}readonly{{/isCreateObject}} required="true" />

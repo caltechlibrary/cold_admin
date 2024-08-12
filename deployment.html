@@ -25,7 +25,19 @@
 <h1 id="deploying-cold-and-cold_admin">Deploying <strong>cold</strong>
 and <strong>cold_admin</strong></h1>
 <p>Deploying cold and and cold admin on a remote system requires manual
-setup. My current recommendation is the following.</p>
+setup. You will need the following software to successfully build and
+deploy.</p>
+<ul>
+<li>Deno &gt;= 1.45.5</li>
+<li>Dataset &gt;= 2.1.17</li>
+<li>Pandoc &gt;= 3.1</li>
+<li>GNU Make</li>
+<li>Git</li>
+<li>Tmux highly recommended</li>
+<li>eLinks or Lynx recommended (to test form the console)</li>
+</ul>
+<h2 id="deployment-steps">Deployment steps</h2>
+<p>My current recommendation is the following.</p>
 <ol type="1">
 <li>Setup the directory to old he web application if it doesn’t
 exist.</li>
@@ -66,6 +78,8 @@ warning about symbolic link)
 <li><code>sudo systemctl start cold_admin.service</code></li>
 <li><code>sudo systemctl start cold_admin_api.service</code></li>
 </ol></li>
+<li>In the admin directory use the Deno task setup to create your
+dataset collections</li>
 <li>Test the public and admin services using elinks. If you get a
 gateway error it means datasetd isn’t runining correctly in port 8112.
 Debug with curl, systemctl status, journalctl.</li>
@@ -104,6 +118,7 @@ sudo systemctl enable cold_admin_api.service
 sudo systemctl start cold.service
 sudo systemctl start cold_admin.service
 sudo systemctl start cold_admin_api.service
+deno task setup
 elinks http://localhost:8110
 elinks http://localhost:8111</code></pre>
 <p>NOTE: The TypeScript services need to be compile before running with

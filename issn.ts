@@ -265,10 +265,9 @@ async function handlePostISSN(
         );
       }
     }
-    console.log(`DEBUG redirect ("${issn}") to /issn/${issn}`);
-    return new Response(`<html>Redirect to /issn/${issn}</html>`, {
+    return new Response(`<html>Redirect to ${issn}</html>`, {
       status: 303,
-      headers: { Location: `./issn/${issn}` },
+      headers: { Location: `${issn}` },
     });
   }
   return new Response(`<html>problem creating issn data</html>`, {

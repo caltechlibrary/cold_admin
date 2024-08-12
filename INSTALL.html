@@ -31,124 +31,78 @@ application is split with two layers of responsibility. The Admin UI is
 written in Typescript and run via <a href="https://deno.land">Deno</a>.
 A JSON API used by <strong>cold_admin</strong> is provided by datasetd
 for managing the people, groups and vocabularies collections.</p>
-<p><strong>cold_admin</strong> can be configured via the command, shell
-environment or YAML file.</p>
+<p><strong>cold_admin</strong> is largely configuration free. It run on
+localhost with the UI on port 8111 and the JSON API on port 8112.</p>
 <p><strong>cold_admin</strong> is intended to run behind a front facing
 web server (e.g. Apache 2 or NginX) that implements access control and
 authentication. This can be configured in Apache 2 or NginX by use of
 Shibboleth or BasicAuth. An example apache2 configuration block is
 included in the source repository for <strong>cold</strong>. It will
 require adaptation to your specific web server configuration.</p>
-<p>You will need to build <strong>cold_admin</strong> for your specific
-system configuration. You need to rebuild the static web content (very
-likely) you’ll need to have Git, GNU Make, Pandoc 3 and Deno &gt;=
-1.45.5 available and working on your system.</p>
-<h2 id="quick-install-with-curl-or-irm">Quick install with curl or
-irm</h2>
-<p>There is an experimental installer.sh script that can be run with the
-following command to install latest table release. This may work for
-macOS, Linux and if you’re using Windows with the Unix subsystem. This
-would be run from your shell (e.g. Terminal on macOS).</p>
-<pre><code>curl https://caltechlibrary.github.io/cold_admin/installer.sh | sh</code></pre>
-<p>This will install dataset and datasetd in your <code>$HOME/bin</code>
-directory.</p>
-<p>If you are running Windows 10 or 11 use the Powershell command
-below.</p>
-<pre><code>irm https://caltechlibrary.github.io/cold_admin/installer.ps1 | iex</code></pre>
-<p>NOTE: You will need to install <a
-href="https://github.com/caltechlibrary/dataset">dataset</a> if it is
-not available. You need to install dataset in
-<code>/usr/local</code>.</p>
-<h2 id="required-software">Required software</h2>
-<p>Adjusting the web content to your host system requires the
-following</p>
-<ol type="1">
-<li>Git (to clone the cold repository on GitHub)</li>
+<p>These installation instructions are for a developer setup. You will
+need additional software to do development.</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
 <li>Deno &gt;= 1.45.5</li>
-<li>dataset &gt;= 2.1</li>
-<li>Pandoc &gt; 3 (both cli and server)</li>
+<li>Pandoc &gt;= 3.1</li>
+<li>Dataset &gt;= 2.1.17</li>
 <li>GNU Make</li>
-</ol>
-<h2 id="running-cold_admin-on-unix-systems">Running cold_admin on Unix
-systems</h2>
-<p>NOTE: Currently Pandoc 2 ships with many packaging systems
-(e.g. Ubuntu 22.04 LTS). <strong>cold_admin</strong> requires Pandoc 3.
-To get Pandoc v3 you can check the <a
-href="https://pandoc.org">Pandoc</a> <a
-href="https://pandoc.org/downloads">Download Page</a> for your platform.
-You can also compile Pandoc but you will need a modern Haskell installed
-(e.g. via <a href="https://www.haskell.org/ghcup/">gchup</a>).</p>
-<p>Here’s an example of the commands you could use for development.</p>
-<pre><code>make
-make website
-deno task dev</code></pre>
-<h2 id="building-pandoc-on-linuxmacos">Building Pandoc on
-Linux/macOS</h2>
+<li>Git</li>
+<li>Tmux (highly recommended for development)</li>
+</ul>
+<!--
+
+Quick install with curl or irm
+------------------------------
+
+There is an experimental installer.sh script that can be run with the
+following command to install latest table release. This may work for
+macOS, Linux and if you're using Windows with the Unix subsystem. This
+would be run from your shell (e.g. Terminal on macOS).
+
+~~~
+curl https://caltechlibrary.github.io/cold_admin/installer.sh | sh
+~~~
+
+This will install dataset and datasetd in your `$HOME/bin` directory.
+
+If you are running Windows 10 or 11 use the Powershell command
+below.
+
+~~~
+irm https://caltechlibrary.github.io/cold_admin/installer.ps1 | iex
+~~~
+
+NOTE: You will need to install [dataset](https://github.com/caltechlibrary/dataset) if it is not available. You need to install dataset
+in `/usr/local`.
+
+-->
+<h2 id="quick-installation-using-git">Quick installation using Git</h2>
+<p>It is best to clone the <a
+href="https://github.com/caltechlibrary/cold">cold</a> recursively to
+get the full cold application (public and admin UIs). If you are just
+working on the admin UI then you can do the following.</p>
 <ol type="1">
-<li>Install Haskell via <a
-href="https://www.haskell.org/ghcup/">ghcup</a></li>
-<li>Make sure <code>$HOME/bin</code> exists and is in your path
-<ol type="a">
-<li><code>mkdir -p $HOME/bin</code></li>
-<li>Add it to your .bashrc,
-<code>echo 'export PATH="$HOME/bin:$PATH"' &gt;&gt;$HOME.bashrc</code></li>
-<li>Source .bashrc if needed <code>source $HOME/.bashrc</code></li>
-</ol></li>
-<li>Build Pandoc 3 install as pandoc and pandoc-server
-<ol type="a">
-<li><code>cd</code></li>
-<li><code>git clone https://github.com/jgm/pandoc src/github.com/jgm/pandoc</code></li>
-<li><code>cd src/github.com/jgm/pandoc</code></li>
-<li><code>make</code></li>
-<li><code>cp -vi $(find . -type f -name pandoc) $HOME/bin/pandoc-server</code></li>
-<li><code>cp -vi $(find . -type f -name pandoc) $HOME/bin/pandoc</code></li>
-</ol></li>
+<li>Clone the Git Repo</li>
+<li>Change into the Git repo</li>
+<li>Start up tmux</li>
+<li>Launch the JSON API using deno task</li>
+<li>Open a new tmux window</li>
+<li>Use the deno task to setup the dataset collections.</li>
+<li>Launch the web UI using deno task</li>
+<li>Test with your web browser.</li>
 </ol>
-<pre><code>curl --proto &#39;=https&#39; --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
-source $HOME/.ghcup/env
-mkdir -p $HOME/bin
-echo &#39;export PATH=&quot;$HOME/bin:$PATH&quot;&#39; &gt;&gt;&quot;$HOME/.bashrc&quot;
-source $HOME/.bashrc
-cd
-git clone https://github.com/jgm/pandoc \
-    src/github.com/jgm/pandoc
-cd src/github.com/jgm/pandoc
-make
-cp -vi $(find . -type f -name pandoc) $HOME/bin/pandoc
-cp -vi $(find . -type f -name pandoc) $HOME/bin/pandoc-server
-cd</code></pre>
-<h2 id="building-cold_admin-on-linuxmacos">Building cold_admin on
-Linux/macOS</h2>
-<ol type="1">
-<li>Clone the Git repository for cold and run with Make
-<ol type="a">
-<li><code>cd</code></li>
-<li><code>git clone https://github.com/caltechlibrary/cold_admin src/github.com/caltechlibrary/cold_admin</code></li>
-<li><code>cd src/github.com/caltechlibrary/cold_admin</code></li>
-</ol></li>
-<li>Run <code>make</code> to compile cold_admin</li>
-<li>Run <code>make dataset_collections</code> to create SQLite3 based
-dataset collections for people, groups, vocabularies</li>
-<li>Run tmux, launch datasetd then split the window and our deno task
-<ol type="a">
-<li>tmux</li>
-<li>launch JSON API with <code>datasetd cold_api.yaml</code></li>
-<li>split the window, <code>Ctrl-b %</code></li>
-<li>launch COLD UI with <code>deno task start</code> or
-<code>deno task dev</code> (for development)</li>
-</ol></li>
-</ol>
-<p>Get datasetd going</p>
-<p>Here’s an example of the steps I’d take on my M1 Mac Mini.</p>
-<pre><code>git clone git@github.com:caltechlibrary/cold_admin \
-    src/github.com/caltechlibrary/cold_admin
-cd src/github.com/caltechlibrary/cold_admin
-make
-make dataset_collections
+<pre class="shell"><code>git clone git@github.com:caltechlibrary/cold_admin
+cd cold_admin
 tmux
-dataset cold_api.yaml
-# split the window then run start task
-deno task start</code></pre>
+deno task json_api
+# open new window, e.g. Ctrl-&quot;
+deno task setup
+deno task start
+# Open new window
+elinks http://localhost:8111</code></pre>
+<p>NOTE: You can use a GUI web browser to test, I’ve used elinks as an
+example.</p>
 <p>The cold admin application is visible to your web browser at <a
 href="http://localhost:8111" class="uri">http://localhost:8111</a></p>
 <p>The datasetd JSON API is visible at <a href="http://localhost:8112"
@@ -159,6 +113,8 @@ class="uri">http://localhost:8112</a></p>
 <li>Press ctl-c to quit <code>deno task start</code> or run
 <code>deno task stop</code></li>
 </ul>
+<p>See <a href="deployment.html">deployments</a> for a description of
+deploying on an application server.</p>
 </section>
 
 <footer>

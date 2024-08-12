@@ -358,10 +358,9 @@ async function handlePostPeople(
         );
       }
     }
-    console.log(`DEBUG redirect ("${clpid}") to /people/${clpid}`);
-    return new Response(`<html>Redirect to /people/${clpid}</html>`, {
+    return new Response(`<html>Redirect to ${clpid}</html>`, {
       status: 303,
-      headers: { Location: `./people/${clpid}` },
+      headers: { Location: `${clpid}` },
     });
   }
   return new Response(`<html>problem creating people data</html>`, {

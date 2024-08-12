@@ -5,15 +5,16 @@
 {{>header}}
 <nav>
 <ul>
-<li><a href="{{base_path}}/" title="return to dashboard">Dashboard</a></li>
-<li><a href="{{base_path}}/subjects/" title="return to subject list">Subjects</a></li>
-<li><a href="{{base_path}}/subjects/{{subject.clsid}}">View {{subject.clsid}}</a></li>
+<li><a href="/" title="return home">Home</a></li>
+<li><a href="../" title="return to dashboard">Dashboard</a></li>
+<li><a href="./" title="return to subject list">Subjects</a></li>
+<li><a href="{{subject.clsid}}">View {{subject.clsid}}</a></li>
 </ul>
 </nav>
 <section>
 <h1>{{#isCreateObject}}Create:{{/isCreateObject}}{{^isCreateObject}}Edit:{{/isCreateObject}} {{subject.name}}</h1>
 
-<form action="{{base_path}}/subjects/{{subject.clsid}}" method="post">
+<form action="{{subject.clsid}}" method="post">
 
 <div>
 <label set="clsid">clsid</label> <input type="text" id="clsid" name="clsid" value="{{subject.clsid}}" {{^isCreateObject}}readonly{{/isCreateObject}} required="true" />

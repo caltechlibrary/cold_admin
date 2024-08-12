@@ -248,10 +248,9 @@ async function handlePostSubjects(
         );
       }
     }
-    console.log(`DEBUG redirect ("${clsid}") to /subjects/${clsid}`);
-    return new Response(`<html>Redirect to /subjects/${clsid}</html>`, {
+    return new Response(`<html>Redirect to ${clsid}</html>`, {
       status: 303,
-      headers: { Location: `./subjects/${clsid}` },
+      headers: { Location: `${clsid}` },
     });
   }
   return new Response(`<html>problem creating subject data</html>`, {
