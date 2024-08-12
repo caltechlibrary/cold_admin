@@ -6,7 +6,11 @@
 ## Next
 
 - [ ] Figure out if I need refactor people, groups, funders to tease out the type definitions (i.e. interface and class) into 
+    - [ ] Review https://jsr.io/@deno/emit, this is probably the right choice for the project but not certain, need to figure out how clean a "compile to single JS file" I can get
     - Looks like the "bundle" command line compile option in deno maybe helpful here, see `deno --help bundle`
+        - Looks like "bundle" is depreciated, see https://docs.deno.com/runtime/manual/tools/bundler/
+        - [ ] Review https://esbuild.github.io/
+        - [ ] Review https://rollupjs.org/
 - [X] Figure out how switching from a read view to an edit view should work (e.g. URL parameter like `view=...` or do I expanded URL end points?). The problem is keeping the URL end points managable while still maintaining a simple implementation. I POST can be used to submit form to the same URL as the edit view is, edit view would use GET to retrieve the populated form. 
 - [X] Figure out if Mustache templates are enough to support UI. If not then find an alternative quickly
     - switched to Handlebars
