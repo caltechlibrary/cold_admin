@@ -5,12 +5,13 @@
 
 ## Next
 
+- [ ] Figure out if I need refactor people, groups, funders to tease out the type definitions (i.e. interface and class) into 
+    - Looks like the "bundle" command line compile option in deno maybe helpful here, see `deno --help bundle`
 - [X] Figure out how switching from a read view to an edit view should work (e.g. URL parameter like `view=...` or do I expanded URL end points?). The problem is keeping the URL end points managable while still maintaining a simple implementation. I POST can be used to submit form to the same URL as the edit view is, edit view would use GET to retrieve the populated form. 
 - [X] Figure out if Mustache templates are enough to support UI. If not then find an alternative quickly
     - switched to Handlebars
 - [X] refactor modules for people and groups so that the web configuration like base\_url can flow through the app. This could be done by making a app\_group and app\_people object that held the various handlers. It could also be done through the config module exposing global values. Not sure right approach.
     - fixed by adopting relative linking throughout templates
-- [ ] Figure out how to render TypeScript to JavaScript for browser side interactivity if there is time to implement that
+- [X] Figure out how to render TypeScript to JavaScript for browser side interactivity if there is time to implement that
     - See https://rsdoiel.github.io/blog/2024/07/03/transpiling_with_deno.html
-    - Looks like the "bundle" command line compile option in deno maybe helpful here, see `deno --help bundle`
 
