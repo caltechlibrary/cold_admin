@@ -19,3 +19,5 @@
 - [X] Figure out how to render TypeScript to JavaScript for browser side interactivity if there is time to implement that
     - See https://rsdoiel.github.io/blog/2024/07/03/transpiling_with_deno.html
 - [ ] Update UI labeling based on RDM project meeting suggestions, see https://caltechlibrary.atlassian.net/wiki/spaces/InvenioMigration/pages/3282960385/2024-08-13+Project+Team+Meeting+Notes
+- [ ] Make sure `author_id` and `thesis_id` continue to be mapped on reloading data from CSV file, if a person has an "clpid" and only are alumni then that should go into the `thesis_id` field.
+- [ ] Make sure we auto tag `include_in_feeds` based on current algorithms on importing data
