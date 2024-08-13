@@ -49,18 +49,23 @@
 
 <div class="image_url">{{#people.image_url}}Image URL: <a href="{{.}}">{{.}}</a>{{/people.image_url}}</div>
 
-<div class="active-affiliations"><p>Active Affiliations:
+{{#if (or people.caltech people.jpl)}}
+<div class="active-affiliations"><p>Active Affiliation(s):
   <ul>
   {{#people.caltech}}<li class="is_caltech">Caltech</li>{{/people.caltech}}
-  {{#people.caltech}}<li class="is_jpl">JPL</li>{{/people.caltech}}
+  {{#people.jpl}}<li class="is_jpl">JPL</li>{{/people.jpl}}
   </ul>
 </div>
-<div class="type-affiliation"><p>Type of affiliation:
+{{/if}}
+
+{{#if (or people.faculty people.alumn)}}
+<div class="type-affiliation"><p>Type of affiliation(s):
   <ul>
   {{#people.faculty}}<li class="is_faculty">Faculty</li>{{/people.faculty}}
   {{#people.alumn}}<li class="is_alumn">Alumn</li>{{/people.alumn}}
   </ul>
 </div>
+{{/if}}
 
 <div class="updated">{{#people.updated}}Updated: {{.}}{{/people.updated}}</div>
 
