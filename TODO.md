@@ -18,4 +18,4 @@
     - fixed by adopting relative linking throughout templates
 - [X] Figure out how to render TypeScript to JavaScript for browser side interactivity if there is time to implement that
     - See https://rsdoiel.github.io/blog/2024/07/03/transpiling_with_deno.html
-
+- [ ] Update UI labeling based on RDM project meeting suggestions, see https://caltechlibrary.atlassian.net/wiki/spaces/InvenioMigration/pages/3282960385/2024-08-13+Project+Team+Meeting+Notes
