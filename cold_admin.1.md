@@ -1,6 +1,6 @@
-%cold_admin(1) user manual | 0.0.1 2024-08-12
+%cold_admin(1) user manual | 0.0.1 2024-08-13
 % R. S.Doiel
-% 2024-08-12 842440f
+% 2024-08-13 04489a8
 
 # NAME
 

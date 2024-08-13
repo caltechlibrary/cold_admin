@@ -43,7 +43,9 @@ export interface PeopleInterface {
   updated: string;
   authors_id: string;
   thesis_id: string;
+  advisors_id: string;
 }
+
 /**
  * People implements a Caltech People object
  */
@@ -75,6 +77,7 @@ export class People implements PeopleInterface {
   updated: string = "";
   authors_id: string = "";
   thesis_id: string = "";
+  advisors_id: string = "";
 
   migrateCsv(row: any): boolean {
     // NOTE: Skipping the follow legacy columns: thesis_id,advisor_id,authors_id
@@ -83,6 +86,15 @@ export class People implements PeopleInterface {
       this.clpid = row.cl_people_id;
     } else {
       return false;
+    }
+    if (row.hasOwnProperty("thesis_id")) {
+      this.thesis_id = row.thesis_id;
+    }
+    if (row.hasOwnProperty("authors_id")) {
+      this.authors_id = row.authors_id;
+    }
+    if (row.hasOwnProperty("advisors_id")) {
+      this.advisors_id = row.advisors_id;
     }
     if (row.hasOwnProperty("family_name")) {
       this.family_name = row.family_name;
@@ -158,6 +170,9 @@ export class People implements PeopleInterface {
   asObject(): Object {
     return {
       clpid: this.clpid,
+      thesis_id: this.thesis_id,
+      authors_id: this.authors_id,
+      advisors_id: this.advisors_id,
       include_in_feeds: this.include_in_feeds,
       family_name: this.family_name,
       given_name: this.given_name,
