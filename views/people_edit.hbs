@@ -53,9 +53,11 @@
 <label set="directory_user_id">Directory User ID</label> <input type="directory_user_id" id="directory_user_id" name="directory_user_id" value="{{people.directory_user_id}}">
 </div>
 
+<!--
 <div>
 <label set="image_url">Image URL</label> <input type="url" id="image_url" name="image_url" value="{{people.image_url}}">
 </div>
+-->
 
 <div>
 <label set="division">Division</label> <input type="text" id="division" name="division" value="{{people.division}}">
@@ -100,20 +102,24 @@
 </div>
 
 <div>
-<label set="author_id">CaltechAUTHORS ID</label> <input type="text" id="author_id" name="author_id" value="{{people.author_id}}" >
+<label set="authors_id">CaltechAUTHORS ID</label> <input type="text" id="authors_id" name="authors_id" value="{{people.authors_id}}" >
 </div>
 
 <div>
 <label set="thesis_id">CaltechTHESIS ID</label> <input type="text" id="thesis_id" name="thesis_id" value="{{people.thesis_id}}" >
 </div>
+
+<div>
+<label set="advisors_id">CaltechTHESIS Advisor ID</label> <input type="text" id="advisors_id" name="advisors_id" value="{{people.advisors_id}}" >
+</div>
 </div>
 
-<div class="active-affiliation">
-<label>Active Caltech <input type="checkbox" id="caltech" name="caltech" {{#people.caltech}}checked{{/people.caltech}} ></label>
-<label>Active JPL <input type="checkbox" id="jpl" name="jpl" {{#people.jpl}}checked{{/people.jpl}} ></label>
+<div class="active-affiliation"><p>Active Affiliation:<br >
+<label>Caltech <input type="checkbox" id="caltech" name="caltech" {{#people.caltech}}checked{{/people.caltech}} ></label>
+<label>JPL <input type="checkbox" id="jpl" name="jpl" {{#people.jpl}}checked{{/people.jpl}} ></label>
 </div>
 
-<div class="affiliation-type">
+<div class="affiliation-type"><p>Affiation type:<br >
 <label>Faculty <input type="checkbox" id="faculty" name="faculty" {{#people.faculty}}checked{{/people.faculty}} ></label>
 <label>Alumn <input type="checkbox" id="alumn" name="alumn" {{#people.alumn}}checked{{/people.alumn}} ></label>
 </div>
@@ -130,6 +136,5 @@
 <p>
 </section>
 {{>footer}}
-<code><pre>{{debug_src}}</pre></code>
 </body>
 </html>
