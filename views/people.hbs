@@ -27,7 +27,9 @@
 
 <div class="email">{{#people.email}}EMail: {{.}}{{/people.email}}</div>
 
+<!--
 <div class="status">{{#people.status}}Status: {{.}}{{/people.status}}</div>
+-->
 
 <div class="directory_user_id">{{#people.directory_user_id}}IMSS userid: {{.}}{{/people.directory_user_id}}</div>
 
@@ -47,10 +49,14 @@
 
 <div class="image_url">{{#people.image_url}}Image URL: <a href="{{.}}">{{.}}</a>{{/people.image_url}}</div>
 
-<div class="affiliations"><p>Affiliations:
+<div class="active-affiliations"><p>Active Affiliations:
   <ul>
   {{#people.caltech}}<li class="is_caltech">Caltech</li>{{/people.caltech}}
   {{#people.caltech}}<li class="is_jpl">JPL</li>{{/people.caltech}}
+  </ul>
+</div>
+<div class="type-affiliation"><p>Type of affiliation:
+  <ul>
   {{#people.faculty}}<li class="is_faculty">Faculty</li>{{/people.faculty}}
   {{#people.alumn}}<li class="is_alumn">Alumn</li>{{/people.alumn}}
   </ul>
