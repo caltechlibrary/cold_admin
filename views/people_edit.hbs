@@ -38,10 +38,6 @@
 </div>
 
 <div>
-<label set="include_in_feeds">Include in feeds <input type="checkbox" id="include_in_feeds" name="include_in_feeds" {{#people.include_in_feeds}}checked{{/people.include_in_feeds}}> </label>
-</div>
-
-<div>
 <label set="email">Contact Email</label> <input type="email" id="email" name="email" pattern=".+@.+\.edu" value="{{people.email}}">
 </div>
 
@@ -112,6 +108,10 @@
 <div>
 <label set="advisors_id">CaltechTHESIS Advisor ID</label> <input type="text" id="advisors_id" name="advisors_id" value="{{people.advisors_id}}" >
 </div>
+</div>
+
+<div>
+<label set="include_in_feeds">Include in feeds <input type="checkbox" id="include_in_feeds" name="include_in_feeds" {{#people.include_in_feeds}}checked{{/people.include_in_feeds}}> </label>
 </div>
 
 <div class="active-affiliation"><p>Active Affiliation:<br >

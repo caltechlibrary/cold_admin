@@ -52,6 +52,7 @@
 <div class="image_url">{{#people.image_url}}Image URL: <a href="{{.}}">{{.}}</a>{{/people.image_url}}</div>
 -->
 
+
 <div class="active-affiliations"><p>Institute Affiliation(s):
   <ul>
   {{#people.caltech}}<li class="is_caltech">Active Caltech</li>{{/people.caltech}}
@@ -64,6 +65,14 @@
   {{#people.faculty}}<li class="is_faculty">Faculty</li>{{/people.faculty}}
   {{#people.alumn}}<li class="is_alumn">Alumn</li>{{/people.alumn}}
   </ul>
+</div>
+
+<div class="included-in-feeds">
+{{#if people.include_in_feeds}}
+{{people.given_name}} {{people.family_name}} is included in feeds
+{{else}}
+{{people.given_name}} {{people.family_name}} is NOT included in feeds
+{{/if}}
 </div>
 
 {{#if people.updated}}<p><div class="updated">Record Updated: {{people.updated}}</div>{{/if}}
