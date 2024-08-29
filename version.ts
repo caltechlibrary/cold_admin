@@ -6,13 +6,13 @@ export const appInfo: {[k: string]: string} = {
   appName: "cold_admin",
 
   // Version number of release
-  version: "0.0.1",
+  version: "0.0.2",
 
   // ReleaseDate, the date version.ts was generated
   releaseDate: "2024-08-29",
 
   // ReleaseHash, the Git hash when version.go was generated
-  releaseHash: "e1b631e",
+  releaseHash: "d0d6d2c",
 
   // licenseText holds a copy of the application license text.
   licenseText: `

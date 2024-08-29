@@ -11,7 +11,7 @@ authors:
     orcid: https://orcid.org/0000-0003-0900-6903
 
 repository-code: https://github.com/caltechlibrary/cold_admin
-version: 0.0.1
+version: 0.0.2
 
 keywords:
   - metadata
@@ -24,7 +24,7 @@ keywords:
 About this software
 ===================
 
-## cold_admin 0.0.1
+## cold_admin 0.0.2
 
 ### Authors
 
