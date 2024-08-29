@@ -18,6 +18,7 @@ const ds = new Dataset(apiPort, "people.ds");
 export interface PeopleInterface {
   clpid: string;
   include_in_feeds: boolean;
+  display_name: string;
   family_name: string;
   given_name: string;
   email: string;
@@ -52,6 +53,7 @@ export interface PeopleInterface {
 export class People implements PeopleInterface {
   clpid: string = "";
   include_in_feeds: boolean = false;
+  display_name: string = "";
   family_name: string = "";
   given_name: string = "";
   email: string = "";

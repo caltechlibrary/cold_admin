@@ -42,10 +42,10 @@
         "Pandoc >= 3.1",
         "datasetd >= 2.1"
     ],
-    "version": "0.0.1",
+    "version": "0.0.2",
     "dateCreated": "2024-06-24",
-    "dateModified": "2024-08-06",
-	"dateRelease": "2024-08-06",
+    "dateModified": "2024-08-29",
+	"dateRelease": "2024-08-29",
     "releaseNotes": "Cold Admin is a proof of concept and subject to change and not suitable for production.",
     "developmentStatus": "concept",
     "issueTracker": "https://github.com/caltechlibrary/cold_admin/issues"
