@@ -1,8 +1,8 @@
 /* COLD related packages */
 export { makePage } from "./render.ts";
 export { appInfo, fmtHelp } from "./version.ts";
-export { OptionsProcessor } from "./options.ts";
-export { handlePeople, People } from "./people.ts";
+export { OptionsProcessor, matchType } from "./options.ts";
+export { handlePeople, People, PeopleInterface } from "./people.ts";
 export { Group, handleGroups } from "./groups.ts";
 export { Funder, handleFunders } from "./funders.ts";
 export { handleSubjects, Subject } from "./subjects.ts";

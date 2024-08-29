@@ -13,6 +13,8 @@ collections:
   - dataset: people.ds
     query:
       people_names: select json_object('clpid', src->'clpid', 'family_name', src->'family_name', 'given_name', src->'given_name') as src from people order by src->'family_name' ASC, src->'given_name' ASC;
+      missing_bios: select json_object('clpid', json_extract(src, '$.clpid'), 'ims_uid', json_extract(src, '$.directory_user_id')) as src from people where json_extract(src, '$.directory_user_id') != '' and json_extract(src, '$.bio') == '';
+      directory_people: select json_object('clpid', json_extract(src, '$.clpid'), 'imss_uid', json_extract(src, '$.directory_user_id')) as src from people where json_extract(src, '$.directory_user_id') != '';
     # What follows are object level permissions
     keys: true
     create: true

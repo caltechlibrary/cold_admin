@@ -14,3 +14,5 @@ issn_journal_publisher.*
 TODO.html
 *.env
 *.service
+cdh.yaml
+cold_directory_sync.yaml
