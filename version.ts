@@ -12,7 +12,7 @@ export const appInfo: {[k: string]: string} = {
   releaseDate: "2024-08-29",
 
   // ReleaseHash, the Git hash when version.go was generated
-  releaseHash: "a1811fa",
+  releaseHash: "fb3ba70",
 
   // licenseText holds a copy of the application license text.
   licenseText: `
