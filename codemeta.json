@@ -37,15 +37,15 @@
     ],
     "releaseNotes": "Proof of concept",
     "softwareRequirements": [
-        "Deno >= 1.45.5",
+        "Deno >= 1.46.4",
         "GNU Make",
         "Pandoc >= 3.1",
-        "datasetd >= 2.1"
+        "datasetd >= 2.1.18"
     ],
-    "version": "0.0.2",
+    "version": "0.0.3",
     "dateCreated": "2024-06-24",
-    "dateModified": "2024-08-29",
-	"dateRelease": "2024-08-29",
+    "dateModified": "2024-09-10",
+	"dateRelease": "2024-09-10",
     "releaseNotes": "Cold Admin is a proof of concept and subject to change and not suitable for production.",
     "developmentStatus": "concept",
     "issueTracker": "https://github.com/caltechlibrary/cold_admin/issues"

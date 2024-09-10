@@ -12,6 +12,6 @@ authors:
 
 
 repository-code: "https://github.com/caltechlibrary/cold_admin"
-version: 0.0.2
+version: 0.0.3
 
 keywords: [ "metadata", "objects", "controlled vocabulary" ]

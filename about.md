@@ -11,7 +11,7 @@ authors:
     orcid: https://orcid.org/0000-0003-0900-6903
 
 repository-code: https://github.com/caltechlibrary/cold_admin
-version: 0.0.2
+version: 0.0.3
 
 keywords:
   - metadata
@@ -24,7 +24,7 @@ keywords:
 About this software
 ===================
 
-## cold_admin 0.0.2
+## cold_admin 0.0.3
 
 ### Authors
 
@@ -52,10 +52,10 @@ lists held in dataset collections.
 
 ### Software Requirements
 
-- Deno &gt;= 1.45.5
+- Deno &gt;= 1.46.4
 - GNU Make
 - Pandoc &gt;= 3.1
-- datasetd &gt;= 2.1
+- datasetd &gt;= 2.1.18
 
 ### Operating Systems
 

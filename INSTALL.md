@@ -13,9 +13,9 @@ These installation instructions are for a developer setup. You will need additio
 Requirements
 ------------
 
-- Deno >= 1.45.5
+- Deno >= 1.46.4
 - Pandoc >= 3.1
-- Dataset >= 2.1.17
+- Dataset >= 2.1.18
 - GNU Make
 - Git
 - Tmux (highly recommended for development)

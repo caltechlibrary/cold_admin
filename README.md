@@ -7,9 +7,9 @@ This project implements the administrative interface for [cold](https://github.c
 
 ## Requirements
 
-- [Dataset](https://github.com/caltechlibrary/dataset) >= 2.1.3 (running COLD Admin)
-- [Deno](https://deno.land) >= 1.45.5 (used to build the app and compile services) (build COLD Admin)
-- [Pandoc](https://pandoc.org) >= 3 (render documentation and version.ts) (build COLD Admin)
+- [Dataset](https://github.com/caltechlibrary/dataset) >= 2.1.18 (running COLD Admin)
+- [Deno](https://deno.land) >= 1.46.4 (used to build the app and compile services) (build COLD Admin)
+- [Pandoc](https://pandoc.org) >= 3.1 (render documentation and version.ts) (build COLD Admin)
 - GNU Make (build COLD Admin)
 - Zip (packaging build and installation)
 - Bash+cURL or Powershell (installation only)
