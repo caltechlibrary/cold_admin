@@ -18,6 +18,7 @@
     "test": "dsquery test.ds 'delete from test' ; deno test --allow-net dataset_test.ts ; deno test options_test.ts ; deno test config_test.ts ; deno test people_test.ts ; deno test groups_test.ts ; deno test cold_admin_test.ts ",
     "import_people_csv": "deno run --allow-read --allow-net ds_importer.ts people.ds people.csv",
     "import_groups_csv": "deno run --allow-read --allow-net ds_importer.ts groups.ds groups.csv",
+	"set_include_in_feeds": "deno run --allow-read --allow-net set_include_in_feeds.ts people.ds people_in_feeds.csv",
     "import_issn_journal_publisher_csv": "deno run --allow-read --allow-net ds_importer.ts issn.ds issn_journal_publisher.csv",
     "esm:add": "deno run -A https://esm.sh/v135 add",
     "esm:update": "deno run -A https://esm.sh/v135 update",
