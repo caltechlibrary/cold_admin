@@ -114,10 +114,6 @@
 </div>
 </div>
 
-<div>
-<label set="include_in_feeds">Include in feeds <input type="checkbox" id="include_in_feeds" name="include_in_feeds" {{#people.include_in_feeds}}checked{{/people.include_in_feeds}}> </label>
-</div>
-
 <div class="active-affiliation"><p>Active Affiliation:<br >
 <label>Caltech <input type="checkbox" id="caltech" name="caltech" {{#people.caltech}}checked{{/people.caltech}} ></label>
 <label>JPL <input type="checkbox" id="jpl" name="jpl" {{#people.jpl}}checked{{/people.jpl}} ></label>
@@ -130,6 +126,10 @@
 
 <div>
 {{#if people.updated}}<label set="updated">updated</label> {{people.updated}}{{/if}}
+</div>
+
+<div>
+<label set="include_in_feeds">Include in feeds <input type="checkbox" id="include_in_feeds" name="include_in_feeds" {{#people.include_in_feeds}}checked{{/people.include_in_feeds}}> </label>
 </div>
 
 <div>
