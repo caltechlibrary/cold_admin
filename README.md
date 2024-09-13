@@ -1,4 +1,6 @@
 
+__Depreciated: This repository was merged into the main cold repository at https://github.com/caltechlibrary/cold__
+
 # COLD Admin
 
 > COLD - controlled object lists and datum
