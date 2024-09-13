@@ -124,13 +124,13 @@
 <label>Alumn <input type="checkbox" id="alumn" name="alumn" {{#people.alumn}}checked{{/people.alumn}} ></label>
 </div>
 
-<div>
-{{#if people.updated}}<label set="updated">updated</label> {{people.updated}}{{/if}}
-</div>
-
-<div>
+<div class="feeds-status"><p>Feeds status:<br >
 <label set="include_in_feeds">Include in feeds <input type="checkbox" id="include_in_feeds" name="include_in_feeds" {{#people.include_in_feeds}}checked{{/people.include_in_feeds}}> </label>
 </div>
+
+<p>
+{{#if people.updated}}<label set="updated">updated</label> {{people.updated}}{{/if}}
+</p>
 
 <div>
 <input type="submit" id="submit" name="submit" value="submit"> <input type="reset" id="reset" name="reset" value="reset">
